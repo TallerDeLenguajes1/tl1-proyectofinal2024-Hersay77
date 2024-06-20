@@ -51,6 +51,6 @@ namespace EspacioPersonajes
         TheOffice = 3,
         MalcolmInTheMiddle = 4,
         Friends = 5,
-        ElChavoDel8 = 6
     }
 }
+
