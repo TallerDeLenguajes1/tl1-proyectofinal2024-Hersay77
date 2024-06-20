@@ -33,14 +33,14 @@ namespace EspacioPersonajes
         private DateTime fecha;
         private int edad;
         private string descripcion;
-        private Serie serie;
+        private Serie serieDelPersonaje;
 
             public string Nombre { get => nombre; set => nombre = value; }
             public string Apodo { get => apodo; set => apodo = value; }
             public DateTime Fecha { get => fecha; set => fecha = value; }
             public int Edad { get => edad; set => edad = value; }
             public string Descripcion { get => descripcion; set => descripcion = value; }
-            public Serie Serie { get => serie; set => serie = value; }
+            public Serie SerieDelPersonaje { get => serieDelPersonaje; set => serieDelPersonaje = value; }
     }
 
     public enum Serie
