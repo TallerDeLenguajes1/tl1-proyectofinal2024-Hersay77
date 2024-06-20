@@ -8,9 +8,10 @@ namespace EspacioPersonajesJson
 {
     public class PersonajesJson
     {
-        public void GuardarPersonajes(List<Personaje> ListaPersonajes, string ArchivoListaPersonajesJson)
+        public static void GuardarPersonajes(List<Personaje> ListaPersonajes, string ArchivoListaPersonajesJson)
         {
-
+            string jsonString = JsonSerializer.Serialize(ListaPersonajes); //Serealizo la lista de personajes
+            File.WriteAllText(ArchivoListaPersonajesJson, jsonString); //escribo en el json. WriteAllText crea y soobrescribe el archivo ya que necesito soobreescribir el archivo lista de personajes siempre, sea cual sea el camino que se lo cree
         }
 
         public static List<Personaje> LeerPersonajes(string ArchivoListaPersonajesJson)
@@ -22,7 +23,7 @@ namespace EspacioPersonajesJson
 
         public static bool Existe(string Archivo)
         {
-            if (File.Exists(Archivo))
+            if (File.Exists(Archivo)) //se usa la clase File con el metodo exists para comprobar si existe el rchivo en la ruta proporcionada
             {
                 return true;
             }
@@ -55,6 +56,4 @@ namespace EspacioPersonajesJson
         }
 
     }
-
-
 }
