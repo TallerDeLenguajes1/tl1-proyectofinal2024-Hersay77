@@ -4,7 +4,7 @@ namespace EspacioFabricaDePersonajes
 {
     public class FabricaDePersonjaes
     {
-        public Personaje CrearPersonaje(string nombre, string apodo, DateTime fecha, int edad, string descripcion, Serie serieDelPersonaje)
+        public static Personaje CrearPersonaje(string nombre, string apodo, DateTime fecha, int edad, string descripcion, Serie serieDelPersonaje)
         {
             Personaje nuevoPersonaje = new Personaje();
             nuevoPersonaje.DatosPersonaje.Nombre = nombre;
@@ -23,7 +23,7 @@ namespace EspacioFabricaDePersonajes
             return nuevoPersonaje; 
         }
 
-        public int ValorAleatorio(int min, int max){
+        public static int ValorAleatorio(int min, int max){
             Random numeroRandom = new Random();
             return numeroRandom.Next(min, max);
         }

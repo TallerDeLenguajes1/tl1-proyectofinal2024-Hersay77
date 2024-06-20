@@ -1,7 +1,8 @@
-using EspacioPersonajes;
+using EspacioPersonajes; 
 using System.Collections.Generic; //para manejo de colecciones
 using System.Text.Json; //para manejo de json
 using System.IO; //para manejo de FILE
+using EspacioFabricaDePersonajes;
 
 namespace EspacioPersonajesJson
 {
@@ -21,22 +22,35 @@ namespace EspacioPersonajesJson
 
         public static bool Existe(string Archivo)
         {
-            bool existe = true;
-
-            return existe;
+            if (File.Exists(Archivo))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        public static void GenerarPersonajes()
+        public static List<Personaje> GenerarPersonajes()
         {
-            string ArchivoDatosPersonajes = "Archivo/DatosPerosnajes.json";
-            if (Existe(ArchivoDatosPersonajes))
+            string ArchivoDatosPersonajes = "Archivo/DatosPerosnajes.json"; //guardo en un string la ruta del archivo que contiene datos de los personajes para generarlos
+            if (Existe(ArchivoDatosPersonajes)) //compruebo si existe el archivo
             {
-                string jsonString = File.ReadAllText(ArchivoDatosPersonajes);
-                List<Datos> ListaDatos = JsonSerializer.Deserialize<List<Datos>>(jsonString);
+                string jsonString = File.ReadAllText(ArchivoDatosPersonajes); //se lee el archivo y se guarda en un string - el archivo esta en formato json
+                List<Datos> ListaDatos = JsonSerializer.Deserialize<List<Datos>>(jsonString); //deseralizo el json basado en la clase Datos
+                List<Personaje> ListaPersonajes = new List<Personaje>(); //creo lista de personajes
+                foreach (var Dato in ListaDatos) //se recorre la lista y se envian los datos de un personaje a la fabrica
+                {
+                    Personaje NuevoPersonje = FabricaDePersonjaes.CrearPersonaje(Dato.Nombre, Dato.Apodo, Dato.Fecha, Dato.Edad, Dato.Descripcion, Dato.SerieDelPersonaje); //fabrica el nuevo personaje
+                    ListaPersonajes.Add(NuevoPersonje); //lo agrego a la lista
+                }
+                return ListaPersonajes;
             }
             else
             {
                 Console.Write("El archivo DatosPersonajes.json no existe");
+                return null;
             }
         }
 

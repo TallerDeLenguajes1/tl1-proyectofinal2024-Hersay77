@@ -7,8 +7,11 @@ string ArchivoListaPersonajes = "Archivos/ListaPersonajes.Json";
 if (PersonajesJson.Existe(ArchivoListaPersonajes))
 {
     List<Personaje> ListaPersonajes = PersonajesJson.LeerPersonajes(ArchivoListaPersonajes);
+    //CARGAR HISTORIAL
 }
 else
 {
-    PersonajesJson.GenerarPersonajes();//
+    List<Personaje> ListaPersonajes = PersonajesJson.GenerarPersonajes();
+    //CARGAR HISTORIAL
 }
+
