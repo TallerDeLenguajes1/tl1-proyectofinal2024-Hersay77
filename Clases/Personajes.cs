@@ -7,6 +7,9 @@ namespace EspacioPersonajes
 
             public Caracteristicas CaracteristicasPersonaje { get => caracteristicasPersonaje; set => caracteristicasPersonaje = value; }
             public Datos DatosPersonaje { get => datosPersonaje; set => datosPersonaje = value; }
+        private string nombreJugadorEnHistorial;
+        public string NombreJugadorEnHistorial { get => nombreJugadorEnHistorial; set => nombreJugadorEnHistorial = value; }
+        
     }
 
     public class Caracteristicas

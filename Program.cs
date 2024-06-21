@@ -8,7 +8,7 @@ string ArchivoHistorial = "Archivos/Historial.json";
 
 List<Personaje> ListaPersonajes;
 List<Personaje> Historial;
-bool Guardado = false;
+bool Guardado = true; //guardado inicia en true por si ya se habia guardado anteriormente ppor primera vez los personajes
 
 if (PersonajesJson.Existe(ArchivoListaPersonajes))
 {
