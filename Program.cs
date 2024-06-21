@@ -31,3 +31,11 @@ else
 {
     //MOSTAR MENU
 }*/
+
+MostrarPersonajes(ListaPersonajes);
+
+
+static void MostrarPersonajes(List<Personaje> ListaPersonajes){
+    Console.WriteLine("################# MOSTRANDO LISTA DE PERSONAJES ################");
+    Console.WriteLine("");
+}
