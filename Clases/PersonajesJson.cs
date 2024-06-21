@@ -60,7 +60,7 @@ namespace EspacioPersonajesJson
 
         public static List<Personaje> GenerarPersonajes()
         {
-            string ArchivoDatosPersonajes = "Archivo/DatosPerosnajes.json"; //guardo en un string la ruta del archivo que contiene datos de los personajes para generarlos
+            string ArchivoDatosPersonajes = "Archivos/DatosPersonajes.json"; //guardo en un string la ruta del archivo que contiene datos de los personajes para generarlos
             if (Existe(ArchivoDatosPersonajes)) //compruebo si existe el archivo
             {
                 try
@@ -70,15 +70,15 @@ namespace EspacioPersonajesJson
                         List<Personaje> ListaPersonajes = new List<Personaje>(); //creo lista de personajes
                         foreach (var Dato in ListaDatos) //se recorre la lista y se envian los datos de un personaje a la fabrica
                         {
-                            Personaje NuevoPersonje = FabricaDePersonjaes.CrearPersonaje(Dato.Nombre, Dato.Apodo, Dato.Fecha, Dato.Edad, Dato.Descripcion, Dato.SerieDelPersonaje); //se fabrica el nuevo personaje
-                            ListaPersonajes.Add(NuevoPersonje); //lo agrego a la lista
+                            Personaje NuevoPersonaje = FabricaDePersonjaes.CrearPersonaje(Dato.Nombre, Dato.Apodo, Dato.Fecha, Dato.Edad, Dato.Descripcion, Dato.SerieDelPersonaje); //se fabrica el nuevo personaje
+                            ListaPersonajes.Add(NuevoPersonaje); //lo agrego a la lista
                         }
                         return ListaPersonajes;
                     }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error creando personajes: {ex.Message}");
-                    return null; //retorna nulo si no se pudo crear la lista Historial
+                    return null; //retorna nulo si no se pudo crear personajes
                 };                
             }
             else

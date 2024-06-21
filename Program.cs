@@ -8,7 +8,7 @@ string ArchivoHistorial = "Archivos/Historial.json";
 
 List<Personaje> ListaPersonajes;
 List<Personaje> Historial;
-bool Guardado = true; //guardado inicia en true por si ya se habia guardado anteriormente ppor primera vez los personajes
+bool Guardado = true; //guardado inicia en true por si ya se habia guardado anteriormente por primera vez los personajes
 
 if (PersonajesJson.Existe(ArchivoListaPersonajes))
 {
@@ -19,15 +19,15 @@ else
 {
     ListaPersonajes = PersonajesJson.GenerarPersonajes(); //Crea la lista de personajes desde 0 con DatosPersonajesjson que arme con datos 
     Guardado = PersonajesJson.GuardarPersonajes(ListaPersonajes, ArchivoListaPersonajes); //el metodo guarda la lista de personajes en json y devuelve true si se completo el guardado
-    Historial = HistorialJson.LeerGanadores(ArchivoHistorial); //el metodo lee el historial desde un json, si no retorna null
+    //Historial = HistorialJson.LeerGanadores(ArchivoHistorial); //el metodo lee el historial desde un json, si no retorna null
 }
 
 
-if (ListaPersonajes == null || Historial == null || Guardado == false)
+/*if (ListaPersonajes == null || Historial == null || Guardado == false)
 {
     Console.WriteLine("Error de programa: No se pudo cargar los datos");
 }
 else
 {
     //MOSTAR MENU
-}
+}*/
