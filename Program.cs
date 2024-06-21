@@ -37,5 +37,22 @@ MostrarPersonajes(ListaPersonajes);
 
 static void MostrarPersonajes(List<Personaje> ListaPersonajes){
     Console.WriteLine("################# MOSTRANDO LISTA DE PERSONAJES ################");
-    Console.WriteLine("");
+    foreach (var personaje in ListaPersonajes)
+    {
+        Console.WriteLine("###########################################################");
+        Console.WriteLine($"NOMBRE: {personaje.DatosPersonaje.Nombre}");
+        Console.WriteLine($"APODO: {personaje.DatosPersonaje.Apodo}");
+        Console.WriteLine($"FECHA DE NACIMIENTO: {personaje.DatosPersonaje.Fecha.ToShortDateString()}");
+        Console.WriteLine($"EDAD: {personaje.DatosPersonaje.Edad}");
+        Console.WriteLine($"DESCRIPCION: {personaje.DatosPersonaje.Descripcion}");
+        Console.WriteLine($"SERIE: {personaje.DatosPersonaje.SerieDelPersonaje}");
+        Console.WriteLine($"VELOCIDAD: {personaje.CaracteristicasPersonaje.Velocidad}");
+        Console.WriteLine($"DESTREZA: {personaje.CaracteristicasPersonaje.Destreza}");
+        Console.WriteLine($"FUERZA: {personaje.CaracteristicasPersonaje.Fuerza}");
+        Console.WriteLine($"NIVEL: {personaje.CaracteristicasPersonaje.Nivel}");
+        Console.WriteLine($"DEFENSA: {personaje.CaracteristicasPersonaje.Defensa}");
+        Console.WriteLine($"SALUD: {personaje.CaracteristicasPersonaje.Salud}");
+        Console.WriteLine("###########################################################");
+    }
 }
+
