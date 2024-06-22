@@ -54,10 +54,27 @@ namespace EspacioMetodosPrincipales
 
             var turno = FabricaDePersonjaes.ValorAleatorio(1, 3); //uso metodo estatico de fabrica de personajes para generar numero aleatorio
             Console.WriteLine(turno == 1 ? "INICIAS ATACANDO !!!" : "INICIA ATACANDO EL ENEMIGO!!!");
+            int ataque;
+            int efectividad;
+            int defensa;
+            const int ajuste = 500;
+            float danioProvocado;
 
             do
             {
-                
+                if (turno == 1 )
+                {
+                    
+                    
+
+                    //5) El que gane es beneficiado con una mejora en sus habilidades.por ejemplo: +10 en salud o +5 en defensa.
+                    turno = 0; //cambio el turno
+                }
+                else
+                {
+                    turno = 1; //cambio el turno
+                }
+
             } while (jugador1.CaracteristicasPersonaje.Salud != 0 || jugador2.CaracteristicasPersonaje.Salud != 0); //continua hasta que uno tenga salud 0
 
 
