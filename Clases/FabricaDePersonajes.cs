@@ -19,7 +19,7 @@ namespace EspacioFabricaDePersonajes
             nuevoPersonaje.CaracteristicasPersonaje.Destreza = ValorAleatorio(1, 6);
             nuevoPersonaje.CaracteristicasPersonaje.Fuerza = ValorAleatorio(1, 11);
             nuevoPersonaje.CaracteristicasPersonaje.Nivel = ValorAleatorio(1, 11);
-            nuevoPersonaje.CaracteristicasPersonaje.Defensa = ValorAleatorio(1, 11);
+            nuevoPersonaje.CaracteristicasPersonaje.Defensa = ValorAleatorio(1, 11); //ARMADURA
             nuevoPersonaje.CaracteristicasPersonaje.Salud = 100;
 
             return nuevoPersonaje; 

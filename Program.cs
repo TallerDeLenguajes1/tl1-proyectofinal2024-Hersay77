@@ -44,8 +44,11 @@ ListaPersonajes.Remove(ListaPersonajes[opcion]); //ELIMINO EL PERSONAJE SELECCIO
     var resultadoBatalla = true;
     var resultadoPartida = true;
     float puntaje = 0;
+    var numeroBatalla = 0;
     foreach (var jugador2 in ListaPersonajes)
     {
+        numeroBatalla += 1;
+        Console.WriteLine($"################### - INICIA LA BATALLA - {numeroBatalla} - ###############################");
         resultadoBatalla = Metodos.GenerarBatalla(personajeSeleccionado, jugador2); //genero batalla
         if (resultadoBatalla)//true - si se gana la batalla
         {

@@ -56,47 +56,60 @@ namespace EspacioMetodosPrincipales
             Console.WriteLine(turno == 1 ? "INICIAS ATACANDO !!!" : "INICIA ATACANDO EL ENEMIGO!!!");
             int ataque; //Ataque: Destreza * Fuerza * Nivel (del personaje que ataca)
             int efectividad;//Valor aleatorio entre 1 y 100.
-            int defensa; //Armadura * Velocidad (del personaje que defiende)
-            const int ajuste = 500; 
+            int defensa; //rating * Velocidad (del personaje que defiende)
+            const int ajuste = 50; 
             float danioProvocado; //(Ataque * Efectividad) - Defensa) / constante de ajuste
-            float armadura;
+            float rating ;
 
             do
             {
                 if (turno == 1 )
                 {
+                    Console.WriteLine("---------------TU TURNO---------------");
                     ataque = (jugador1.CaracteristicasPersonaje.Destreza) * (jugador1.CaracteristicasPersonaje.Fuerza) * (jugador1.CaracteristicasPersonaje.Nivel);
                     efectividad = FabricaDePersonjaes.ValorAleatorio(1, 101);
-                    Console.WriteLine($"TU EFECTIVIDAD DE ATAQUE SERA DE: {efectividad} %");
-                    armadura = FabricaDePersonjaes.ValorAleatorio(5, 9); //de momento la armadura sera aletoria
-                    defensa = (int)armadura * (jugador2.CaracteristicasPersonaje.Velocidad);
-                    Console.WriteLine("EL CONTRINCANTE SE DEFIENDE USANDO SU CARTA-EPISODIO: nombre episodio CON UN RAITING DE: raiting - SU ARMADURA ES EL RAITING!!!");
+                    Console.WriteLine($"TU EFECTIVIDAD DE ATAQUE: {efectividad}");
+                    rating = FabricaDePersonjaes.ValorAleatorio(5, 9); //de momento la rating sera aletoria
+                    defensa = (int)rating * (jugador2.CaracteristicasPersonaje.Velocidad);
+                    Console.WriteLine("EL CONTRINCANTE SE DEFIENDE USANDO SU CARTA-EPISODIO: nombre episodio CON UN RAITING DE: raiting - SU rating ES EL RAITING!!!");
                     danioProvocado = ((ataque * efectividad) - defensa) / ajuste;
                     jugador2.CaracteristicasPersonaje.Salud = (jugador2.CaracteristicasPersonaje.Salud) - danioProvocado;
                     Console.WriteLine($"DANIO PROVOCADO: {danioProvocado}");
+                    //Verificando salud 
+                    if (jugador2.CaracteristicasPersonaje.Salud <= 0)
+                    {
+                        Console.WriteLine("¡Lo derrotaste!");
+                        break;
+                    }
                     Console.WriteLine($"SALUD DEL ENEMIGO: {jugador2.CaracteristicasPersonaje.Salud}");
-
                     turno = 0; //cambio el turno
                 }
                 else
                 {
+                    Console.WriteLine("---------------TURNO ENEMIGO---------------");
                     ataque = (jugador2.CaracteristicasPersonaje.Destreza) * (jugador2.CaracteristicasPersonaje.Fuerza) * (jugador2.CaracteristicasPersonaje.Nivel);
                     efectividad = FabricaDePersonjaes.ValorAleatorio(1, 101);
-                    Console.WriteLine($"TU EFECTIVIDAD DE ATAQUE SERA DE: {efectividad} %");
-                    armadura = FabricaDePersonjaes.ValorAleatorio(5, 9); //de momento la armadura sera aletoria
-                    defensa = (int)armadura * (jugador1.CaracteristicasPersonaje.Velocidad);
-                    Console.WriteLine("EL CONTRINCANTE SE DEFIENDE USANDO SU CARTA-EPISODIO: nombre episodio CON UN RAITING DE: raiting - SU ARMADURA ES EL RAITING!!!");
+                    Console.WriteLine($"EFECTIVIDAD DE ATAQUE DEL ENEMIGO: {efectividad} ");
+                    rating = FabricaDePersonjaes.ValorAleatorio(5, 9); //de momento la rating sera aletoria
+                    defensa = (int)rating * (jugador1.CaracteristicasPersonaje.Velocidad);
+                    Console.WriteLine("TE DEFIENDES USANDO SU CARTA-EPISODIO: nombre episodio CON UN RAITING DE: raiting - TU rating ES EL RAITING!!!");
                     danioProvocado = ((ataque * efectividad) - defensa) / ajuste;
                     jugador1.CaracteristicasPersonaje.Salud = (jugador1.CaracteristicasPersonaje.Salud) - danioProvocado;
                     Console.WriteLine($"DANIO PROVOCADO: {danioProvocado}");
-                    Console.WriteLine($"TU SALUD: {jugador2.CaracteristicasPersonaje.Salud}");
+                    //Verificando salud
+                    if (jugador1.CaracteristicasPersonaje.Salud <= 0)
+                    {
+                        Console.WriteLine("¡Fuiste derrotado!");
+                        break;
+                    }
+                    Console.WriteLine($"TU SALUD: {jugador1.CaracteristicasPersonaje.Salud}");  
                     turno = 1; //cambio el turno
                 }
 
-            } while (jugador1.CaracteristicasPersonaje.Salud != 0 || jugador2.CaracteristicasPersonaje.Salud != 0); //continua hasta que uno tenga salud 0
+            } while (jugador1.CaracteristicasPersonaje.Salud > 0 && jugador2.CaracteristicasPersonaje.Salud > 0); //continua mientras la salud de ambos jugadores siga positiva
 
 
-            if (jugador1.CaracteristicasPersonaje.Salud != 0) //retorna true si gano
+            if (jugador1.CaracteristicasPersonaje.Salud > 0) //retorna true si gano
             {
                 return true;
             }
