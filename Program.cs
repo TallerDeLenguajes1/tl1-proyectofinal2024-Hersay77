@@ -34,25 +34,51 @@ else
 
 MostrarPersonajes(ListaPersonajes);
 
-
+//MOSTAR PERSONAJES
 static void MostrarPersonajes(List<Personaje> ListaPersonajes){
     Console.WriteLine("################# MOSTRANDO LISTA DE PERSONAJES ################");
-    foreach (var personaje in ListaPersonajes)
+
+    for (int i = 0; i < ListaPersonajes.Count; i++)
     {
         Console.WriteLine("###########################################################");
-        Console.WriteLine($"NOMBRE: {personaje.DatosPersonaje.Nombre}");
-        Console.WriteLine($"APODO: {personaje.DatosPersonaje.Apodo}");
-        Console.WriteLine($"FECHA DE NACIMIENTO: {personaje.DatosPersonaje.Fecha.ToShortDateString()}");
-        Console.WriteLine($"EDAD: {personaje.DatosPersonaje.Edad}");
-        Console.WriteLine($"DESCRIPCION: {personaje.DatosPersonaje.Descripcion}");
-        Console.WriteLine($"SERIE: {personaje.DatosPersonaje.SerieDelPersonaje}");
-        Console.WriteLine($"VELOCIDAD: {personaje.CaracteristicasPersonaje.Velocidad}");
-        Console.WriteLine($"DESTREZA: {personaje.CaracteristicasPersonaje.Destreza}");
-        Console.WriteLine($"FUERZA: {personaje.CaracteristicasPersonaje.Fuerza}");
-        Console.WriteLine($"NIVEL: {personaje.CaracteristicasPersonaje.Nivel}");
-        Console.WriteLine($"DEFENSA: {personaje.CaracteristicasPersonaje.Defensa}");
-        Console.WriteLine($"SALUD: {personaje.CaracteristicasPersonaje.Salud}");
+        Console.WriteLine($"NUMERO DE PERSONAJE: {i}");
+        Console.WriteLine($"NOMBRE: {ListaPersonajes[i].DatosPersonaje.Nombre}");
+        Console.WriteLine($"APODO: {ListaPersonajes[i].DatosPersonaje.Apodo}");
+        Console.WriteLine($"FECHA DE NACIMIENTO: {ListaPersonajes[i].DatosPersonaje.Fecha.ToShortDateString()}");
+        Console.WriteLine($"EDAD: {ListaPersonajes[i].DatosPersonaje.Edad}");
+        Console.WriteLine($"DESCRIPCION: {ListaPersonajes[i].DatosPersonaje.Descripcion}");
+        Console.WriteLine($"SERIE: {ListaPersonajes[i].DatosPersonaje.SerieDelPersonaje}");
+        Console.WriteLine($"VELOCIDAD: {ListaPersonajes[i].CaracteristicasPersonaje.Velocidad}");
+        Console.WriteLine($"DESTREZA: {ListaPersonajes[i].CaracteristicasPersonaje.Destreza}");
+        Console.WriteLine($"FUERZA: {ListaPersonajes[i].CaracteristicasPersonaje.Fuerza}");
+        Console.WriteLine($"NIVEL: {ListaPersonajes[i].CaracteristicasPersonaje.Nivel}");
+        Console.WriteLine($"DEFENSA: {ListaPersonajes[i].CaracteristicasPersonaje.Defensa}");
+        Console.WriteLine($"SALUD: {ListaPersonajes[i].CaracteristicasPersonaje.Salud}");
         Console.WriteLine("###########################################################");
     }
+
+
+    //SELECCION DE PERSONAJE
+
+    int numero;
+    bool esValido = false;
+
+    while (!esValido)
+    {
+        Console.WriteLine("SELECCIONE EL PERSONAJE: ");
+        string entrada = Console.ReadLine();
+        
+        if (int.TryParse(entrada, out numero))
+        {
+            esValido = true;
+            Console.WriteLine("ELEGISTE EL PERSONAJE: " + numero);
+
+        }
+        else
+        {
+            Console.WriteLine("Entrada no válida. Intente de nuevo.");
+        }
+    }
+
 }
 

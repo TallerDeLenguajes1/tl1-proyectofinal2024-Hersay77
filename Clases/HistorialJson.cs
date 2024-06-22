@@ -8,7 +8,7 @@ namespace EspacioHistorialJson
     {
         public static void GuardarGanador(Personaje Ganador, string info, string ArchivoHistorial)
         {
-
+            
         }
 
         public static List<Personaje> LeerGanadores(string ArchivoHistorial)
