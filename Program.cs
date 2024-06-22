@@ -65,10 +65,12 @@ else
         if (resultadoPartida)
         {
             Console.WriteLine("HAS GANADO LA PARTIDA!!!");
+            Console.WriteLine($"NIVEL PERSONAJE: {personajeSeleccionado.CaracteristicasPersonaje.Nivel}");
             personajeSeleccionado.CaracteristicasPersonaje.Nivel += 1; //cada vez que se gana una partida el nivel del personaje aumenta en 1 unidad
-
+            
             Console.WriteLine("TU PERSONAJE AUMENTA +1 EN NIVEL !!!");
-
+            Console.WriteLine($"NIVEL ACTUAL: {personajeSeleccionado.CaracteristicasPersonaje.Nivel}");
+            ListaPersonajes = PersonajesJson.LeerPersonajes(ArchivoListaPersonajes); //vuelvo a leer lista de personajes sino se agregan modificaciones a personajes enemigos
             ListaPersonajes.Add(personajeSeleccionado); //agrego el personaje con nivel modificado a la lista
 
             Guardado = PersonajesJson.GuardarPersonajes(ListaPersonajes, ArchivoListaPersonajes); //guardo la lista modificada
