@@ -38,13 +38,38 @@ MetodosPrincipales Metodos = new MetodosPrincipales(); //CREO UNA INSTANCIA PARA
 Metodos.MostrarPersonajes(ListaPersonajes); // MOSTRANDO PERSONAJES
 int opcion = Metodos.ElegirPersonaje(); //SELECCION DE PERSONAJE
 var personajeSeleccionado = ListaPersonajes[opcion]; //SE GUARDA EL PERSONAJE SELECCIONADO EN UNA VARIABLE
-ListaPersonajes.Remove(ListaPersonajes[opcion]); //ELIMINO EL PERSONAJE DE LA LISTA
+ListaPersonajes.Remove(ListaPersonajes[opcion]); //ELIMINO EL PERSONAJE SELECCIONADO DE LA LISTA PARA QUE NO SE ENFRENTE A EL MISMO
 
 //ENFRENTO AL PERSONAJE CON TODOS LOS PERSONAJES DE LA LISTA
     var resultadoBatalla = true;
+    var resultadoPartida = true;
+    float puntaje = 0;
     foreach (var jugador2 in ListaPersonajes)
     {
-        resultadoBatalla = Metodos.GenerarBatalla(personajeSeleccionado, jugador2);
+        resultadoBatalla = Metodos.GenerarBatalla(personajeSeleccionado, jugador2); //genero batalla
+        if (resultadoBatalla)//true - si se gana la batalla
+        {
+            Console.WriteLine("HAS GANADO LA BATALLA!!!");
+            puntaje = puntaje + personajeSeleccionado.CaracteristicasPersonaje.Salud; //El puntaje acumulado en cada batalla sera la salud con la que queda el personaje
+            personajeSeleccionado.CaracteristicasPersonaje.Salud = 100;//VUELVO SALUD DEL PERSONAJE NUEVAENTE A 100 PARA ENFRENTARSE AL PROXIMO OPONENTE
+
+        }
+        else
+        {
+            Console.WriteLine("HAS PERDIDO LA BATALLA!!!");
+            resultadoPartida = false; //si no se gano la batalla se pierde la partida 
+            return;
+        }
+    }
+
+    if (resultadoPartida)
+    {
+        Console.WriteLine("HAS GANADO LA PARTIDA!!!");
+        personajeSeleccionado.CaracteristicasPersonaje.Nivel += 1; //cada vez que se gana una partida el nivel del personaje aumenta en 1 unidad
+    }
+    else
+    {
+        Console.WriteLine("GAME OVER");
     }
 
 
