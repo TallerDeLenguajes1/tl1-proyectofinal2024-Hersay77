@@ -8,7 +8,7 @@ string ArchivoListaPersonajes = "Archivos/ListaPersonajes.json";
 string ArchivoHistorial = "Archivos/Historial.json";
 
 List<Personaje> ListaPersonajes;
-List<Personaje> Historial;
+List<PersonajeEnHistorial> Historial;
 bool Guardado = true; //guardado inicia en true por si ya se habia guardado anteriormente por primera vez los personajes
 
 if (PersonajesJson.Existe(ArchivoListaPersonajes))
@@ -20,7 +20,7 @@ else
 {
     ListaPersonajes = PersonajesJson.GenerarPersonajes(); //Crea la lista de personajes desde 0 con DatosPersonajesjson que arme con datos 
     Guardado = PersonajesJson.GuardarPersonajes(ListaPersonajes, ArchivoListaPersonajes); //el metodo guarda la lista de personajes en json y devuelve true si se completo el guardado
-    //Historial = HistorialJson.LeerGanadores(ArchivoHistorial); //el metodo lee el historial desde un json, si no retorna null
+    Historial = HistorialJson.LeerGanadores(ArchivoHistorial); //el metodo lee el historial desde un json, si no retorna null
 }
 
 
@@ -69,6 +69,28 @@ ListaPersonajes.Remove(ListaPersonajes[opcion]); //ELIMINO EL PERSONAJE SELECCIO
     {
         Console.WriteLine("HAS GANADO LA PARTIDA!!!");
         personajeSeleccionado.CaracteristicasPersonaje.Nivel += 1; //cada vez que se gana una partida el nivel del personaje aumenta en 1 unidad
+
+        //Console.WriteLine("TU PERSONAJE AUMENTA +1 EN NIVEL !!!"); 
+
+        //PEDIR DATOS SI ENTRA EN EL RANKING DE GANADORES
+        if (Historial[9].Puntaje <= puntaje)
+        {
+            Console.WriteLine("INGRESE SU NOMBRE PARA GUARDAR EN EL HISTORIAL DE GANADORES: ");
+            var nombreJugador = Console.ReadLine();
+            if(HistorialJson.GuardarGanador(personajeSeleccionado, nombreJugador, ArchivoHistorial, Historial, puntaje))
+            {
+                //MOSTRAR HISTORIAL
+            }
+            else
+            {
+                Console.WriteLine("Error al guardar");
+            }
+        }
+        else
+        {
+            Console.WriteLine("PUNTAJE NO ALCANZADO PARA ENTRAR EN EL RANKING");
+        }
+
     }
     else
     {

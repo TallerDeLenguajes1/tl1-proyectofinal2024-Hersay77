@@ -6,19 +6,33 @@ namespace EspacioHistorialJson
 {
     public class HistorialJson 
     {
-        public static void GuardarGanador(Personaje Ganador, string info, string ArchivoHistorial)
+        public static bool GuardarGanador(Personaje Ganador, string nombre, string ArchivoHistorial, List<PersonajeEnHistorial> Historial, float puntaje)
         {
+                try
+                {
+                    Historial.Remove(Historial[9]);//se quita el ultimo en la lista
+                    var personajeAgregar = new PersonajeEnHistorial(){NombreJugador = nombre, NombrePersonaje = Ganador.DatosPersonaje.Nombre, Nivel = Ganador.CaracteristicasPersonaje.Nivel, Puntaje = puntaje};
+                    Historial.Add(personajeAgregar);
+                    string jsonString = JsonSerializer.Serialize(Historial); // Serializar la lista de personajes que se recibe a JSON
+                    File.WriteAllText(ArchivoHistorial, jsonString); // Escribir la cadena JSON en el archivo especificado - WriteAllText sobreexcribe el archivo si existe y si no, lo crea
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al guardar en Historial: {ex.Message}");
+                    return false; //retorna nulo si no se pudo guardar la lista Historial
+                };
             
         }
 
-        public static List<Personaje> LeerGanadores(string ArchivoHistorial)
+        public static List<PersonajeEnHistorial> LeerGanadores(string ArchivoHistorial)
         {
             if(Existe(ArchivoHistorial))
             {
                 try
                 {
                     string jsonString = File.ReadAllText(ArchivoHistorial); //se lee el archivo y se guarda en un string - el archivo esta en formato json
-                    List<Personaje> Historial = JsonSerializer.Deserialize<List<Personaje>>(jsonString); //deseralizo el json basado en la clase Personaje
+                    List<PersonajeEnHistorial> Historial = JsonSerializer.Deserialize<List<PersonajeEnHistorial>>(jsonString); //deseralizo el json basado en la clase Personaje
                     return Historial;
                 }
                 catch (Exception ex)
@@ -46,5 +60,18 @@ namespace EspacioHistorialJson
             }
         }
     }
+
+    public class PersonajeEnHistorial
+        {
+            private string nombreJugador;
+            private string nombrePersonaje;
+            int nivel ; 
+            float puntaje;
+
+            public string NombreJugador { get => nombreJugador; set => nombreJugador = value; }
+            public string NombrePersonaje { get => nombrePersonaje; set => nombrePersonaje = value; }
+            public int Nivel { get => nivel; set => nivel = value; }
+            public float Puntaje { get => puntaje; set => puntaje = value; }
+        }
 }
 
