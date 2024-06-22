@@ -66,11 +66,11 @@ namespace EspacioPersonajesJson
                 try
                     {
                         string jsonString = File.ReadAllText(ArchivoDatosPersonajes); //se lee el archivo y se guarda en un string - el archivo esta en formato json
-                        List<Datos> ListaDatos = JsonSerializer.Deserialize<List<Datos>>(jsonString); //deseralizo el json basado en la clase Datos
+                        List<Personaje> ListaDatosPredefinidos = JsonSerializer.Deserialize<List<Personaje>>(jsonString); //deseralizo el json basado en la clase Personaje
                         List<Personaje> ListaPersonajes = new List<Personaje>(); //creo lista de personajes
-                        foreach (var Dato in ListaDatos) //se recorre la lista y se envian los datos de un personaje a la fabrica
+                        foreach (var DatoPredefinido in ListaDatosPredefinidos) //se recorre la lista y se envian los datos de un personaje a la fabrica
                         {
-                            Personaje NuevoPersonaje = FabricaDePersonjaes.CrearPersonaje(Dato.Nombre, Dato.Apodo, Dato.Fecha, Dato.Edad, Dato.Descripcion, Dato.SerieDelPersonaje); //se fabrica el nuevo personaje
+                            Personaje NuevoPersonaje = FabricaDePersonjaes.CrearPersonaje(DatoPredefinido.DatosPersonaje.Nombre, DatoPredefinido.DatosPersonaje.Apodo, DatoPredefinido.DatosPersonaje.Fecha, DatoPredefinido.DatosPersonaje.Edad, DatoPredefinido.DatosPersonaje.Descripcion, DatoPredefinido.DatosPersonaje.SerieDelPersonaje, DatoPredefinido.CaracteristicasPersonaje.Velocidad, DatoPredefinido.CaracteristicasPersonaje.Destreza, DatoPredefinido.CaracteristicasPersonaje.Fuerza, DatoPredefinido.CaracteristicasPersonaje.Armadura); //se fabrica el nuevo personaje
                             ListaPersonajes.Add(NuevoPersonaje); //lo agrego a la lista
                         }
                         return ListaPersonajes;

@@ -4,7 +4,7 @@ namespace EspacioFabricaDePersonajes
 {
     public class FabricaDePersonjaes
     {
-        public static Personaje CrearPersonaje(string nombre, string apodo, DateTime fecha, int edad, string descripcion, Serie serieDelPersonaje)
+        public static Personaje CrearPersonaje(string nombre, string apodo, DateTime fecha, int edad, string descripcion, Serie serieDelPersonaje, int velocidad, int destreza, int fuerza, int armadura)
         {
             Personaje nuevoPersonaje = new Personaje();
             nuevoPersonaje.DatosPersonaje = new Datos(); //como datos es una clase debo crear una instancia
@@ -15,11 +15,11 @@ namespace EspacioFabricaDePersonajes
             nuevoPersonaje.DatosPersonaje.Descripcion = descripcion;
             nuevoPersonaje.DatosPersonaje.SerieDelPersonaje = serieDelPersonaje;
             nuevoPersonaje.CaracteristicasPersonaje = new Caracteristicas(); //como Caracteristicas es una clase debo crear una instancia
-            nuevoPersonaje.CaracteristicasPersonaje.Velocidad = ValorAleatorio(1, 11);
-            nuevoPersonaje.CaracteristicasPersonaje.Destreza = ValorAleatorio(1, 6);
-            nuevoPersonaje.CaracteristicasPersonaje.Fuerza = ValorAleatorio(1, 11);
+            nuevoPersonaje.CaracteristicasPersonaje.Velocidad = velocidad;
+            nuevoPersonaje.CaracteristicasPersonaje.Destreza = destreza;
+            nuevoPersonaje.CaracteristicasPersonaje.Fuerza = fuerza;
             nuevoPersonaje.CaracteristicasPersonaje.Nivel = ValorAleatorio(1, 11);
-            nuevoPersonaje.CaracteristicasPersonaje.Defensa = ValorAleatorio(1, 11); //ARMADURA
+            nuevoPersonaje.CaracteristicasPersonaje.Armadura = armadura;
             nuevoPersonaje.CaracteristicasPersonaje.Salud = 100;
 
             return nuevoPersonaje; 

@@ -15,14 +15,14 @@ namespace EspacioPersonajes
         int destreza; //1 a 5
         int fuerza; //1 a 10
         int nivel; //1 a 10
-        int defensa; //1 a 10
+        int armadura; //1 a 10
         float salud; //100
 
             public int Velocidad { get => velocidad; set => velocidad = value; }
             public int Destreza { get => destreza; set => destreza = value; }
             public int Fuerza { get => fuerza; set => fuerza = value; }
             public int Nivel { get => nivel; set => nivel = value; }
-            public int Defensa { get => defensa; set => defensa = value; }
+            public int Armadura { get => armadura; set => armadura = value; }
             public float Salud { get => salud; set => salud = value; }
     }
 

@@ -23,7 +23,7 @@ namespace EspacioMetodosPrincipales
                 Console.WriteLine($"DESTREZA: {ListaPersonajes[i].CaracteristicasPersonaje.Destreza}");
                 Console.WriteLine($"FUERZA: {ListaPersonajes[i].CaracteristicasPersonaje.Fuerza}");
                 Console.WriteLine($"NIVEL: {ListaPersonajes[i].CaracteristicasPersonaje.Nivel}");
-                Console.WriteLine($"DEFENSA: {ListaPersonajes[i].CaracteristicasPersonaje.Defensa}");
+                Console.WriteLine($"DEFENSA: {ListaPersonajes[i].CaracteristicasPersonaje.Armadura}");
                 Console.WriteLine($"SALUD: {ListaPersonajes[i].CaracteristicasPersonaje.Salud}");
                 Console.WriteLine("###########################################################");
             }
@@ -56,7 +56,7 @@ namespace EspacioMetodosPrincipales
             Console.WriteLine(turno == 1 ? "INICIAS ATACANDO !!!" : "INICIA ATACANDO EL ENEMIGO!!!");
             int ataque; //Ataque: Destreza * Fuerza * Nivel (del personaje que ataca)
             int efectividad;//Valor aleatorio entre 1 y 100.
-            int defensa; //rating * Velocidad (del personaje que defiende)
+            int defensa; //armadura * Velocidad (del personaje que defiende)
             const int ajuste = 50; 
             float danioProvocado; //(Ataque * Efectividad) - Defensa) / constante de ajuste
             float rating ;
@@ -69,9 +69,8 @@ namespace EspacioMetodosPrincipales
                     ataque = (jugador1.CaracteristicasPersonaje.Destreza) * (jugador1.CaracteristicasPersonaje.Fuerza) * (jugador1.CaracteristicasPersonaje.Nivel);
                     efectividad = FabricaDePersonjaes.ValorAleatorio(1, 101);
                     Console.WriteLine($"TU EFECTIVIDAD DE ATAQUE: {efectividad}");
-                    rating = FabricaDePersonjaes.ValorAleatorio(5, 9); //de momento la rating sera aletoria
-                    defensa = (int)rating * (jugador2.CaracteristicasPersonaje.Velocidad);
-                    Console.WriteLine("EL CONTRINCANTE SE DEFIENDE USANDO SU CARTA-EPISODIO: nombre episodio CON UN RAITING DE: raiting - SU rating ES EL RAITING!!!");
+                    defensa = (jugador2.CaracteristicasPersonaje.Armadura) * (jugador2.CaracteristicasPersonaje.Velocidad);
+
                     danioProvocado = ((ataque * efectividad) - defensa) / ajuste;
                     jugador2.CaracteristicasPersonaje.Salud = (jugador2.CaracteristicasPersonaje.Salud) - danioProvocado;
                     Console.WriteLine($"DANIO PROVOCADO: {danioProvocado}");
@@ -90,9 +89,8 @@ namespace EspacioMetodosPrincipales
                     ataque = (jugador2.CaracteristicasPersonaje.Destreza) * (jugador2.CaracteristicasPersonaje.Fuerza) * (jugador2.CaracteristicasPersonaje.Nivel);
                     efectividad = FabricaDePersonjaes.ValorAleatorio(1, 101);
                     Console.WriteLine($"EFECTIVIDAD DE ATAQUE DEL ENEMIGO: {efectividad} ");
-                    rating = FabricaDePersonjaes.ValorAleatorio(5, 9); //de momento la rating sera aletoria
-                    defensa = (int)rating * (jugador1.CaracteristicasPersonaje.Velocidad);
-                    Console.WriteLine("TE DEFIENDES USANDO SU CARTA-EPISODIO: nombre episodio CON UN RAITING DE: raiting - TU rating ES EL RAITING!!!");
+                    defensa = (jugador1.CaracteristicasPersonaje.Armadura) * (jugador1.CaracteristicasPersonaje.Velocidad);
+
                     danioProvocado = ((ataque * efectividad) - defensa) / ajuste;
                     jugador1.CaracteristicasPersonaje.Salud = (jugador1.CaracteristicasPersonaje.Salud) - danioProvocado;
                     Console.WriteLine($"DANIO PROVOCADO: {danioProvocado}");
@@ -118,17 +116,6 @@ namespace EspacioMetodosPrincipales
                 return false;
             }
         }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
