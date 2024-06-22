@@ -10,9 +10,11 @@ namespace EspacioHistorialJson
         {
                 try
                 {
+                    Historial = Historial.OrderByDescending(p => p.Puntaje).ToList();//OrderByDescending ordena segun el puntaje, pero no modifica la lista original Historial. En su lugar, crea una nueva secuencia (IEnumerable<T>) con los elementos ordenados según el criterio especificado. Entonces se hace tambien ToList();
                     Historial.Remove(Historial[9]);//se quita el ultimo en la lista
-                    var personajeAgregar = new PersonajeEnHistorial(){NombreJugador = nombre, NombrePersonaje = Ganador.DatosPersonaje.Nombre, Nivel = Ganador.CaracteristicasPersonaje.Nivel, Puntaje = puntaje};
+                    var personajeAgregar = new PersonajeEnHistorial(){NombreJugador = nombre, NombrePersonaje = Ganador.DatosPersonaje.Nombre, Nivel = Ganador.CaracteristicasPersonaje.Nivel, Puntaje = puntaje}; //construyo nuevo personaje en historial a guardar
                     Historial.Add(personajeAgregar);
+                    Historial = Historial.OrderByDescending(p => p.Puntaje).ToList();//se vuelve a ordenar la lista por puntaje
                     string jsonString = JsonSerializer.Serialize(Historial); // Serializar la lista de personajes que se recibe a JSON
                     File.WriteAllText(ArchivoHistorial, jsonString); // Escribir la cadena JSON en el archivo especificado - WriteAllText sobreexcribe el archivo si existe y si no, lo crea
                     return true;
@@ -22,7 +24,6 @@ namespace EspacioHistorialJson
                     Console.WriteLine($"Error al guardar en Historial: {ex.Message}");
                     return false; //retorna nulo si no se pudo guardar la lista Historial
                 };
-            
         }
 
         public static List<PersonajeEnHistorial> LeerGanadores(string ArchivoHistorial)
@@ -57,6 +58,16 @@ namespace EspacioHistorialJson
             else
             {
                 return false;
+            }
+        }
+
+
+        public static void MostrarHistorial(List<PersonajeEnHistorial> Historial)
+        {
+            Console.WriteLine("####################################  HISTORIAL GANADORES  ####################################");
+            for (int i = 0; i < Historial.Count; i++)
+            {
+                Console.WriteLine($"{i+1} - JUGADOR: {Historial[i].NombreJugador} ----PERSONAJE: {Historial[i].NombrePersonaje} ----NIVEL: {Historial[i].Nivel} ----PUNTAJE: {Historial[i].Puntaje}");
             }
         }
     }

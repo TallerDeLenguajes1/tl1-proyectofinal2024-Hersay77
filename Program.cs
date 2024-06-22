@@ -79,7 +79,9 @@ ListaPersonajes.Remove(ListaPersonajes[opcion]); //ELIMINO EL PERSONAJE SELECCIO
             var nombreJugador = Console.ReadLine();
             if(HistorialJson.GuardarGanador(personajeSeleccionado, nombreJugador, ArchivoHistorial, Historial, puntaje))
             {
+                Historial = HistorialJson.LeerGanadores(ArchivoHistorial);
                 //MOSTRAR HISTORIAL
+                HistorialJson.MostrarHistorial(Historial);
             }
             else
             {
