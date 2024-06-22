@@ -24,81 +24,82 @@ else
 }
 
 
-/*if (ListaPersonajes == null || Historial == null || Guardado == false)
+if (ListaPersonajes == null || Historial == null || Guardado == false)
 {
     Console.WriteLine("Error de programa: No se pudo cargar los datos");
 }
 else
 {
-    //MOSTAR MENU
-}*/
+    MetodosPrincipales Metodos = new MetodosPrincipales(); //CREO UNA INSTANCIA PARA USAR METODOS EN LA LOGICA PRINCIPAL
 
-MetodosPrincipales Metodos = new MetodosPrincipales(); //CREO UNA INSTANCIA PARA USAR METODOS EN LA LOGICA PRINCIPAL
+    Metodos.MostrarPersonajes(ListaPersonajes); // MOSTRANDO PERSONAJES
+    int opcion = Metodos.ElegirPersonaje(); //SELECCION DE PERSONAJE
+    var personajeSeleccionado = ListaPersonajes[opcion]; //SE "GUARDA" EL PERSONAJE SELECCIONADO EN UNA VARIABLE
+    ListaPersonajes.Remove(ListaPersonajes[opcion]); //ELIMINO EL PERSONAJE SELECCIONADO DE LA LISTA PARA QUE NO SE ENFRENTE A EL MISMO
 
-Metodos.MostrarPersonajes(ListaPersonajes); // MOSTRANDO PERSONAJES
-int opcion = Metodos.ElegirPersonaje(); //SELECCION DE PERSONAJE
-var personajeSeleccionado = ListaPersonajes[opcion]; //SE GUARDA EL PERSONAJE SELECCIONADO EN UNA VARIABLE
-ListaPersonajes.Remove(ListaPersonajes[opcion]); //ELIMINO EL PERSONAJE SELECCIONADO DE LA LISTA PARA QUE NO SE ENFRENTE A EL MISMO
-
-//ENFRENTO AL PERSONAJE CON TODOS LOS PERSONAJES DE LA LISTA
-    var resultadoBatalla = true;
-    var resultadoPartida = true;
-    float puntaje = 0;
-    var numeroBatalla = 0;
-    foreach (var jugador2 in ListaPersonajes)
-    {
-        numeroBatalla += 1;
-        Console.WriteLine($"################### - INICIA LA BATALLA - {numeroBatalla} - ###############################");
-        resultadoBatalla = Metodos.GenerarBatalla(personajeSeleccionado, jugador2); //genero batalla
-        if (resultadoBatalla)//true - si se gana la batalla
+    //ENFRENTO AL PERSONAJE CON TODOS LOS PERSONAJES DE LA LISTA
+        var resultadoBatalla = true;
+        var resultadoPartida = true;
+        float puntaje = 0;
+        var numeroBatalla = 0;
+        foreach (var jugador2 in ListaPersonajes)
         {
-            Console.WriteLine("HAS GANADO LA BATALLA!!!");
-            puntaje = puntaje + personajeSeleccionado.CaracteristicasPersonaje.Salud; //El puntaje acumulado en cada batalla sera la salud con la que queda el0 personaje
-            personajeSeleccionado.CaracteristicasPersonaje.Salud = 100;//VUELVO SALUD DEL PERSONAJE NUEVAENTE A 100 PARA ENFRENTARSE AL PROXIMO OPONENTE
-
-        }
-        else
-        {
-            Console.WriteLine("HAS PERDIDO LA BATALLA!!!");
-            resultadoPartida = false; //si no se gano la batalla se pierde la partida 
-            break;
-        }
-    }
-
-    if (resultadoPartida)
-    {
-        Console.WriteLine("HAS GANADO LA PARTIDA!!!");
-        personajeSeleccionado.CaracteristicasPersonaje.Nivel += 1; //cada vez que se gana una partida el nivel del personaje aumenta en 1 unidad
-
-        //Console.WriteLine("TU PERSONAJE AUMENTA +1 EN NIVEL !!!"); 
-
-        //PEDIR DATOS SI ENTRA EN EL RANKING DE GANADORES
-        if (Historial[9].Puntaje <= puntaje)
-        {
-            Console.WriteLine("INGRESE SU NOMBRE PARA GUARDAR EN EL HISTORIAL DE GANADORES: ");
-            var nombreJugador = Console.ReadLine();
-            if(HistorialJson.GuardarGanador(personajeSeleccionado, nombreJugador, ArchivoHistorial, Historial, puntaje))
+            numeroBatalla += 1;
+            Console.WriteLine($"################### - INICIA LA BATALLA - {numeroBatalla} - ###############################");
+            resultadoBatalla = Metodos.GenerarBatalla(personajeSeleccionado, jugador2); //genero batalla
+            if (resultadoBatalla)//true - si se gana la batalla
             {
-                Historial = HistorialJson.LeerGanadores(ArchivoHistorial);
-                //MOSTRAR HISTORIAL
-                HistorialJson.MostrarHistorial(Historial);
+                Console.WriteLine("HAS GANADO LA BATALLA!!!");
+                puntaje = puntaje + personajeSeleccionado.CaracteristicasPersonaje.Salud; //El puntaje acumulado en cada batalla sera la salud con la que queda el personaje
+                personajeSeleccionado.CaracteristicasPersonaje.Salud = 100;//VUELVO SALUD DEL PERSONAJE NUEVAENTE A 100 PARA ENFRENTARSE AL PROXIMO OPONENTE
+
             }
             else
             {
-                Console.WriteLine("Error al guardar");
+                Console.WriteLine("HAS PERDIDO LA BATALLA!!!");
+                resultadoPartida = false; //si no se gano la batalla se pierde la partida 
+                break;
+            }
+        }
+
+        if (resultadoPartida)
+        {
+            Console.WriteLine("HAS GANADO LA PARTIDA!!!");
+            personajeSeleccionado.CaracteristicasPersonaje.Nivel += 1; //cada vez que se gana una partida el nivel del personaje aumenta en 1 unidad
+
+            Console.WriteLine("TU PERSONAJE AUMENTA +1 EN NIVEL !!!");
+
+            ListaPersonajes.Add(personajeSeleccionado); //agrego el personaje con nivel modificado a la lista
+
+            Guardado = PersonajesJson.GuardarPersonajes(ListaPersonajes, ArchivoListaPersonajes); //guardo la lista modificada
+            Console.WriteLine(Guardado == true ?  "PERSONAJE ACTUALIZADO !!!": "ERROR EN EL GUARDADO DE LISTA MODIFICADA");
+
+            //PEDIR DATOS SI ENTRA EN EL RANKING DE GANADORES
+            if (Historial[9].Puntaje <= puntaje)
+            {
+                Console.WriteLine("INGRESE SU NOMBRE PARA GUARDAR EN EL HISTORIAL DE GANADORES: ");
+                var nombreJugador = Console.ReadLine();
+                if(HistorialJson.GuardarGanador(personajeSeleccionado, nombreJugador, ArchivoHistorial, Historial, puntaje))
+                {
+                    Historial = HistorialJson.LeerGanadores(ArchivoHistorial);
+
+                    HistorialJson.MostrarHistorial(Historial); //MOSTRAR HISTORIAL
+                }
+                else
+                {
+                    Console.WriteLine("Error al guardar");
+                }
+            }
+            else
+            {
+                Console.WriteLine("PUNTAJE NO ALCANZADO PARA ENTRAR EN EL RANKING");
             }
         }
         else
         {
-            Console.WriteLine("PUNTAJE NO ALCANZADO PARA ENTRAR EN EL RANKING");
+            Console.WriteLine("GAME OVER");
         }
-
-    }
-    else
-    {
-        Console.WriteLine("GAME OVER");
-    }
-
+}
 
 
 
