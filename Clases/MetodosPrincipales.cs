@@ -115,7 +115,28 @@ namespace EspacioMetodosPrincipales
             }
         }
 
+        public void Bonificacion(Serie serie)
+        {
+            switch (serie)
+            {
+                case Serie.BreakingBad:
 
+                break;
+                case Serie.HouseMD:
+                break;
+                case Serie.GameOfThrones:
+                break;
+                case Serie.TheOffice:
+                break;  
+                case Serie.MalcolmInTheMiddle:
+                break;
+                case Serie.Friends:
+                break;
+                default:
+                break;
+            }
+
+        }
 
 
     }

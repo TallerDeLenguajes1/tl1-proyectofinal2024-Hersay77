@@ -45,6 +45,9 @@ else
         foreach (var jugador2 in ListaPersonajes)
         {
             numeroBatalla += 1;
+
+            Console.WriteLine($"<===BONIFICACION POR BATALLA====>");
+                        
             Console.WriteLine($"################### - INICIA LA BATALLA - {numeroBatalla} - ###############################");
             resultadoBatalla = Metodos.GenerarBatalla(personajeSeleccionado, jugador2); //genero batalla
             if (resultadoBatalla)//true - si se gana la batalla
