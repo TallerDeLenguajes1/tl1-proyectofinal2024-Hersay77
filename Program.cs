@@ -53,7 +53,7 @@ ListaPersonajes.Remove(ListaPersonajes[opcion]); //ELIMINO EL PERSONAJE SELECCIO
         if (resultadoBatalla)//true - si se gana la batalla
         {
             Console.WriteLine("HAS GANADO LA BATALLA!!!");
-            puntaje = puntaje + personajeSeleccionado.CaracteristicasPersonaje.Salud; //El puntaje acumulado en cada batalla sera la salud con la que queda el personaje
+            puntaje = puntaje + personajeSeleccionado.CaracteristicasPersonaje.Salud; //El puntaje acumulado en cada batalla sera la salud con la que queda el0 personaje
             personajeSeleccionado.CaracteristicasPersonaje.Salud = 100;//VUELVO SALUD DEL PERSONAJE NUEVAENTE A 100 PARA ENFRENTARSE AL PROXIMO OPONENTE
 
         }
@@ -61,7 +61,7 @@ ListaPersonajes.Remove(ListaPersonajes[opcion]); //ELIMINO EL PERSONAJE SELECCIO
         {
             Console.WriteLine("HAS PERDIDO LA BATALLA!!!");
             resultadoPartida = false; //si no se gano la batalla se pierde la partida 
-            return;
+            break;
         }
     }
 

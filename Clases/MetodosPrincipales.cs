@@ -57,10 +57,8 @@ namespace EspacioMetodosPrincipales
             int ataque; //Ataque: Destreza * Fuerza * Nivel (del personaje que ataca)
             int efectividad;//Valor aleatorio entre 1 y 100.
             int defensa; //armadura * Velocidad (del personaje que defiende)
-            const int ajuste = 50; 
+            const int ajuste = 500; 
             float danioProvocado; //(Ataque * Efectividad) - Defensa) / constante de ajuste
-            float rating ;
-
             do
             {
                 if (turno == 1 )
