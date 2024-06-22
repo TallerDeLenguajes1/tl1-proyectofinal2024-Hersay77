@@ -4,8 +4,8 @@ namespace EspacioMetodosPrincipales
 {
     public class MetodosPrincipales
     {    
-        //MOSTAR PERSONAJES
-        public void MostrarPersonajes(List<Personaje> ListaPersonajes){
+        public void MostrarPersonajes(List<Personaje> ListaPersonajes) //METODO MOSTAR PERSONAJES
+        {
             Console.WriteLine("################# MOSTRANDO LISTA DE PERSONAJES ################");
 
             for (int i = 0; i < ListaPersonajes.Count; i++)
@@ -28,7 +28,7 @@ namespace EspacioMetodosPrincipales
             }
         }
 
-        public int ElegirPersonaje()
+        public int ElegirPersonaje() //METODO ELEGIR EL PERSONAJE
         {
             int numero;
             while (true) //aseguro que el bucle siempre se repita a menos que entre al if y retorne el numero elegido
@@ -45,6 +45,21 @@ namespace EspacioMetodosPrincipales
                 {
                     Console.WriteLine("Entrada no válida. Intente de nuevo.");
                 }
+            }
+        }
+
+        public bool GenerarBatalla(Personaje jugador1, Personaje jugador2)
+        {
+
+            //BATALLA
+
+            if ()
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 

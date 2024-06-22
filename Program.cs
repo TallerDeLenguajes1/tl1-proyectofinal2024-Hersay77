@@ -33,11 +33,19 @@ else
     //MOSTAR MENU
 }*/
 
-MetodosPrincipales Metodos = new MetodosPrincipales();
+MetodosPrincipales Metodos = new MetodosPrincipales(); //CREO UNA INSTANCIA PARA USAR METODOS EN LA LOGICA PRINCIPAL
 
 Metodos.MostrarPersonajes(ListaPersonajes); // MOSTRANDO PERSONAJES
-var Opcion = Metodos.ElegirPersonaje(); //SELECCION DE PERSONAJE
+int opcion = Metodos.ElegirPersonaje(); //SELECCION DE PERSONAJE
+var personajeSeleccionado = ListaPersonajes[opcion]; //SE GUARDA EL PERSONAJE SELECCIONADO EN UNA VARIABLE
+ListaPersonajes.Remove(ListaPersonajes[opcion]); //ELIMINO EL PERSONAJE DE LA LISTA
 
+//ENFRENTO AL PERSONAJE CON TODOS LOS PERSONAJES DE LA LISTA
+    var resultadoBatalla = true;
+    foreach (var jugador2 in ListaPersonajes)
+    {
+        resultadoBatalla = Metodos.GenerarBatalla(personajeSeleccionado, jugador2);
+    }
 
 
 
