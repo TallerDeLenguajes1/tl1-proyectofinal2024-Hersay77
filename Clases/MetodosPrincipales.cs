@@ -1,4 +1,5 @@
 using EspacioPersonajes;
+using EspacioFabricaDePersonajes;
 
 namespace EspacioMetodosPrincipales
 {
@@ -48,12 +49,19 @@ namespace EspacioMetodosPrincipales
             }
         }
 
-        public bool GenerarBatalla(Personaje jugador1, Personaje jugador2)
+        public bool GenerarBatalla(Personaje jugador1, Personaje jugador2) //METODO SIMULA BATALLA
         {
 
-            //BATALLA
+            var turno = FabricaDePersonjaes.ValorAleatorio(1, 3); //uso metodo estatico de fabrica de personajes para generar numero aleatorio
+            Console.WriteLine(turno == 1 ? "INICIAS ATACANDO !!!" : "INICIA ATACANDO EL ENEMIGO!!!");
 
-            if ()
+            do
+            {
+                
+            } while (jugador1.CaracteristicasPersonaje.Salud != 0 || jugador2.CaracteristicasPersonaje.Salud != 0); //continua hasta que uno tenga salud 0
+
+
+            if (jugador1.CaracteristicasPersonaje.Salud != 0) //retorna true si gano
             {
                 return true;
             }
