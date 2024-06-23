@@ -3,6 +3,8 @@ using EspacioPersonajes;
 using System.Collections.Generic;
 using EspacioHistorialJson;
 using EspacioMetodosPrincipales;
+using EspacioClaseListaEpisdios;
+using System.Text.Json;
 
 string ArchivoListaPersonajes = "Archivos/ListaPersonajes.json";
 string ArchivoHistorial = "Archivos/Historial.json";
@@ -36,18 +38,25 @@ else
     int opcion = Metodos.ElegirPersonaje(); //SELECCION DE PERSONAJE
     var personajeSeleccionado = ListaPersonajes[opcion]; //SE "GUARDA" EL PERSONAJE SELECCIONADO EN UNA VARIABLE
     ListaPersonajes.Remove(ListaPersonajes[opcion]); //ELIMINO EL PERSONAJE SELECCIONADO DE LA LISTA PARA QUE NO SE ENFRENTE A EL MISMO
+    List<Personaje> CopiaListaPersonajes = ListaPersonajes.ToList(); //CREO LISTA DE PERSONAJES PARA LUEGO AGREGAR ALLI EL PERSONAJE MODIFICADO SI GANA LA PARTIDA Y GUARDAR ESTA LISTA EN EL JSON
 
     //ENFRENTO AL PERSONAJE CON TODOS LOS PERSONAJES DE LA LISTA
         var resultadoBatalla = true;
         var resultadoPartida = true;
         float puntaje = 0;
         var numeroBatalla = 0;
+        string url = Metodos.ObtenerUrl(personajeSeleccionado.DatosPersonaje.SerieDelPersonaje);
+        List<Episodio> episodios = await GetEpisodiosAsync(url);
+
         foreach (var jugador2 in ListaPersonajes)
         {
             numeroBatalla += 1;
 
             Console.WriteLine($"<===BONIFICACION POR BATALLA====>");
-                        
+            double rating = Metodos.ObtenerRating(episodios);
+            puntaje = puntaje + (float)(2*rating);
+            Console.WriteLine($"TU PUNTAJE AUMENTA UN 2X{rating} ===> PUNTAJE ACTUAL: {puntaje}");
+            
             Console.WriteLine($"################### - INICIA LA BATALLA - {numeroBatalla} - ###############################");
             resultadoBatalla = Metodos.GenerarBatalla(personajeSeleccionado, jugador2); //genero batalla
             if (resultadoBatalla)//true - si se gana la batalla
@@ -73,10 +82,10 @@ else
             
             Console.WriteLine("TU PERSONAJE AUMENTA +1 EN NIVEL !!!");
             Console.WriteLine($"NIVEL ACTUAL: {personajeSeleccionado.CaracteristicasPersonaje.Nivel}");
-            ListaPersonajes = PersonajesJson.LeerPersonajes(ArchivoListaPersonajes); //vuelvo a leer lista de personajes sino se agregan modificaciones a personajes enemigos
-            ListaPersonajes.Add(personajeSeleccionado); //agrego el personaje con nivel modificado a la lista
+            
+            CopiaListaPersonajes.Add(personajeSeleccionado); //agrego el personaje con nivel modificado a la lista
 
-            Guardado = PersonajesJson.GuardarPersonajes(ListaPersonajes, ArchivoListaPersonajes); //guardo la lista modificada
+            Guardado = PersonajesJson.GuardarPersonajes(CopiaListaPersonajes, ArchivoListaPersonajes); //guardo la lista modificada
             Console.WriteLine(Guardado == true ?  "PERSONAJE ACTUALIZADO !!!": "ERROR EN EL GUARDADO DE LISTA MODIFICADA");
 
             //PEDIR DATOS SI ENTRA EN EL RANKING DE GANADORES
@@ -107,5 +116,23 @@ else
 }
 
 
+//USO DE API
+static async Task<List<Episodio>> GetEpisodiosAsync(string url) 
+{
+    try //para manejo de posibles excepciones
+    {
 
-
+        HttpClient client = new HttpClient(); 
+        HttpResponseMessage response = await client.GetAsync(url); 
+        response.EnsureSuccessStatusCode(); 
+        string responseBody = await response.Content.ReadAsStringAsync(); 
+        List<Episodio> ListaEpisodios = JsonSerializer.Deserialize<List<Episodio>>(responseBody);
+        return ListaEpisodios;
+    }
+    catch (HttpRequestException e)
+    {
+        Console.WriteLine("Problemas de acceso a la API");
+        Console.WriteLine("Message :{0} ", e.Message);
+        return null;
+    }
+}

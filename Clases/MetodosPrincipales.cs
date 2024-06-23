@@ -1,5 +1,6 @@
 using EspacioPersonajes;
 using EspacioFabricaDePersonajes;
+using EspacioClaseListaEpisdios;
 
 namespace EspacioMetodosPrincipales
 {
@@ -52,8 +53,9 @@ namespace EspacioMetodosPrincipales
         public bool GenerarBatalla(Personaje jugador1, Personaje jugador2) //METODO SIMULA BATALLA
         {
 
-            var turno = FabricaDePersonjaes.ValorAleatorio(1, 3); //uso metodo estatico de fabrica de personajes para generar numero aleatorio
-            Console.WriteLine(turno == 1 ? "INICIAS ATACANDO !!!" : "INICIA ATACANDO EL ENEMIGO!!!");
+            /*var turno = FabricaDePersonjaes.ValorAleatorio(1, 3); //uso metodo estatico de fabrica de personajes para generar numero aleatorio
+            Console.WriteLine(turno == 1 ? "INICIAS ATACANDO !!!" : "INICIA ATACANDO EL ENEMIGO!!!");*/
+            var turno = 1;
             int ataque; //Ataque: Destreza * Fuerza * Nivel (del personaje que ataca)
             int efectividad;//Valor aleatorio entre 1 y 100.
             int defensa; //armadura * Velocidad (del personaje que defiende)
@@ -115,29 +117,41 @@ namespace EspacioMetodosPrincipales
             }
         }
 
-        public void Bonificacion(Serie serie)
+        public string ObtenerUrl(Serie serie)
         {
+            string url;
             switch (serie)
             {
                 case Serie.BreakingBad:
-
-                break;
+                    return "https://api.tvmaze.com/shows/169/episodes"; //url de API que retorna lista de episodios de la serie
+                
                 case Serie.HouseMD:
-                break;
-                case Serie.GameOfThrones:
-                break;
-                case Serie.TheOffice:
-                break;  
-                case Serie.MalcolmInTheMiddle:
-                break;
-                case Serie.Friends:
-                break;
-                default:
-                break;
-            }
+                    return "https://api.tvmaze.com/shows/118/episodes";
 
+                case Serie.GameOfThrones:
+                    return "https://api.tvmaze.com/shows/82/episodes";
+
+                case Serie.TheOffice:
+                    return "https://api.tvmaze.com/shows/526/episodes";
+
+                case Serie.MalcolmInTheMiddle:
+                    return "https://api.tvmaze.com/shows/568/episodes";
+
+                case Serie.Friends:
+                    return "https://api.tvmaze.com/shows/431/episodes";
+                default:
+                    return null;
+            }
         }
 
+        public double ObtenerRating(List<Episodio> episodios){
+            
+            var valorAleatorio = FabricaDePersonjaes.ValorAleatorio(0 , episodios.Count);
 
+            Console.WriteLine($"===>>EPISODIO ALEATORIO: {episodios[valorAleatorio].Name}");
+            Console.WriteLine($"===>>RATING DEL EPISODIO: {episodios[valorAleatorio].Rating.Average}");
+            double rating = episodios[valorAleatorio].Rating.Average; 
+            return rating;
+        }
     }
 }
