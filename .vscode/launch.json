@@ -13,7 +13,7 @@
             "program": "${workspaceFolder}/bin/Debug/net8.0/tl1-proyectofinal2024-Hersay77.dll", //CAMBIAR POR EL NOMBRE DEL .dll QUE ESTA EN LA CARPETA "bin"
             "args": [],
             "cwd": "${workspaceFolder}",
-            "console":"externalTerminal",
+            "console":"integratedTerminal",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",

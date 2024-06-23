@@ -97,7 +97,7 @@ namespace EspacioMetodosPrincipales
                 Thread.Sleep(1000);
             }
             Console.WriteLine("╚══════════════════════════════════════════════════════════════════════════════════╝");
-
+            Console.ResetColor();
         }
 
         public int ElegirOpcion() //METODO ELEGIR 
@@ -189,7 +189,6 @@ namespace EspacioMetodosPrincipales
 
         public string ObtenerUrl(Serie serie)
         {
-            string url;
             switch (serie)
             {
                 case Serie.BreakingBad:
@@ -214,16 +213,6 @@ namespace EspacioMetodosPrincipales
             }
         }
 
-        public double ObtenerRating(List<Episodio> episodios){
-            
-            var valorAleatorio = FabricaDePersonjaes.ValorAleatorio(0 , episodios.Count);
-
-            Console.WriteLine($"===>>EPISODIO ALEATORIO: {episodios[valorAleatorio].Name}");
-            Console.WriteLine($"===>>RATING DEL EPISODIO: {episodios[valorAleatorio].Rating.Average}");
-            double rating = episodios[valorAleatorio].Rating.Average; 
-            return rating;
-        }
-    
         public void MostrarTxt(string archivo, int retraso) //METODO PARA MOSTRAR TXT O TITULOS
         {
             var GestorArchivos = new GestorDeArchivos(); 
@@ -259,6 +248,25 @@ namespace EspacioMetodosPrincipales
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine(menu);
             Console.ResetColor();
+        }
+
+        public float Bonificacion(float puntaje, List<Episodio> episodios)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow; 
+            var valorAleatorio = FabricaDePersonjaes.ValorAleatorio(0 , episodios.Count); //obtengo valor aleatorio basado en cantidad de episodios
+            Console.WriteLine(@"
+╔═════════════════════════════════════════════════════╗
+║              BONIFICACION POR ESPISODIO             ║
+╚═════════════════════════════════════════════════════╝
+                    
+            ");
+            Console.WriteLine($"===>>EPISODIO ALEATORIO: {episodios[valorAleatorio].Name}");
+            Console.WriteLine($"===>>RATING DEL EPISODIO: {episodios[valorAleatorio].Rating.Average}");
+            double rating = episodios[valorAleatorio].Rating.Average; //rating del episodio
+            puntaje += 2 *(float)(rating); 
+            Console.WriteLine($"===>>PUNTAJE NUEVO: {puntaje}");
+            Console.ResetColor();
+            return puntaje;
         }
     
     }
