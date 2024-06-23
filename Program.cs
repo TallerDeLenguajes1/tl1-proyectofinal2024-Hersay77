@@ -5,6 +5,7 @@ using EspacioHistorialJson;
 using EspacioMetodosPrincipales;
 using EspacioClaseListaEpisdios;
 using System.Text.Json;
+using EspacioFabricaDePersonajes;
 
 string ArchivoListaPersonajes = "Archivos/ListaPersonajes.json";
 string ArchivoHistorial = "Archivos/Historial.json";
@@ -55,10 +56,9 @@ else
                 Metodos.MostrarPersonajes(ListaPersonajes);
                 opcion = Metodos.ElegirOpcion(); //seleccion de personaje
                 Metodos.MostrarTxt($"ArchivosTxt/{ListaPersonajes[opcion].DatosPersonaje.Apodo}.txt", 0);//muestro personaje elegido
-                var personajeSeleccionado = ListaPersonajes[opcion]; //SE "GUARDA" EL PERSONAJE SELECCIONADO EN UNA VARIABLE
-                List<Personaje> CopiaListaPersonajes = PersonajesJson.LeerPersonajes(ArchivoListaPersonajes); //lee lista de personajes; //CREO LISTA DE PERSONAJES COPIA PARA LUEGO AGREGAR ALLI EL PERSONAJE MODIFICADO SI GANA LA PARTIDA Y GUARDAR ESTA LISTA EN EL JSON SIN MODIFICACIONES
-                ListaPersonajes.Remove(ListaPersonajes[opcion]); //ELIMINO EL PERSONAJE SELECCIONADO DE LA LISTA PARA QUE NO SE ENFRENTE A EL MISMO
-                ListaPersonajes.Remove(CopiaListaPersonajes[opcion]); //TAMBIEN DE LA LISTA COPIA
+                Personaje personajeSeleccionado = ListaPersonajes[opcion]; //HAGO REFERENCIA AL PERSONAJE EN OTRA VARIABLE
+
+                ListaPersonajes.Remove(ListaPersonajes[opcion]); //ELIMINO PERSONAJE DE LISTA
                 
                 //PARTIDA - ENFRENTO AL PERSONAJE CON TODOS LOS PERSONAJES DE LA LISTA
                 var resultadoBatalla = true; //variable para controlar si se gano
@@ -96,6 +96,7 @@ else
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("=====================>>>HAS PERDIDO LA BATALLA!!! <<<<============= ");
                         Console.ResetColor();
+                        ListaPersonajes= PersonajesJson.LeerPersonajes(ArchivoListaPersonajes); //restauro la lista y las propiedades de los personajes
                         resultadoPartida = false; //si no se gano la batalla se pierde la partida 
                         break;//se sale del bucle foreach
                     }
@@ -103,6 +104,7 @@ else
 
                 if (resultadoPartida)
                 {
+                    
                     Metodos.MostrarPartidaGanada();
                     Console.WriteLine("================================================================");
                     Console.WriteLine($"NIVEL PERSONAJE: {personajeSeleccionado.CaracteristicasPersonaje.Nivel}");
@@ -110,10 +112,11 @@ else
                     
                     Console.WriteLine("TU PERSONAJE AUMENTA +1 EN NIVEL !!!");
                     Console.WriteLine($"NIVEL ACTUAL: {personajeSeleccionado.CaracteristicasPersonaje.Nivel}");
-                    
-                    CopiaListaPersonajes.Add(personajeSeleccionado); //agrego el personaje con nivel modificado a la lista AUXILIAR
+                    ListaPersonajes= PersonajesJson.LeerPersonajes(ArchivoListaPersonajes); //restauro la lista y las propiedades de los personajes
+                    ListaPersonajes.Remove(ListaPersonajes[opcion]);//remuevo el personaje que se habia seleccionado
+                    ListaPersonajes.Add(personajeSeleccionado); //agrego el personaje con nivel modificado a la lista NO MODIFCADA
 
-                    Guardado = PersonajesJson.GuardarPersonajes(CopiaListaPersonajes, ArchivoListaPersonajes); //guardo la lista modificada
+                    Guardado = PersonajesJson.GuardarPersonajes(ListaPersonajes, ArchivoListaPersonajes); //guardo la lista modificada
                     Console.WriteLine(Guardado == true ?  "PERSONAJE ACTUALIZADO !!!": "ERROR EN EL GUARDADO DE LISTA MODIFICADA");
 
                     //PEDIR DATOS SI ENTRA EN EL RANKING DE GANADORES
@@ -152,6 +155,7 @@ else
                 Console.WriteLine("NOS VEMOS CAMPEON");
             break;                
             default:
+                opcionMenu = 1;
             break;
         }
     } while (opcionMenu == 1 || opcionMenu == 2);
