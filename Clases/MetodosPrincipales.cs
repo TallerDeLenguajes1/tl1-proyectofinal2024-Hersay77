@@ -2,6 +2,7 @@ using EspacioPersonajes;
 using EspacioFabricaDePersonajes;
 using EspacioClaseListaEpisdios;
 using EspacioGestorArchivos;
+using System.Diagnostics;
 
 namespace EspacioMetodosPrincipales
 {
@@ -31,17 +32,17 @@ namespace EspacioMetodosPrincipales
             }
         }
 
-        public int ElegirPersonaje() //METODO ELEGIR EL PERSONAJE
+        public int ElegirOpcion() //METODO ELEGIR 
         {
             int numero;
             while (true) //aseguro que el bucle siempre se repita a menos que entre al if y retorne el numero elegido
             {
-                Console.WriteLine("SELECCIONE EL PERSONAJE: ");
+                Console.WriteLine("ELIGE LA OPCION: ");
                 string entrada = Console.ReadLine();
                 
                 if (int.TryParse(entrada, out numero))
                 {
-                    Console.WriteLine("ELEGISTE EL PERSONAJE: " + numero);
+                    Console.WriteLine("SELECCIONASTE LA OPCION: " + numero);
                     return numero;
                 }
                 else
@@ -171,6 +172,25 @@ namespace EspacioMetodosPrincipales
             {
                 Console.WriteLine("#ERROR: El Archivo txt no existe");
             }
+        }
+
+        public void MostrarMenu()
+        {
+
+            
+            //El símbolo @ se usa antes de una cadena en C# para indicar que es una cadena literal (verbatim string literal). Esto permite incluir caracteres especiales, como barras invertidas (\)
+            string menu = @"
+                    ╔═════════════════════════════════════════════════════╗
+                    ║               M E N Ú   P R I N C I P A L           ║
+                    ╠═════════════════════════════════════════════════════╣
+                    ║ 1. SELECCIONAR - MOSTRAR LISTA DE PERSONAJES        ║
+                    ║ 2. MOSTRAR RANKING - HISTORIAL                      ║
+                    ║ 3. SALIR                                            ║
+                    ╚═════════════════════════════════════════════════════╝
+                    ";
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine(menu);
+            Console.ResetColor();
         }
     
     }

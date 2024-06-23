@@ -42,8 +42,26 @@ else
     Console.ResetColor();
     Console.ReadKey();
 
+    Metodos.MostrarMenu(); //MENU PRINCIPAL
+        int opcion = Metodos.ElegirOpcion(); //uso el metodo de elegir opcion en la misma clase
+        switch (opcion)
+        {
+            case 1:
+                //MOSTRAR LISTA PERSONAJES
+                
+            break;
+            case 2:
+                //MOSTRAR HISOTIRAL
+            break;
+            case 3:
+                //MOSTRAR LISTA PERSONAJES
+            break;                
+            default:
+            break;
+        }
+
     Metodos.MostrarPersonajes(ListaPersonajes); // MOSTRANDO PERSONAJES
-    int opcion = Metodos.ElegirPersonaje(); //SELECCION DE PERSONAJE
+    int opcion = Metodos.ElegirOpcion(); //SELECCION DE PERSONAJE
     var personajeSeleccionado = ListaPersonajes[opcion]; //SE "GUARDA" EL PERSONAJE SELECCIONADO EN UNA VARIABLE
     ListaPersonajes.Remove(ListaPersonajes[opcion]); //ELIMINO EL PERSONAJE SELECCIONADO DE LA LISTA PARA QUE NO SE ENFRENTE A EL MISMO
     List<Personaje> CopiaListaPersonajes = ListaPersonajes.ToList(); //CREO LISTA DE PERSONAJES PARA LUEGO AGREGAR ALLI EL PERSONAJE MODIFICADO SI GANA LA PARTIDA Y GUARDAR ESTA LISTA EN EL JSON
