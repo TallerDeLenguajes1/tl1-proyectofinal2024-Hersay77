@@ -8,6 +8,7 @@ using System.Text.Json;
 
 string ArchivoListaPersonajes = "Archivos/ListaPersonajes.json";
 string ArchivoHistorial = "Archivos/Historial.json";
+string Portada = "ArchivosTxt/Portada.txt";
 
 List<Personaje> ListaPersonajes;
 List<PersonajeEnHistorial> Historial;
@@ -33,7 +34,11 @@ if (ListaPersonajes == null || Historial == null || Guardado == false)
 else
 {
     MetodosPrincipales Metodos = new MetodosPrincipales(); //CREO UNA INSTANCIA PARA USAR METODOS EN LA LOGICA PRINCIPAL
-
+    Console.ForegroundColor = ConsoleColor.Green;
+    Metodos.MostrarTxt(Portada);
+    Console.ResetColor();
+    Thread.Sleep(1000);
+    
     Metodos.MostrarPersonajes(ListaPersonajes); // MOSTRANDO PERSONAJES
     int opcion = Metodos.ElegirPersonaje(); //SELECCION DE PERSONAJE
     var personajeSeleccionado = ListaPersonajes[opcion]; //SE "GUARDA" EL PERSONAJE SELECCIONADO EN UNA VARIABLE

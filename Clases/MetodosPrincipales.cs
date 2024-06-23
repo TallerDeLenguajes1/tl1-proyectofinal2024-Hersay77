@@ -1,6 +1,7 @@
 using EspacioPersonajes;
 using EspacioFabricaDePersonajes;
 using EspacioClaseListaEpisdios;
+using EspacioGestorArchivos;
 
 namespace EspacioMetodosPrincipales
 {
@@ -153,5 +154,16 @@ namespace EspacioMetodosPrincipales
             double rating = episodios[valorAleatorio].Rating.Average; 
             return rating;
         }
+    
+        public void MostrarTxt(string archivo){
+            var GestorArchivos = new GestorDeArchivos();
+            var documentotxt = GestorArchivos.AbrirArchivoTexto(archivo);
+
+            foreach (var caracter in documentotxt)
+            {
+                Console.Write(caracter);
+            }
+        }
+    
     }
 }
