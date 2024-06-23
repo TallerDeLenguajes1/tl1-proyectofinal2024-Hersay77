@@ -29,5 +29,17 @@ public class GestorDeArchivos
                 }
             }
         }
-    }
+
+        public bool Existe(string Archivo)
+        {
+            if (File.Exists(Archivo)) //se usa la clase File con el metodo exists para comprobar si existe el rchivo en la ruta proporcionada
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+}
 }

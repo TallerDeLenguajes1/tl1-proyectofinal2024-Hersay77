@@ -14,6 +14,7 @@ List<Personaje> ListaPersonajes;
 List<PersonajeEnHistorial> Historial;
 bool Guardado = true; //guardado inicia en true por si ya se habia guardado anteriormente por primera vez los personajes
 
+//LEYENDO O CONSTRUYENDO LISTAS PERSONAJES E HISTORIAL
 if (PersonajesJson.Existe(ArchivoListaPersonajes))
 {
     ListaPersonajes = PersonajesJson.LeerPersonajes(ArchivoListaPersonajes); //lee lista de personajes
@@ -26,19 +27,21 @@ else
     Historial = HistorialJson.LeerGanadores(ArchivoHistorial); //el metodo lee el historial desde un json, si no retorna null
 }
 
-
+//CONTROL LECTURA O CONSTRUCCION CORRECTA PARA INICIAR JUEGO
 if (ListaPersonajes == null || Historial == null || Guardado == false)
 {
     Console.WriteLine("Error de programa: No se pudo cargar los datos");
 }
 else
 {
-    MetodosPrincipales Metodos = new MetodosPrincipales(); //CREO UNA INSTANCIA PARA USAR METODOS EN LA LOGICA PRINCIPAL
-    Console.ForegroundColor = ConsoleColor.Green;
-    Metodos.MostrarTxt(Portada);
+    MetodosPrincipales Metodos = new MetodosPrincipales(); //creo instancia para usar metodos principales
+    Console.ForegroundColor = ConsoleColor.Green; 
+    Metodos.MostrarTxt(Portada, 0);
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine("###################=========>   PRESIONE UNA TECLA PARA INICIAR <===========######################");
     Console.ResetColor();
-    Thread.Sleep(1000);
-    
+    Console.ReadKey();
+
     Metodos.MostrarPersonajes(ListaPersonajes); // MOSTRANDO PERSONAJES
     int opcion = Metodos.ElegirPersonaje(); //SELECCION DE PERSONAJE
     var personajeSeleccionado = ListaPersonajes[opcion]; //SE "GUARDA" EL PERSONAJE SELECCIONADO EN UNA VARIABLE

@@ -155,13 +155,21 @@ namespace EspacioMetodosPrincipales
             return rating;
         }
     
-        public void MostrarTxt(string archivo){
-            var GestorArchivos = new GestorDeArchivos();
-            var documentotxt = GestorArchivos.AbrirArchivoTexto(archivo);
-
-            foreach (var caracter in documentotxt)
+        public void MostrarTxt(string archivo, int retraso) //METODO PARA MOSTRAR TXT O TITULOS
+        {
+            var GestorArchivos = new GestorDeArchivos(); 
+            if(GestorArchivos.Existe(archivo)) //compruebo si existe el archivo
             {
-                Console.Write(caracter);
+                var documentotxt = GestorArchivos.AbrirArchivoTexto(archivo); //leo el archivo
+                foreach (var caracter in documentotxt) //recorro caracter por caracter para hacer mas lenta la muestra
+                {
+                    Console.Write(caracter);
+                    Thread.Sleep(retraso);
+                }
+            }
+            else
+            {
+                Console.WriteLine("#ERROR: El Archivo txt no existe");
             }
         }
     
