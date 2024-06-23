@@ -118,7 +118,7 @@ else
 
                     Guardado = PersonajesJson.GuardarPersonajes(ListaPersonajes, ArchivoListaPersonajes); //guardo la lista modificada
                     Console.WriteLine(Guardado == true ?  "PERSONAJE ACTUALIZADO !!!": "ERROR EN EL GUARDADO DE LISTA MODIFICADA");
-
+                    Console.WriteLine($"===>>PUNTAJE: {puntaje}"); 
                     //PEDIR DATOS SI ENTRA EN EL RANKING DE GANADORES
                     if (Historial[9].Puntaje <= puntaje)
                     {

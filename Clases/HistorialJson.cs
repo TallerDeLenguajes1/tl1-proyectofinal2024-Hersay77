@@ -73,6 +73,8 @@ namespace EspacioHistorialJson
             {
                 Console.WriteLine($"    {i+1} - JUGADOR: {Historial[i].NombreJugador} ----PERSONAJE: {Historial[i].NombrePersonaje} ----NIVEL: {Historial[i].Nivel} ----PUNTAJE: {Historial[i].Puntaje}");
             }
+            Console.WriteLine(@"
+╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
             Console.ResetColor();
         }
     }
