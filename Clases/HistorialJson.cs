@@ -64,11 +64,16 @@ namespace EspacioHistorialJson
 
         public static void MostrarHistorial(List<PersonajeEnHistorial> Historial)
         {
-            Console.WriteLine("####################################  HISTORIAL GANADORES  ####################################");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(@"
+╔═══════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                 HISTORIAL - RANKING GANADORES                                 ║
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
             for (int i = 0; i < Historial.Count; i++)
             {
-                Console.WriteLine($"{i+1} - JUGADOR: {Historial[i].NombreJugador} ----PERSONAJE: {Historial[i].NombrePersonaje} ----NIVEL: {Historial[i].Nivel} ----PUNTAJE: {Historial[i].Puntaje}");
+                Console.WriteLine($"    {i+1} - JUGADOR: {Historial[i].NombreJugador} ----PERSONAJE: {Historial[i].NombrePersonaje} ----NIVEL: {Historial[i].Nivel} ----PUNTAJE: {Historial[i].Puntaje}");
             }
+            Console.ResetColor();
         }
     }
 

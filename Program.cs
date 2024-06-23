@@ -42,12 +42,13 @@ else
     Console.ResetColor();
     Console.ReadKey();
 
+    int opcionMenu;
     int opcion;
     do
     {
         Metodos.MostrarMenu(); //MENU PRINCIPAL
-        opcion = Metodos.ElegirOpcion(); //uso el metodo de elegir opcion en la misma clase
-        switch (opcion)
+        opcionMenu = Metodos.ElegirOpcion(); //uso el metodo de elegir opcion en la misma clase
+        switch (opcionMenu)
         {
             case 1:
                 //MOSTRAR LISTA PERSONAJES Y SELECCIONAR
@@ -55,9 +56,10 @@ else
                 opcion = Metodos.ElegirOpcion(); //seleccion de personaje
                 Metodos.MostrarTxt($"ArchivosTxt/{ListaPersonajes[opcion].DatosPersonaje.Apodo}.txt", 0);//muestro personaje elegido
                 var personajeSeleccionado = ListaPersonajes[opcion]; //SE "GUARDA" EL PERSONAJE SELECCIONADO EN UNA VARIABLE
+                List<Personaje> CopiaListaPersonajes = PersonajesJson.LeerPersonajes(ArchivoListaPersonajes); //lee lista de personajes; //CREO LISTA DE PERSONAJES COPIA PARA LUEGO AGREGAR ALLI EL PERSONAJE MODIFICADO SI GANA LA PARTIDA Y GUARDAR ESTA LISTA EN EL JSON SIN MODIFICACIONES
                 ListaPersonajes.Remove(ListaPersonajes[opcion]); //ELIMINO EL PERSONAJE SELECCIONADO DE LA LISTA PARA QUE NO SE ENFRENTE A EL MISMO
-                List<Personaje> CopiaListaPersonajes = ListaPersonajes.ToList(); //COPIO Y CREO LISTA DE PERSONAJES PARA LUEGO AGREGAR ALLI EL PERSONAJE MODIFICADO SI GANA LA PARTIDA Y GUARDAR ESTA LISTA EN EL JSON
-
+                ListaPersonajes.Remove(CopiaListaPersonajes[opcion]); //TAMBIEN DE LA LISTA COPIA
+                
                 //PARTIDA - ENFRENTO AL PERSONAJE CON TODOS LOS PERSONAJES DE LA LISTA
                 var resultadoBatalla = true; //variable para controlar si se gano
                 var resultadoPartida = true; //variable para controlar si se gan
@@ -70,7 +72,7 @@ else
                 {
                     numeroBatalla += 1;              
                     puntaje = Metodos.Bonificacion(puntaje, episodios); //bonificacion por batalla
-                    Console.ForegroundColor = ConsoleColor.Green; 
+                    Console.ForegroundColor = ConsoleColor.Magenta; 
 
                     Console.WriteLine($"\n°°°°°°°°°°°°°° INICIA LA BATALLA N°: {numeroBatalla}°°°°°°°°°°°°°°°°°°\n");
                     Thread.Sleep(700);
@@ -78,19 +80,22 @@ else
                     Metodos.MostrarVS(personajeSeleccionado, jugador2);
                     Console.ResetColor();
 
-
-                    resultadoBatalla = Metodos.GenerarBatalla(personajeSeleccionado, jugador2); //genero batalla
+                    resultadoBatalla = Metodos.GenerarBatalla(personajeSeleccionado, jugador2); //BATALLA
 
                     if (resultadoBatalla)//true - si se gana la batalla
                     {
-                        Console.WriteLine("HAS GANADO LA BATALLA!!!");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("=============>>>> HAS GANADO LA BATALLA!!! <<<<============= ");
+                        Console.ResetColor();
                         puntaje = puntaje + personajeSeleccionado.CaracteristicasPersonaje.Salud; //El puntaje acumulado en cada batalla sera la salud con la que queda el personaje
                         personajeSeleccionado.CaracteristicasPersonaje.Salud = 100;//VUELVO SALUD DEL PERSONAJE NUEVAENTE A 100 PARA ENFRENTARSE AL PROXIMO OPONENTE
 
                     }
                     else
                     {
-                        Console.WriteLine("HAS PERDIDO LA BATALLA!!!");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("=====================>>>HAS PERDIDO LA BATALLA!!! <<<<============= ");
+                        Console.ResetColor();
                         resultadoPartida = false; //si no se gano la batalla se pierde la partida 
                         break;//se sale del bucle foreach
                     }
@@ -98,14 +103,15 @@ else
 
                 if (resultadoPartida)
                 {
-                    Console.WriteLine("HAS GANADO LA PARTIDA!!!");
+                    Metodos.MostrarPartidaGanada();
+                    Console.WriteLine("================================================================");
                     Console.WriteLine($"NIVEL PERSONAJE: {personajeSeleccionado.CaracteristicasPersonaje.Nivel}");
                     personajeSeleccionado.CaracteristicasPersonaje.Nivel += 1; //cada vez que se gana una partida el nivel del personaje aumenta en 1 unidad
                     
                     Console.WriteLine("TU PERSONAJE AUMENTA +1 EN NIVEL !!!");
                     Console.WriteLine($"NIVEL ACTUAL: {personajeSeleccionado.CaracteristicasPersonaje.Nivel}");
                     
-                    CopiaListaPersonajes.Add(personajeSeleccionado); //agrego el personaje con nivel modificado a la lista
+                    CopiaListaPersonajes.Add(personajeSeleccionado); //agrego el personaje con nivel modificado a la lista AUXILIAR
 
                     Guardado = PersonajesJson.GuardarPersonajes(CopiaListaPersonajes, ArchivoListaPersonajes); //guardo la lista modificada
                     Console.WriteLine(Guardado == true ?  "PERSONAJE ACTUALIZADO !!!": "ERROR EN EL GUARDADO DE LISTA MODIFICADA");
@@ -113,6 +119,8 @@ else
                     //PEDIR DATOS SI ENTRA EN EL RANKING DE GANADORES
                     if (Historial[9].Puntaje <= puntaje)
                     {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("================================================================");
                         Console.WriteLine("INGRESE SU NOMBRE PARA GUARDAR EN EL HISTORIAL DE GANADORES: ");
                         var nombreJugador = Console.ReadLine();
                         if(HistorialJson.GuardarGanador(personajeSeleccionado, nombreJugador, ArchivoHistorial, Historial, puntaje))
@@ -133,14 +141,11 @@ else
                 }
                 else
                 {
-                    Console.WriteLine("GAME OVER");
+                    Metodos.MostrarGameOver();
                 }
-
-
-
             break;
             case 2:
-                //MOSTRAR HISTORIAL
+                HistorialJson.MostrarHistorial(Historial); //MOSTRAR HISTORIAL
             break;
             case 3:
                 //SALIR
@@ -149,13 +154,8 @@ else
             default:
             break;
         }
-    } while (opcion == 1 || opcion == 2);
+    } while (opcionMenu == 1 || opcionMenu == 2);
 }
-
-
-
-
-
 
 
 

@@ -135,7 +135,9 @@ namespace EspacioMetodosPrincipales
             {
                 if (turno == 1 )
                 {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine("---------------TU TURNO---------------");
+                    Console.ResetColor();
                     ataque = (jugador1.CaracteristicasPersonaje.Destreza) * (jugador1.CaracteristicasPersonaje.Fuerza) * (jugador1.CaracteristicasPersonaje.Nivel);
                     efectividad = FabricaDePersonjaes.ValorAleatorio(1, 101); //efectividad es aleatoria
                     Console.WriteLine($"TU EFECTIVIDAD DE ATAQUE: {efectividad}");
@@ -155,7 +157,9 @@ namespace EspacioMetodosPrincipales
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine("---------------TURNO ENEMIGO---------------");
+                    Console.ResetColor();
                     ataque = (jugador2.CaracteristicasPersonaje.Destreza) * (jugador2.CaracteristicasPersonaje.Fuerza) * (jugador2.CaracteristicasPersonaje.Nivel);
                     efectividad = FabricaDePersonjaes.ValorAleatorio(1, 101);
                     Console.WriteLine($"EFECTIVIDAD DE ATAQUE DEL ENEMIGO: {efectividad} ");
@@ -281,7 +285,49 @@ namespace EspacioMetodosPrincipales
             Thread.Sleep(700);
             MostrarTxt($"ArchivosTxt/{jugador2.DatosPersonaje.Apodo}.txt", 0);
             Thread.Sleep(700);
+            Console.WriteLine(" ");
         }
-    
+
+        public void MostrarPartidaGanada(){
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(@"
+▄██████░▄████▄░██████▄░▄████▄░▄██████░████████░▄█████
+██░░░░░░██░░██░██░░░██░██░░██░██░░░░░░░░░██░░░░██░░░░
+██░░███░██░░██░██░░░██░██░░██░▀█████▄░░░░██░░░░█████░
+██░░░██░██████░██░░░██░██████░░░░░░██░░░░██░░░░██░░░░
+▀█████▀░██░░██░██░░░██░██░░██░██████▀░░░░██░░░░▀█████
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+                ██░░░░░▄████▄
+                ██░░░░░██░░██
+                ██░░░░░██░░██
+                ██░░░░░██████
+                ██████░██░░██
+                ░░░░░░░░░░░░░
+█████▄░▄████▄░█████▄░████████░██████░██████▄░▄████▄░░░██░██░██
+██░░██░██░░██░██░░██░░░░██░░░░░░██░░░██░░░██░██░░██░░░██░██░██
+█████▀░██░░██░█████▀░░░░██░░░░░░██░░░██░░░██░██░░██░░░██░██░██
+██░░░░░██████░██░░██░░░░██░░░░░░██░░░██░░░██░██████░░░░░░░░░░░
+██░░░░░██░░██░██░░██░░░░██░░░░██████░██████▀░██░░██░░░██░██░██
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+            ");
+        Console.ResetColor();
+        }
+        public void MostrarGameOver(){
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(@"
+
+▄██████░▄████▄░▄██▄▄██▄░▄█████░░░▄█████▄░██░░░██░▄█████░█████▄
+██░░░░░░██░░██░██░██░██░██░░░░░░░██░░░██░██░░░██░██░░░░░██░░██
+██░░███░██░░██░██░██░██░█████░░░░██░░░██░██░░░██░█████░░█████▀
+██░░░██░██████░██░██░██░██░░░░░░░██░░░██░██░░██░░██░░░░░██░░██
+▀█████▀░██░░██░██░██░██░▀█████░░░▀█████▀░▀███▀░░░▀█████░██░░██
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+            ");
+        Console.ResetColor();       
+        }
     }
+
+
 }
