@@ -38,24 +38,24 @@ namespace EspacioMetodosPrincipales
                         archivo = "ArchivosTxt/Wilson.txt";
                         MostrarTxt(archivo, 0);
                     break;
-                    case "Rey Del Norte":
+                    case "Rey-Del-Norte":
                         Console.ForegroundColor = ConsoleColor.Red; 
-                        archivo = "ArchivosTxt/ReyDelNorte.txt";
+                        archivo = "ArchivosTxt/Rey-Del-Norte.txt";
                         MostrarTxt(archivo, 0);
                     break;
-                    case "Madre De Dragones":
+                    case "Madre-De-Dragones":
                         Console.ForegroundColor = ConsoleColor.DarkRed; 
-                        archivo = "ArchivosTxt/MadreDeDragones.txt";
+                        archivo = "ArchivosTxt/Madre-De-Dragones.txt";
                         MostrarTxt(archivo, 0);
                     break;
-                    case "El Mejor Jefe Del Mundo":
+                    case "El-Mejor-Jefe-Del-Mundo":
                         Console.ForegroundColor = ConsoleColor.Cyan; 
-                        archivo = "ArchivosTxt/ElMejorJefeDelMundo.txt";
+                        archivo = "ArchivosTxt/El-Mejor-Jefe-Del-Mundo.txt";
                         MostrarTxt(archivo, 0);
                     break;
-                    case "El Asistente Regional":
+                    case "El-Asistente-Regional":
                         Console.ForegroundColor = ConsoleColor.DarkCyan; 
-                        archivo = "ArchivosTxt/ElAsistenteRegional.txt";
+                        archivo = "ArchivosTxt/El-Asistente-Regional.txt";
                         MostrarTxt(archivo, 0);
                     break;
                     case "Malcolm":
@@ -122,7 +122,7 @@ namespace EspacioMetodosPrincipales
 
         public bool GenerarBatalla(Personaje jugador1, Personaje jugador2) //METODO SIMULA BATALLA
         {
-
+            //codigo turno aleatorio
             /*var turno = FabricaDePersonjaes.ValorAleatorio(1, 3); //uso metodo estatico de fabrica de personajes para generar numero aleatorio
             Console.WriteLine(turno == 1 ? "INICIAS ATACANDO !!!" : "INICIA ATACANDO EL ENEMIGO!!!");*/
             var turno = 1;
@@ -137,7 +137,7 @@ namespace EspacioMetodosPrincipales
                 {
                     Console.WriteLine("---------------TU TURNO---------------");
                     ataque = (jugador1.CaracteristicasPersonaje.Destreza) * (jugador1.CaracteristicasPersonaje.Fuerza) * (jugador1.CaracteristicasPersonaje.Nivel);
-                    efectividad = FabricaDePersonjaes.ValorAleatorio(1, 101);
+                    efectividad = FabricaDePersonjaes.ValorAleatorio(1, 101); //efectividad es aleatoria
                     Console.WriteLine($"TU EFECTIVIDAD DE ATAQUE: {efectividad}");
                     defensa = (jugador2.CaracteristicasPersonaje.Armadura) * (jugador2.CaracteristicasPersonaje.Velocidad);
 
@@ -257,16 +257,30 @@ namespace EspacioMetodosPrincipales
             Console.WriteLine(@"
 ╔═════════════════════════════════════════════════════╗
 ║              BONIFICACION POR ESPISODIO             ║
-╚═════════════════════════════════════════════════════╝
-                    
-            ");
+╚═════════════════════════════════════════════════════╝");
             Console.WriteLine($"===>>EPISODIO ALEATORIO: {episodios[valorAleatorio].Name}");
             Console.WriteLine($"===>>RATING DEL EPISODIO: {episodios[valorAleatorio].Rating.Average}");
-            double rating = episodios[valorAleatorio].Rating.Average; //rating del episodio
+            double? rating = episodios[valorAleatorio].Rating.Average; //rating del episodio - //corrigiendo a veces devuelve null  - la api
             puntaje += 2 *(float)(rating); 
             Console.WriteLine($"===>>PUNTAJE NUEVO: {puntaje}");
             Console.ResetColor();
+            Thread.Sleep(700);
             return puntaje;
+        }
+
+        public void MostrarVS(Personaje jugador1, Personaje jugador2){
+            MostrarTxt($"ArchivosTxt/{jugador1.DatosPersonaje.Apodo}.txt", 0);
+            Thread.Sleep(700);
+
+            Console.WriteLine(@"
+ __     __  ____  
+ \ \   / / / ___| 
+  \ \ / /  \___ \ 
+   \ V /    ___) |
+    \_/    |____/");
+            Thread.Sleep(700);
+            MostrarTxt($"ArchivosTxt/{jugador2.DatosPersonaje.Apodo}.txt", 0);
+            Thread.Sleep(700);
         }
     
     }

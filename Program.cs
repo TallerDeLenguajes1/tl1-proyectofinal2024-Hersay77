@@ -53,10 +53,10 @@ else
                 //MOSTRAR LISTA PERSONAJES Y SELECCIONAR
                 Metodos.MostrarPersonajes(ListaPersonajes);
                 opcion = Metodos.ElegirOpcion(); //seleccion de personaje
-                Metodos.MostrarTxt($"Archivostxt/{ListaPersonajes[opcion].DatosPersonaje.Apodo}.txt", 0);//muestro personaje elegido
+                Metodos.MostrarTxt($"ArchivosTxt/{ListaPersonajes[opcion].DatosPersonaje.Apodo}.txt", 0);//muestro personaje elegido
                 var personajeSeleccionado = ListaPersonajes[opcion]; //SE "GUARDA" EL PERSONAJE SELECCIONADO EN UNA VARIABLE
                 ListaPersonajes.Remove(ListaPersonajes[opcion]); //ELIMINO EL PERSONAJE SELECCIONADO DE LA LISTA PARA QUE NO SE ENFRENTE A EL MISMO
-                List<Personaje> CopiaListaPersonajes = ListaPersonajes.ToList(); //CREO LISTA DE PERSONAJES PARA LUEGO AGREGAR ALLI EL PERSONAJE MODIFICADO SI GANA LA PARTIDA Y GUARDAR ESTA LISTA EN EL JSON
+                List<Personaje> CopiaListaPersonajes = ListaPersonajes.ToList(); //COPIO Y CREO LISTA DE PERSONAJES PARA LUEGO AGREGAR ALLI EL PERSONAJE MODIFICADO SI GANA LA PARTIDA Y GUARDAR ESTA LISTA EN EL JSON
 
                 //PARTIDA - ENFRENTO AL PERSONAJE CON TODOS LOS PERSONAJES DE LA LISTA
                 var resultadoBatalla = true; //variable para controlar si se gano
@@ -69,10 +69,18 @@ else
                 foreach (var jugador2 in ListaPersonajes) //se recorre la lista generando las batallas
                 {
                     numeroBatalla += 1;              
-                    puntaje = Metodos.Bonificacion(puntaje, episodios);
+                    puntaje = Metodos.Bonificacion(puntaje, episodios); //bonificacion por batalla
+                    Console.ForegroundColor = ConsoleColor.Green; 
 
-                    Console.WriteLine($"°°°°°°°°°°°°°° INICIA LA BATALLA{numeroBatalla}°°°°°°°°°°°°°°°°°°");
+                    Console.WriteLine($"\n°°°°°°°°°°°°°° INICIA LA BATALLA N°: {numeroBatalla}°°°°°°°°°°°°°°°°°°\n");
+                    Thread.Sleep(700);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Metodos.MostrarVS(personajeSeleccionado, jugador2);
+                    Console.ResetColor();
+
+
                     resultadoBatalla = Metodos.GenerarBatalla(personajeSeleccionado, jugador2); //genero batalla
+
                     if (resultadoBatalla)//true - si se gana la batalla
                     {
                         Console.WriteLine("HAS GANADO LA BATALLA!!!");
@@ -84,7 +92,7 @@ else
                     {
                         Console.WriteLine("HAS PERDIDO LA BATALLA!!!");
                         resultadoPartida = false; //si no se gano la batalla se pierde la partida 
-                        break;
+                        break;//se sale del bucle foreach
                     }
                 }
 
@@ -156,7 +164,6 @@ static async Task<List<Episodio>> GetEpisodiosAsync(string url)
 {
     try //para manejo de posibles excepciones
     {
-
         HttpClient client = new HttpClient(); 
         HttpResponseMessage response = await client.GetAsync(url); 
         response.EnsureSuccessStatusCode(); 

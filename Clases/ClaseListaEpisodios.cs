@@ -24,7 +24,7 @@ namespace EspacioClaseListaEpisdios
     public class Rating
     {
         [JsonPropertyName("average")]
-        public double Average { get; set; }
+        public double? Average { get; set ; } //corrigiendo a veces devuelve null
     }
 
     public class Episodio

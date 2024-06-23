@@ -75,7 +75,7 @@
     "DatosPersonaje": 
     {
       "Nombre": "Jon Snow",
-      "Apodo": "Rey Del Norte",
+      "Apodo": "Rey-Del-Norte",
       "Fecha": "1986-12-26T00:00:00",
       "Edad": 37,
       "Descripcion": "Legítimo heredero al Trono de Hierro.",
@@ -93,7 +93,7 @@
     "DatosPersonaje": 
     {
       "Nombre": "Daenerys Targaryen",
-      "Apodo": "Madre De Dragones",
+      "Apodo": "Madre-De-Dragones",
       "Fecha": "1986-10-23T00:00:00",
       "Edad": 37,
       "Descripcion": "Loca con Dragones",
@@ -111,7 +111,7 @@
     "DatosPersonaje": 
     {
       "Nombre": "Michael Scott",
-      "Apodo": "El Mejor Jefe Del Mundo",
+      "Apodo": "El-Mejor-Jefe-Del-Mundo",
       "Fecha": "1964-03-15T00:00:00",
       "Edad": 50,
       "Descripcion": "Gerente regional de Dunder Mifflin con un inusual sentido del humor",
@@ -130,7 +130,7 @@
     "DatosPersonaje": 
     {
       "Nombre": "Dwight Schrute",
-      "Apodo": "El Asistente Regional",
+      "Apodo": "El-Asistente-Regional",
       "Fecha": "1970-06-16T00:00:00",
       "Edad": 40,
       "Descripcion": "Asistente Regional de la sucursal de Dunder Mifflin  - excentrico.",
