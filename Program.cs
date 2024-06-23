@@ -1,11 +1,9 @@
 ﻿using EspacioPersonajesJson;
 using EspacioPersonajes;
-using System.Collections.Generic;
 using EspacioHistorialJson;
 using EspacioMetodosPrincipales;
 using EspacioClaseListaEpisdios;
 using System.Text.Json;
-using EspacioFabricaDePersonajes;
 
 string ArchivoListaPersonajes = "Archivos/ListaPersonajes.json";
 string ArchivoHistorial = "Archivos/Historial.json";
