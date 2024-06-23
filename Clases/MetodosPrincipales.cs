@@ -10,26 +10,94 @@ namespace EspacioMetodosPrincipales
     {    
         public void MostrarPersonajes(List<Personaje> ListaPersonajes) //METODO MOSTAR PERSONAJES
         {
-            Console.WriteLine("################# MOSTRANDO LISTA DE PERSONAJES ################");
+            Console.WriteLine("╔════════════════════════MOSTRANDO LISTA DE PERSONAJES═════════════════════════════╗");
 
             for (int i = 0; i < ListaPersonajes.Count; i++)
             {
-                Console.WriteLine("###########################################################");
-                Console.WriteLine($"NUMERO DE PERSONAJE: {i}");
-                Console.WriteLine($"NOMBRE: {ListaPersonajes[i].DatosPersonaje.Nombre}");
-                Console.WriteLine($"APODO: {ListaPersonajes[i].DatosPersonaje.Apodo}");
-                Console.WriteLine($"FECHA DE NACIMIENTO: {ListaPersonajes[i].DatosPersonaje.Fecha.ToShortDateString()}");
-                Console.WriteLine($"EDAD: {ListaPersonajes[i].DatosPersonaje.Edad}");
-                Console.WriteLine($"DESCRIPCION: {ListaPersonajes[i].DatosPersonaje.Descripcion}");
-                Console.WriteLine($"SERIE: {ListaPersonajes[i].DatosPersonaje.SerieDelPersonaje}");
-                Console.WriteLine($"VELOCIDAD: {ListaPersonajes[i].CaracteristicasPersonaje.Velocidad}");
-                Console.WriteLine($"DESTREZA: {ListaPersonajes[i].CaracteristicasPersonaje.Destreza}");
-                Console.WriteLine($"FUERZA: {ListaPersonajes[i].CaracteristicasPersonaje.Fuerza}");
-                Console.WriteLine($"NIVEL: {ListaPersonajes[i].CaracteristicasPersonaje.Nivel}");
-                Console.WriteLine($"DEFENSA: {ListaPersonajes[i].CaracteristicasPersonaje.Armadura}");
-                Console.WriteLine($"SALUD: {ListaPersonajes[i].CaracteristicasPersonaje.Salud}");
-                Console.WriteLine("###########################################################");
+                string archivo;
+
+                switch (ListaPersonajes[i].DatosPersonaje.Apodo)
+                {
+                    case "Heisenberg":
+                        Console.ForegroundColor = ConsoleColor.Green; 
+                        archivo = "ArchivosTxt/Heisenberg.txt";
+                        MostrarTxt(archivo, 0);
+                    break;
+                    case "Jesse":
+                        Console.ForegroundColor = ConsoleColor.DarkGreen; 
+                        archivo = "ArchivosTxt/Jesse.txt";
+                        MostrarTxt(archivo, 0);
+                    break;
+                    case "House":
+                        Console.ForegroundColor = ConsoleColor.Blue; 
+                        archivo = "ArchivosTxt/House.txt";
+                        MostrarTxt(archivo, 0);
+                    break;
+                    case "Wilson":
+                        Console.ForegroundColor = ConsoleColor.DarkBlue; 
+                        archivo = "ArchivosTxt/Wilson.txt";
+                        MostrarTxt(archivo, 0);
+                    break;
+                    case "Rey Del Norte":
+                        Console.ForegroundColor = ConsoleColor.Red; 
+                        archivo = "ArchivosTxt/ReyDelNorte.txt";
+                        MostrarTxt(archivo, 0);
+                    break;
+                    case "Madre De Dragones":
+                        Console.ForegroundColor = ConsoleColor.DarkRed; 
+                        archivo = "ArchivosTxt/MadreDeDragones.txt";
+                        MostrarTxt(archivo, 0);
+                    break;
+                    case "El Mejor Jefe Del Mundo":
+                        Console.ForegroundColor = ConsoleColor.Cyan; 
+                        archivo = "ArchivosTxt/ElMejorJefeDelMundo.txt";
+                        MostrarTxt(archivo, 0);
+                    break;
+                    case "El Asistente Regional":
+                        Console.ForegroundColor = ConsoleColor.DarkCyan; 
+                        archivo = "ArchivosTxt/ElAsistenteRegional.txt";
+                        MostrarTxt(archivo, 0);
+                    break;
+                    case "Malcolm":
+                        Console.ForegroundColor = ConsoleColor.Yellow; 
+                        archivo = "ArchivosTxt/Malcolm.txt";
+                        MostrarTxt(archivo, 0);
+                    break;
+                    case "Lois":
+                        Console.ForegroundColor = ConsoleColor.DarkYellow; 
+                        archivo = "ArchivosTxt/Lois.txt";
+                        MostrarTxt(archivo, 0);
+                    break;
+                    case "Chandler":
+                        Console.ForegroundColor = ConsoleColor.Magenta; 
+                        archivo = "ArchivosTxt/Chandler.txt";
+                        MostrarTxt(archivo, 0);
+                    break;
+                    case "Rachel":
+                        Console.ForegroundColor = ConsoleColor.DarkMagenta; 
+                        archivo = "ArchivosTxt/Rachel.txt";
+                        MostrarTxt(archivo, 0);
+                    break;
+                    default:
+                    break;
+                }
+                Console.WriteLine("");
+                Console.WriteLine($"    NUMERO: {i} - NOMBRE: {ListaPersonajes[i].DatosPersonaje.Nombre} - APODO: {ListaPersonajes[i].DatosPersonaje.Apodo}");
+                Console.WriteLine($"    FECHA: {ListaPersonajes[i].DatosPersonaje.Fecha.ToShortDateString()} - EDAD: {ListaPersonajes[i].DatosPersonaje.Edad}");
+                Console.WriteLine($"    DESCRIPCION: {ListaPersonajes[i].DatosPersonaje.Descripcion}");
+                Console.WriteLine($"    SERIE: {ListaPersonajes[i].DatosPersonaje.SerieDelPersonaje}");
+                Console.WriteLine($"    VELOCIDAD: {ListaPersonajes[i].CaracteristicasPersonaje.Velocidad}");
+                Console.WriteLine($"    DESTREZA: {ListaPersonajes[i].CaracteristicasPersonaje.Destreza}");
+                Console.WriteLine($"    FUERZA: {ListaPersonajes[i].CaracteristicasPersonaje.Fuerza}");
+                Console.WriteLine($"    NIVEL: {ListaPersonajes[i].CaracteristicasPersonaje.Nivel}");
+                Console.WriteLine($"    DEFENSA: {ListaPersonajes[i].CaracteristicasPersonaje.Armadura}");
+                Console.WriteLine($"    SALUD: {ListaPersonajes[i].CaracteristicasPersonaje.Salud}");
+                Console.WriteLine("     ══════════════════════════════════════════════════════════════");
+                Console.WriteLine("");
+                Thread.Sleep(1000);
             }
+            Console.WriteLine("╚══════════════════════════════════════════════════════════════════════════════════╝");
+
         }
 
         public int ElegirOpcion() //METODO ELEGIR 
