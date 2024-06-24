@@ -134,7 +134,8 @@ namespace EspacioMetodosPrincipales
             do
             {
                 if (turno == 1 )
-                {
+                {               
+                    Thread.Sleep(700);
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine("---------------TU TURNO---------------");
                     Console.ResetColor();
@@ -157,6 +158,7 @@ namespace EspacioMetodosPrincipales
                 }
                 else
                 {
+                    Thread.Sleep(700);  
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine("---------------TURNO ENEMIGO---------------");
                     Console.ResetColor();

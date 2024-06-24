@@ -66,15 +66,17 @@ namespace EspacioHistorialJson
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine(@"
-╔═══════════════════════════════════════════════════════════════════════════════════════════════╗
-║                                 HISTORIAL - RANKING GANADORES                                 ║
-|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+╔══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                     HISTORIAL - RANKING GANADORES                                    ║
+ ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+            Console.WriteLine();
             for (int i = 0; i < Historial.Count; i++)
             {
-                Console.WriteLine($"    {i+1} - JUGADOR: {Historial[i].NombreJugador} ----PERSONAJE: {Historial[i].NombrePersonaje} ----NIVEL: {Historial[i].Nivel} ----PUNTAJE: {Historial[i].Puntaje}");
+                Console.WriteLine($"\n    {i+1} - \tJUGADOR: {Historial[i].NombreJugador} ----PERSONAJE: {Historial[i].NombrePersonaje} ----NIVEL: {Historial[i].Nivel} ----PUNTAJE: {Historial[i].Puntaje}");
             }
+
             Console.WriteLine(@"
-╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
+╚══════════════════════════════════════════════════════════════════════════════════════════════════════╝");
             Console.ResetColor();
         }
     }
