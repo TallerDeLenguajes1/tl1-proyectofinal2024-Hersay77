@@ -8,7 +8,10 @@
 
 ![Portada](Archivos/Portada.jpg)
 
+
 El proyecto consiste en cumplir con los objetivos y rúbricas establecidos en las instrucciones de la creación del mismo. Se programó un mini juego con C#: En este caso se optó por elegir personajes de series de TV y servicios de streaming, los cuales se ofrecen para la elección. 
+
+
 
 Una vez elegido uno de los personajes, se continúa con la ejecución enfrentando a dicho personaje con los demás en la lista uno por uno. El jugador por cada batalla tiene la posibilidad de ir aumentando su puntaje, el cual se tendrá en cuenta al finalizar la partida, el puntaje se aumenta multiplicandolo por el Rating del episodio que le toca de forma aleatoria despues de haber obtenido la lista de episodios a traves de la API. Así también, cada ataque en la batalla se realiza por turnos en los cuales un personaje ataca y otro se defiende a través de cálculos matemáticos donde se tienen en cuenta las características de ambos personajes para calcular el daño provocado, hasta que uno pierde la salud completamente.
 

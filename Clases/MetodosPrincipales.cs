@@ -100,7 +100,7 @@ namespace EspacioMetodosPrincipales
             Console.ResetColor();
         }
 
-        public int ElegirOpcion() //METODO ELEGIR 
+        public int ElegirOpcionMenu() //METODO ELEGIR 
         {
             int numero;
             while (true) //aseguro que el bucle siempre se repita a menos que entre al if y retorne el numero elegido
@@ -108,7 +108,7 @@ namespace EspacioMetodosPrincipales
                 Console.WriteLine("ELIGE LA OPCION: ");
                 string entrada = Console.ReadLine();
                 
-                if (int.TryParse(entrada, out numero))
+                if (int.TryParse(entrada, out numero) && numero >= 1 && numero <= 3)
                 {
                     Console.WriteLine("SELECCIONASTE LA OPCION: " + numero);
                     return numero;
@@ -116,6 +116,26 @@ namespace EspacioMetodosPrincipales
                 else
                 {
                     Console.WriteLine("Entrada no válida. Intente de nuevo.");
+                }
+            }
+        }
+
+        public int ElegirOpcionPersonaje() //METODO ELEGIR 
+        {
+            int numero;
+            while (true) //aseguro que el bucle siempre se repita a menos que entre al if y retorne el numero elegido
+            {
+                Console.WriteLine("ELIGE EL NUMERO DE PERSONAJE: ");
+                string entrada = Console.ReadLine();
+                
+                if (int.TryParse(entrada, out numero) && numero >= 0 && numero <= 10)
+                {
+                    Console.WriteLine("SELECCIONASTE LA OPCION: " + numero);
+                    return numero;
+                }
+                else
+                {
+                    Console.WriteLine("Entrada no válida o No existe el numero de personaje. Intente de nuevo.");
                 }
             }
         }
@@ -331,8 +351,4 @@ namespace EspacioMetodosPrincipales
         }
 
     }
-
-
-
-
 }

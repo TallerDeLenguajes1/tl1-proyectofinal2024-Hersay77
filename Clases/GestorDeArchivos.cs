@@ -18,7 +18,9 @@ public class GestorDeArchivos
             return documento;
         }
 
-        public void GuardarArchivoTexto(string nombreArchivo, string datos)
+//SIN USAR
+
+/*        public void GuardarArchivoTexto(string nombreArchivo, string datos)
         {
             using (var archivo = new FileStream(nombreArchivo, FileMode.Create))
             {
@@ -28,7 +30,7 @@ public class GestorDeArchivos
                     strWriter.Close();
                 }
             }
-        }
+        } */
 
         public bool Existe(string Archivo)
         {

@@ -25,6 +25,12 @@ namespace EspacioFabricaDePersonajes
             return nuevoPersonaje; 
         }
 
+        public static List<Personaje> CrearPersonajes(List<Personaje> ListaDatosPredefinidos ){
+            List<Personaje> ListaPersonajes = new List<Personaje>(); //creo lista de personajes
+
+            return ListaPersonajes;
+        }
+
         public static int ValorAleatorio(int min, int max){
             Random numeroRandom = new Random();
             return numeroRandom.Next(min, max);

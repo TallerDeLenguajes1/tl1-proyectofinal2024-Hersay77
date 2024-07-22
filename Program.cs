@@ -46,13 +46,13 @@ else
     do
     {
         Metodos.MostrarMenu(); //MENU PRINCIPAL
-        opcionMenu = Metodos.ElegirOpcion(); //uso el metodo de elegir opcion en la misma clase
+        opcionMenu = Metodos.ElegirOpcionMenu(); //uso el metodo de elegir opcion en la misma clase
         switch (opcionMenu)
         {
             case 1:
                 //MOSTRAR LISTA PERSONAJES Y SELECCIONAR
                 Metodos.MostrarPersonajes(ListaPersonajes);
-                opcion = Metodos.ElegirOpcion(); //seleccion de personaje
+                opcion = Metodos.ElegirOpcionPersonaje(); //seleccion de personaje
                 Metodos.MostrarTxt($"ArchivosTxt/{ListaPersonajes[opcion].DatosPersonaje.Apodo}.txt", 0);//muestro personaje elegido
                 Personaje personajeSeleccionado = ListaPersonajes[opcion]; //HAGO REFERENCIA AL PERSONAJE EN OTRA VARIABLE
 
@@ -180,3 +180,10 @@ static async Task<List<Episodio>> GetEpisodiosAsync(string url)
         return null;
     }
 }
+
+//modular mejor - crear archivos que tengan que ver con los metodos
+//corregir ingreso de mas personajes  - personaje 12  - YA
+//corregi ingreso menu - YA
+//corregir fabrica de personajes
+//mejorar uso de API
+

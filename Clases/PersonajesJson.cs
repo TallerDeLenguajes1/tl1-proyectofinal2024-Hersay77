@@ -67,6 +67,9 @@ namespace EspacioPersonajesJson
                     {
                         string jsonString = File.ReadAllText(ArchivoDatosPersonajes); //se lee el archivo y se guarda en un string - el archivo esta en formato json
                         List<Personaje> ListaDatosPredefinidos = JsonSerializer.Deserialize<List<Personaje>>(jsonString); //deseralizo el json basado en la clase Personaje
+
+                        FabricaDePersonjaes.CrearPersonajes(ListaDatosPredefinidos); //llamo al metodo crear personajes de la
+
                         List<Personaje> ListaPersonajes = new List<Personaje>(); //creo lista de personajes
                         foreach (var DatoPredefinido in ListaDatosPredefinidos) //se recorre la lista y se envian los datos de un personaje a la fabrica
                         {
