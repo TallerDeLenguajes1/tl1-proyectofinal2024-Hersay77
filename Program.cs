@@ -8,6 +8,7 @@ using System.Text.Json;
 string ArchivoListaPersonajes = "Archivos/ListaPersonajes.json"; 
 string ArchivoHistorial = "Archivos/Historial.json";
 string Portada = "ArchivosTxt/Portada.txt";
+string ArchivoDatosPersonajes = "Archivos/DatosPersonajes.json";
 
 List<Personaje> ListaPersonajes;
 List<PersonajeEnHistorial> Historial;
@@ -22,7 +23,7 @@ if (PersonajesJson.Existe(ArchivoListaPersonajes)) ////Verificar al comienzo del
 }
 else
 {
-    ListaPersonajes = PersonajesJson.GenerarPersonajes(); //Crea la lista de personajes desde 0 con DatosPersonajesjson que arme con datos 
+    ListaPersonajes = PersonajesJson.GenerarPersonajesPreestablecidos(ArchivoDatosPersonajes); //Crea la lista de personajes desde 0 con DatosPersonajes.json (archivo que contiene datos de personajes preestablecidos)
     Guardado = PersonajesJson.GuardarPersonajes(ListaPersonajes, ArchivoListaPersonajes); //el metodo guarda la lista de personajes en json y devuelve true si se completo el guardado
     Historial = HistorialJson.LeerGanadores(ArchivoHistorial); //el metodo lee el historial desde un json, si no retorna null
 }

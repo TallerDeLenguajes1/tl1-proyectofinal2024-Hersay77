@@ -60,9 +60,9 @@ namespace EspacioPersonajesJson
             }
         }
 
-        public static List<Personaje> GenerarPersonajes()
+    //METODO ESTATICO QUE GENERA UNA LISTA DE PERSONAJES CON DATOS PREESTABLECIDOS USANDO LA FABRICA DE PERSONAJES
+        public static List<Personaje> GenerarPersonajesPreestablecidos(string ArchivoDatosPersonajes)
         {
-            string ArchivoDatosPersonajes = "Archivos/DatosPersonajes.json"; //guardo en un string la ruta del archivo que contiene datos de los personajes para generarlos
             if (Existe(ArchivoDatosPersonajes)) //compruebo si existe el archivo
             {
                 try
@@ -70,15 +70,24 @@ namespace EspacioPersonajesJson
                         string jsonString = File.ReadAllText(ArchivoDatosPersonajes); //se lee el archivo y se guarda en un string - el archivo esta en formato json
                         List<Personaje> ListaDatosPredefinidos = JsonSerializer.Deserialize<List<Personaje>>(jsonString); //deseralizo el json basado en la clase Personaje
 
-                        FabricaDePersonjaes.CrearPersonajes(ListaDatosPredefinidos); //llamo al metodo crear personajes de la
-
-                        List<Personaje> ListaPersonajes = new List<Personaje>(); //creo lista de personajes
-                        foreach (var DatoPredefinido in ListaDatosPredefinidos) //se recorre la lista y se envian los datos de un personaje a la fabrica
+                        List<Personaje> ListaPersonajes = new List<Personaje>(); //reservo memoria para una lista de personajes
+                        foreach (var DatoPredefinido in ListaDatosPredefinidos) //se recorre la lista con datos predefinidos y se envian los datos de un personaje a la fabrica
                         {
-                            Personaje NuevoPersonaje = FabricaDePersonjaes.CrearPersonaje(DatoPredefinido.DatosPersonaje.Nombre, DatoPredefinido.DatosPersonaje.Apodo, DatoPredefinido.DatosPersonaje.Fecha, DatoPredefinido.DatosPersonaje.Edad, DatoPredefinido.DatosPersonaje.Descripcion, DatoPredefinido.DatosPersonaje.SerieDelPersonaje, DatoPredefinido.CaracteristicasPersonaje.Velocidad, DatoPredefinido.CaracteristicasPersonaje.Destreza, DatoPredefinido.CaracteristicasPersonaje.Fuerza, DatoPredefinido.CaracteristicasPersonaje.Armadura); //se fabrica el nuevo personaje
-                            ListaPersonajes.Add(NuevoPersonaje); //lo agrego a la lista
+                            //se fabrica el nuevo personaje
+                            Personaje NuevoPersonaje = FabricaDePersonjaes.CrearPersonaje( 
+                                DatoPredefinido.DatosPersonaje.Nombre, 
+                                DatoPredefinido.DatosPersonaje.Apodo, 
+                                DatoPredefinido.DatosPersonaje.Fecha, 
+                                DatoPredefinido.DatosPersonaje.Edad, 
+                                DatoPredefinido.DatosPersonaje.Descripcion, 
+                                DatoPredefinido.DatosPersonaje.SerieDelPersonaje, 
+                                DatoPredefinido.CaracteristicasPersonaje.Velocidad, 
+                                DatoPredefinido.CaracteristicasPersonaje.Destreza, 
+                                DatoPredefinido.CaracteristicasPersonaje.Fuerza, 
+                                DatoPredefinido.CaracteristicasPersonaje.Armadura); 
+                            ListaPersonajes.Add(NuevoPersonaje); //lo agrega a la lista
                         }
-                        return ListaPersonajes;
+                        return ListaPersonajes; //retorno lista de personajes con personajes preestablecidos
                     }
                 catch (Exception ex)
                 {
