@@ -8,6 +8,7 @@ namespace EspacioPersonajesJson
 {
     public class PersonajesJson
     {
+    //REQUISITO - METODO ESTATICO PARA LEER PERSONAJES DE LISTA GUARDADA EN JSON
         public static bool GuardarPersonajes(List<Personaje> ListaPersonajes, string ArchivoListaPersonajesJson)
         {
             try //uso try-catch para captura cualquier excepción que pueda ocurrir

@@ -4,15 +4,20 @@ using EspacioHistorialJson; //metodos guardar y leer json historial
 using EspacioMetodosPrincipales;
 using EspacioClaseListaEpisdios;
 using System.Text.Json;
+using EspacioMainLogic;
 
+//RUTAS DE ARCHIVOS
 string ArchivoListaPersonajes = "Archivos/ListaPersonajes.json"; 
 string ArchivoHistorial = "Archivos/Historial.json";
 string Portada = "ArchivosTxt/Portada.txt";
 string ArchivoDatosPersonajes = "Archivos/DatosPersonajes.json";
 
+//INICIO INSTANCIA PARA USAR METODOS DE LOGICA PRINCIPAL
+MainLogic Metodos2 = new MainLogic(); 
+
 List<Personaje> ListaPersonajes;
 List<PersonajeEnHistorial> Historial;
-bool Guardado = true; //guardado inicia en true por si ya se habia guardado anteriormente por primera vez los personajes
+bool Guardado = true; //variable para identificar el correcto guardado de archivos de personajes. Inicia en true por si ya se habia guardado anteriormente por primera vez los personajes (si ya esta creada ListaPersonajes.json en una misma sesion)
 
 
 //VERIFICACION DE EXISTENCIA Y CREACION DE ARCHIVOS PARA COMENZAR EL PROGRAMA
@@ -25,15 +30,15 @@ else
 {
     ListaPersonajes = PersonajesJson.GenerarPersonajesPreestablecidos(ArchivoDatosPersonajes); //Crea la lista de personajes desde 0 con DatosPersonajes.json (archivo que contiene datos de personajes preestablecidos)
     Guardado = PersonajesJson.GuardarPersonajes(ListaPersonajes, ArchivoListaPersonajes); //el metodo guarda la lista de personajes en json y devuelve true si se completo el guardado
-    Historial = HistorialJson.LeerGanadores(ArchivoHistorial); //el metodo lee el historial desde un json, si no retorna null
+    Historial = HistorialJson.LeerGanadores(ArchivoHistorial); //lee el historial desde un json, si no retorna null
 }
 
-//CONTROL LECTURA O CONSTRUCCION CORRECTA PARA INICIAR JUEGO
-if (ListaPersonajes == null || Historial == null || Guardado == false)
+//CONTROL PARA INICIAR EL JUEGO
+if (ListaPersonajes == null || Historial == null || Guardado == false) 
 {
     Console.WriteLine("Error de programa: No se pudo cargar los datos");
 }
-else
+else //SE INCIA EL JUEGO
 {
     MetodosPrincipales Metodos = new MetodosPrincipales(); //creo instancia para usar metodos principales
     Console.ForegroundColor = ConsoleColor.Green; 
@@ -43,7 +48,7 @@ else
     Console.ResetColor();
     Console.ReadKey();
 
-    int opcionMenu;
+    int opcionMenu; //si se ingresa 1 se eligio mostrar personajes y se inicia (al finalizar debe volver al inicio) - si se ingresa 2 se muestra el historial (al finalziar debe volver al incio) y con el metodo opcion menu se verifica ingreso
     int opcion;
     do
     {
@@ -152,7 +157,8 @@ else
             break;
             case 3:
                 //SALIR
-                Console.WriteLine("NOS VEMOS CAMPEON");
+                Console.WriteLine(" # NOS VEMOS CAMPEON #");
+                Thread.Sleep(700); 
             break;                
             default:
                 opcionMenu = 1;
