@@ -5,6 +5,10 @@ using EspacioMetodosPrincipales;
 using EspacioClaseListaEpisdios;
 using System.Text.Json;
 using EspacioGUI;
+using EspacioLogicHelper;
+
+GUI MetodosGUI = new GUI(); //creo instancia para usar metodos DE INTERFAZ GRAFICA DE USUARIO
+LogicHelper MetodosLogica = new LogicHelper(); //creo instancia para usar metodos de AYUDA PARA LOGICA PRINCIPAL
 
 //RUTAS DE ARCHIVOS
     string ArchivoListaPersonajes = "Archivos/ListaPersonajes.json"; 
@@ -38,29 +42,26 @@ using EspacioGUI;
     }
     else //SE INCIA EL JUEGO
     {
-        MetodosPrincipales Metodos = new MetodosPrincipales(); //creo instancia para usar metodos DE INTERFAZ GRAFICA DE USUARIO
-
         Console.ForegroundColor = ConsoleColor.Green; 
-        Metodos.MostrarTxt(Portada, 0);
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("###################=========>   PRESIONE UNA TECLA PARA INICIAR <===========######################");
-        Console.ResetColor();
-        Console.ReadKey();
+        MetodosGUI.MostrarTxt(Portada, 0); //MOSTRAR PORTADA DE INICIO
+        MetodosGUI.MostrarPresionarTecla();
 
-        int opcionMenu; //si se ingresa 1 se eligio mostrar personajes y se inicia (al finalizar debe volver al inicio) - si se ingresa 2 se muestra el historial (al finalziar debe volver al incio) y con el metodo opcion menu se verifica ingreso
+        int opcionMenu; //1 -> se eligio mostrar personajes y se inicia (al finalizar debe volver al inicio). 2 -> se muestra el historial (al finalziar debe volver al incio) y con el metodo opcion menu se verifica ingreso
         int opcion;
         do
         {
-            Metodos.MostrarMenu(); //MENU PRINCIPAL
-            opcionMenu = Metodos.ElegirOpcionMenu(); //uso el metodo de elegir opcion en la misma clase
+            MetodosGUI.MostrarMenu(); //MENU PRINCIPAL
+            opcionMenu = MetodosLogica.ElegirOpcionMenu(); //uso el metodo de elegir opcion en la misma clase
             switch (opcionMenu)
             {
                 case 1:
                     //MOSTRAR LISTA PERSONAJES Y SELECCIONAR
-                    Metodos.MostrarPersonajes(ListaPersonajes);
-                    opcion = Metodos.ElegirOpcionPersonaje(); //seleccion de personaje
-                    Metodos.MostrarTxt($"ArchivosTxt/{ListaPersonajes[opcion].DatosPersonaje.Apodo}.txt", 0);//muestro personaje elegido
-                    Personaje personajeSeleccionado = ListaPersonajes[opcion]; //HAGO REFERENCIA AL PERSONAJE EN OTRA VARIABLE
+                        MetodosGUI.MostrarPersonajes(ListaPersonajes);
+                        opcion = MetodosLogica.ElegirOpcionPersonaje();
+                    //MOSTRAR PERSONAJE ELEGIDO 
+                        MetodosGUI.MostrarTxt($"ArchivosTxt/{ListaPersonajes[opcion].DatosPersonaje.Apodo}.txt", 0);//muestro personaje elegido
+                    //HAGO REFERENCIA AL PERSONAJE ELEGIDO EN OTRA VARIABLE
+                        Personaje personajeSeleccionado = ListaPersonajes[opcion]; 
 
                     ListaPersonajes.Remove(ListaPersonajes[opcion]); //ELIMINO PERSONAJE DE LISTA
                     
