@@ -84,31 +84,7 @@ namespace EspacioMetodosPrincipales
             }
         }
 
-        public string ObtenerUrl(Serie serie)
-        {
-            switch (serie)
-            {
-                case Serie.BreakingBad:
-                    return "https://api.tvmaze.com/shows/169/episodes"; //url de API que retorna lista de episodios de la serie
-                
-                case Serie.HouseMD:
-                    return "https://api.tvmaze.com/shows/118/episodes";
-
-                case Serie.GameOfThrones:
-                    return "https://api.tvmaze.com/shows/82/episodes";
-
-                case Serie.TheOffice:
-                    return "https://api.tvmaze.com/shows/526/episodes";
-
-                case Serie.MalcolmInTheMiddle:
-                    return "https://api.tvmaze.com/shows/568/episodes";
-
-                case Serie.Friends:
-                    return "https://api.tvmaze.com/shows/431/episodes";
-                default:
-                    return null;
-            }
-        }
+        
 
 
         public float Bonificacion(float puntaje, List<Episodio> episodios)

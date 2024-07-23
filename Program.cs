@@ -34,7 +34,7 @@ LogicHelper MetodosLogica = new LogicHelper(); //creo instancia para usar metodo
         Historial = HistorialJson.LeerGanadores(ArchivoHistorial); //lee el historial desde un json, si no retorna null
     }
 
-//CONTROL PARA INICIAR EL JUEGO
+//CONTROL E INICIO DEL JUEGO
 
     if (ListaPersonajes == null || Historial == null || Guardado == false) 
     {
@@ -62,15 +62,16 @@ LogicHelper MetodosLogica = new LogicHelper(); //creo instancia para usar metodo
                         MetodosGUI.MostrarTxt($"ArchivosTxt/{ListaPersonajes[opcion].DatosPersonaje.Apodo}.txt", 0);//muestro personaje elegido
                     //HAGO REFERENCIA AL PERSONAJE ELEGIDO EN OTRA VARIABLE
                         Personaje personajeSeleccionado = ListaPersonajes[opcion]; 
-
-                    ListaPersonajes.Remove(ListaPersonajes[opcion]); //ELIMINO PERSONAJE DE LISTA
+                    //ELIMINO PERSONAJE DE LISTA (SOLO SE ELIMINA DE LA LISTA, LA REFERENCIA A EL EN LA MEMORIA SIGUE EN LA VARIABLE personajeSeleccionado)
+                        ListaPersonajes.Remove(ListaPersonajes[opcion]); 
                     
+
                     //PARTIDA - ENFRENTO AL PERSONAJE CON TODOS LOS PERSONAJES DE LA LISTA
-                    var resultadoBatalla = true; //variable para controlar si se gano
-                    var resultadoPartida = true; //variable para controlar si se gan
+                    var resultadoBatalla = true; //variable para controlar si se gano la batalla
+                    var resultadoPartida = true; //variable para controlar si se gano la Partida
                     float puntaje = 0;
                     var numeroBatalla = 0;
-                    string url = Metodos.ObtenerUrl(personajeSeleccionado.DatosPersonaje.SerieDelPersonaje); //metodo segun serie obtiene url para enviarla al metodo API
+                    string url = MetodosLogica.ObtenerUrl(personajeSeleccionado.DatosPersonaje.SerieDelPersonaje); //metodo segun serie obtiene url para enviarla al metodo API
                     List<Episodio> episodios = await GetEpisodiosAsync(url); //llamada al metodo API obtiene lista de episodios de serie
 
                     foreach (var jugador2 in ListaPersonajes) //se recorre la lista generando las batallas
