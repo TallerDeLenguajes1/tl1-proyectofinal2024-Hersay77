@@ -26,6 +26,7 @@ namespace EspacioHistorialJson
                 };
         }
 
+        //REQUISITO - METODO ESTATICO LEE HISTORIAL DE GANADORES
         public static List<PersonajeEnHistorial> LeerGanadores(string ArchivoHistorial)
         {
             if(Existe(ArchivoHistorial))
@@ -33,7 +34,7 @@ namespace EspacioHistorialJson
                 try
                 {
                     string jsonString = File.ReadAllText(ArchivoHistorial); //se lee el archivo y se guarda en un string - el archivo esta en formato json
-                    List<PersonajeEnHistorial> Historial = JsonSerializer.Deserialize<List<PersonajeEnHistorial>>(jsonString); //deseralizo el json basado en la clase Personaje
+                    List<PersonajeEnHistorial> Historial = JsonSerializer.Deserialize<List<PersonajeEnHistorial>> (jsonString); //deseralizo el json basado en la clase Personaje
                     return Historial;
                 }
                 catch (Exception ex)
@@ -49,6 +50,7 @@ namespace EspacioHistorialJson
             }
         }
 
+        //REQUISITO - METODO ESTATICO COMPRUEBA SI EXISTE ARCHIVO HISTORIAL
         public static bool Existe(string Archivo)
         {
             if (File.Exists(Archivo)) //se usa la clase File con el metodo exists para comprobar si existe el rchivo en la ruta proporcionada
@@ -81,6 +83,7 @@ namespace EspacioHistorialJson
         }
     }
 
+    //CLASE PARA GUARDAR PERSONAJES Y DATOS EN UN FORMATO MAS SIMPLIFICADO EN EL HISTORIAL
     public class PersonajeEnHistorial //Clase para el formato de como se guarda el personaje en el historial
         {
             private string nombreJugador;

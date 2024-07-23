@@ -17,7 +17,7 @@ bool Guardado = true; //guardado inicia en true por si ya se habia guardado ante
 //VERIFICACION DE EXISTENCIA Y CREACION DE ARCHIVOS PARA COMENZAR EL PROGRAMA
 if (PersonajesJson.Existe(ArchivoListaPersonajes)) ////Verificar al comienzo del Juego si existe el archivo de personajes
 {
-    ListaPersonajes = PersonajesJson.LeerPersonajes(ArchivoListaPersonajes); //lee lista de personajes
+    ListaPersonajes = PersonajesJson.LeerPersonajes(ArchivoListaPersonajes); //lee lista de personajes, sino retorna null
     Historial = HistorialJson.LeerGanadores(ArchivoHistorial); //se lee el historial, sino retorna null
 }
 else

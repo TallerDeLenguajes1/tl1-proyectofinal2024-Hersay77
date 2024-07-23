@@ -23,6 +23,7 @@ namespace EspacioPersonajesJson
             }
         }
 
+    //REQUISITO - METODO ESTATICO PARA LEER PERSONAJES DE LISTA GUARDADA EN JSON
         public static List<Personaje> LeerPersonajes(string ArchivoListaPersonajesJson)
         {   
             if(Existe(ArchivoListaPersonajesJson)) //comprueba si existe
@@ -46,6 +47,7 @@ namespace EspacioPersonajesJson
             }
         }
 
+    //REQUISITO - METODO ESTATICO PARA COMPROBAR SI EXITE EL ARCHIVO LISTA DE PERSONAJES EN FORMATO JSON
         public static bool Existe(string Archivo)
         {
             if (File.Exists(Archivo)) //se usa la clase File con el metodo exists para comprobar si existe el archivo en la ruta proporcionada
