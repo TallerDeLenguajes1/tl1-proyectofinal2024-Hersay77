@@ -1,7 +1,6 @@
 using EspacioPersonajes;
 using EspacioFabricaDePersonajes;
 
-
 namespace EspacioBatalla
 {
     public class Batalla
