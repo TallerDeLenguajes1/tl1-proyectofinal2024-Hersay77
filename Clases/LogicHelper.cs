@@ -1,4 +1,6 @@
 using EspacioPersonajes;
+using EspacioClaseListaEpisdios;
+using EspacioFabricaDePersonajes;
 
 namespace EspacioLogicHelper
 {
@@ -73,14 +75,25 @@ namespace EspacioLogicHelper
             }
         }
 
-        
+        //METODO DINAMICO PARA CALCULAR BONIFICACION SEGUN API Y MOSTRAR
+        public float Bonificacion(float puntaje, List<Episodio> episodios)
+        {
 
-
-
-
-
-
-
+            var valorAleatorio = FabricaDePersonjaes.ValorAleatorio(0 , episodios.Count); //obtengo valor aleatorio basado en cantidad de episodios
+            Console.ForegroundColor = ConsoleColor.Yellow; 
+            Console.WriteLine(@"
+╔═════════════════════════════════════════════════════╗
+║              BONIFICACION POR ESPISODIO             ║
+╚═════════════════════════════════════════════════════╝");
+            Console.WriteLine($"===>>EPISODIO ALEATORIO: {episodios[valorAleatorio].Name}");
+            Console.WriteLine($"===>>RATING DEL EPISODIO: {episodios[valorAleatorio].Rating.Average}");
+            double? rating = episodios[valorAleatorio].Rating.Average; //rating del episodio - //corrigiendo a veces devuelve null  - la api
+            puntaje += 2 *(float)(rating); 
+            Console.WriteLine($"===>>PUNTAJE NUEVO: {puntaje}");
+            Console.ResetColor();
+            Thread.Sleep(700);
+            return puntaje;
+        }
 
     }
 }

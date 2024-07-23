@@ -84,42 +84,7 @@ namespace EspacioMetodosPrincipales
             }
         }
 
-        
-
-
-        public float Bonificacion(float puntaje, List<Episodio> episodios)
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow; 
-            var valorAleatorio = FabricaDePersonjaes.ValorAleatorio(0 , episodios.Count); //obtengo valor aleatorio basado en cantidad de episodios
-            Console.WriteLine(@"
-╔═════════════════════════════════════════════════════╗
-║              BONIFICACION POR ESPISODIO             ║
-╚═════════════════════════════════════════════════════╝");
-            Console.WriteLine($"===>>EPISODIO ALEATORIO: {episodios[valorAleatorio].Name}");
-            Console.WriteLine($"===>>RATING DEL EPISODIO: {episodios[valorAleatorio].Rating.Average}");
-            double? rating = episodios[valorAleatorio].Rating.Average; //rating del episodio - //corrigiendo a veces devuelve null  - la api
-            puntaje += 2 *(float)(rating); 
-            Console.WriteLine($"===>>PUNTAJE NUEVO: {puntaje}");
-            Console.ResetColor();
-            Thread.Sleep(700);
-            return puntaje;
-        }
-
-        public void MostrarVS(Personaje jugador1, Personaje jugador2){
-            MostrarTxt($"ArchivosTxt/{jugador1.DatosPersonaje.Apodo}.txt", 0);
-            Thread.Sleep(700);
-
-            Console.WriteLine(@"
- __     __  ____  
- \ \   / / / ___| 
-  \ \ / /  \___ \ 
-   \ V /    ___) |
-    \_/    |____/");
-            Thread.Sleep(700);
-            MostrarTxt($"ArchivosTxt/{jugador2.DatosPersonaje.Apodo}.txt", 0);
-            Thread.Sleep(700);
-            Console.WriteLine(" ");
-        }
+    
 
         public void MostrarPartidaGanada(){
             Console.ForegroundColor = ConsoleColor.Green;

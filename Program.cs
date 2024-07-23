@@ -65,25 +65,25 @@ LogicHelper MetodosLogica = new LogicHelper(); //creo instancia para usar metodo
                     //ELIMINO PERSONAJE DE LISTA (SOLO SE ELIMINA DE LA LISTA, LA REFERENCIA A EL EN LA MEMORIA SIGUE EN LA VARIABLE personajeSeleccionado)
                         ListaPersonajes.Remove(ListaPersonajes[opcion]); 
                     
+                    //USO Y LLAMADA A LA API
+                        string url = MetodosLogica.ObtenerUrl(personajeSeleccionado.DatosPersonaje.SerieDelPersonaje); //metodo segun serie obtiene url para enviarla al metodo API
+                        List<Episodio> episodios = await GetEpisodiosAsync(url); //llamada al metodo API obtiene lista de episodios de serie
 
                     //PARTIDA - ENFRENTO AL PERSONAJE CON TODOS LOS PERSONAJES DE LA LISTA
                     var resultadoBatalla = true; //variable para controlar si se gano la batalla
                     var resultadoPartida = true; //variable para controlar si se gano la Partida
                     float puntaje = 0;
                     var numeroBatalla = 0;
-                    string url = MetodosLogica.ObtenerUrl(personajeSeleccionado.DatosPersonaje.SerieDelPersonaje); //metodo segun serie obtiene url para enviarla al metodo API
-                    List<Episodio> episodios = await GetEpisodiosAsync(url); //llamada al metodo API obtiene lista de episodios de serie
 
                     foreach (var jugador2 in ListaPersonajes) //se recorre la lista generando las batallas
                     {
                         numeroBatalla += 1;              
-                        puntaje = Metodos.Bonificacion(puntaje, episodios); //bonificacion por batalla
+                        puntaje = MetodosLogica.Bonificacion(puntaje, episodios); //bonificacion por batalla
                         Console.ForegroundColor = ConsoleColor.Magenta; 
-
                         Console.WriteLine($"\n°°°°°°°°°°°°°° INICIA LA BATALLA N°: {numeroBatalla}°°°°°°°°°°°°°°°°°°\n");
                         Thread.Sleep(700);
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Metodos.MostrarVS(personajeSeleccionado, jugador2);
+                        MetodosGUI.MostrarVS(personajeSeleccionado, jugador2);
                         Console.ResetColor();
 
                         resultadoBatalla = Metodos.GenerarBatalla(personajeSeleccionado, jugador2); //BATALLA

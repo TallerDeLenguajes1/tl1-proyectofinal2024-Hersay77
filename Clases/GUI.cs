@@ -143,8 +143,23 @@ namespace EspacioGUI
             Console.ResetColor();
         }
     
-    
-    
+        //METODO DINAMICO MOSTRAR VERSUS
+        public void MostrarVS(Personaje jugador1, Personaje jugador2){
+            MostrarTxt($"ArchivosTxt/{jugador1.DatosPersonaje.Apodo}.txt", 0);
+            Thread.Sleep(700);
+
+            Console.WriteLine(@"
+ __     __  ____  
+ \ \   / / / ___| 
+  \ \ / /  \___ \ 
+   \ V /    ___) |
+    \_/    |____/");
+            Thread.Sleep(700);
+            MostrarTxt($"ArchivosTxt/{jugador2.DatosPersonaje.Apodo}.txt", 0);
+            Thread.Sleep(700);
+            Console.WriteLine(" ");
+        }
+
     
     
     
