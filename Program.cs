@@ -1,11 +1,12 @@
 ﻿using EspacioPersonajesJson; //metodos guardar y leer json con lista de personajes
 using EspacioPersonajes;
 using EspacioHistorialJson; //metodos guardar y leer json historial
-using EspacioMetodosPrincipales;
 using EspacioClaseListaEpisdios;
 using System.Text.Json;
 using EspacioGUI;
 using EspacioLogicHelper;
+using EspacioBatalla;
+
 
 GUI MetodosGUI = new GUI(); //creo instancia para usar metodos DE INTERFAZ GRAFICA DE USUARIO
 LogicHelper MetodosLogica = new LogicHelper(); //creo instancia para usar metodos de AYUDA PARA LOGICA PRINCIPAL
@@ -86,7 +87,7 @@ LogicHelper MetodosLogica = new LogicHelper(); //creo instancia para usar metodo
                         MetodosGUI.MostrarVS(personajeSeleccionado, jugador2);
                         Console.ResetColor();
 
-                        resultadoBatalla = Metodos.GenerarBatalla(personajeSeleccionado, jugador2); //BATALLA
+                        resultadoBatalla = Batalla.GenerarBatalla(personajeSeleccionado, jugador2); //BATALLA
 
                         if (resultadoBatalla)//true - si se gana la batalla
                         {
@@ -111,7 +112,7 @@ LogicHelper MetodosLogica = new LogicHelper(); //creo instancia para usar metodo
                     if (resultadoPartida)
                     {
                         
-                        Metodos.MostrarPartidaGanada();
+                        MetodosGUI.MostrarPartidaGanada();
                         Console.WriteLine("================================================================");
                         Console.WriteLine($"NIVEL PERSONAJE: {personajeSeleccionado.CaracteristicasPersonaje.Nivel}");
                         personajeSeleccionado.CaracteristicasPersonaje.Nivel += 1; //cada vez que se gana una partida el nivel del personaje aumenta en 1 unidad
@@ -150,7 +151,7 @@ LogicHelper MetodosLogica = new LogicHelper(); //creo instancia para usar metodo
                     }
                     else
                     {
-                        Metodos.MostrarGameOver();
+                        MetodosGUI.MostrarGameOver();
                     }
                 break;
                 case 2:
@@ -167,8 +168,6 @@ LogicHelper MetodosLogica = new LogicHelper(); //creo instancia para usar metodo
             }
         } while (opcionMenu == 1 || opcionMenu == 2);
     }
-
-
 
 //USO DE API
 static async Task<List<Episodio>> GetEpisodiosAsync(string url) 
