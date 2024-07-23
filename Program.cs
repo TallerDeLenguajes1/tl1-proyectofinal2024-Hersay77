@@ -1,11 +1,11 @@
-﻿using EspacioPersonajesJson;
+﻿using EspacioPersonajesJson; //metodos guardar y leer json con lista de personajes
 using EspacioPersonajes;
-using EspacioHistorialJson;
+using EspacioHistorialJson; //metodos guardar y leer json historial
 using EspacioMetodosPrincipales;
 using EspacioClaseListaEpisdios;
 using System.Text.Json;
 
-string ArchivoListaPersonajes = "Archivos/ListaPersonajes.json";
+string ArchivoListaPersonajes = "Archivos/ListaPersonajes.json"; 
 string ArchivoHistorial = "Archivos/Historial.json";
 string Portada = "ArchivosTxt/Portada.txt";
 
@@ -13,8 +13,9 @@ List<Personaje> ListaPersonajes;
 List<PersonajeEnHistorial> Historial;
 bool Guardado = true; //guardado inicia en true por si ya se habia guardado anteriormente por primera vez los personajes
 
-//LEYENDO O CONSTRUYENDO LISTAS PERSONAJES E HISTORIAL
-if (PersonajesJson.Existe(ArchivoListaPersonajes))
+
+//VERIFICACION DE EXISTENCIA Y CREACION DE ARCHIVOS PARA COMENZAR EL PROGRAMA
+if (PersonajesJson.Existe(ArchivoListaPersonajes)) ////Verificar al comienzo del Juego si existe el archivo de personajes
 {
     ListaPersonajes = PersonajesJson.LeerPersonajes(ArchivoListaPersonajes); //lee lista de personajes
     Historial = HistorialJson.LeerGanadores(ArchivoHistorial); //se lee el historial, sino retorna null

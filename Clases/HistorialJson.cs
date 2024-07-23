@@ -81,12 +81,12 @@ namespace EspacioHistorialJson
         }
     }
 
-    public class PersonajeEnHistorial
+    public class PersonajeEnHistorial //Clase para el formato de como se guarda el personaje en el historial
         {
             private string nombreJugador;
             private string nombrePersonaje;
-            int nivel ; 
-            float puntaje;
+            int nivel ; //nivel que aumento el personaje
+            float puntaje; //puntaje que se alcanzo en el juego
 
             public string NombreJugador { get => nombreJugador; set => nombreJugador = value; }
             public string NombrePersonaje { get => nombrePersonaje; set => nombrePersonaje = value; }

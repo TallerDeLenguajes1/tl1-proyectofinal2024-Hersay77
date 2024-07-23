@@ -25,7 +25,8 @@ namespace EspacioFabricaDePersonajes
             return nuevoPersonaje; 
         }
 
-        public static List<Personaje> CrearPersonajes(List<Personaje> ListaDatosPredefinidos ){
+        public static List<Personaje> CrearPersonajes(List<Personaje> ListaDatosPredefinidos )
+        {
             List<Personaje> ListaPersonajes = new List<Personaje>(); //creo lista de personajes
 
             return ListaPersonajes;
@@ -36,6 +37,5 @@ namespace EspacioFabricaDePersonajes
             return numeroRandom.Next(min, max);
         }
     }
-
 
 }
