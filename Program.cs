@@ -6,6 +6,7 @@ using System.Text.Json;
 using EspacioGUI;
 using EspacioLogicHelper;
 using EspacioBatalla;
+using EspacioAPI;
 
 
 GUI MetodosGUI = new GUI(); //creo instancia para usar metodos DE INTERFAZ GRAFICA DE USUARIO
@@ -69,7 +70,7 @@ LogicHelper MetodosLogica = new LogicHelper(); //creo instancia para usar metodo
                     
                     //USO Y LLAMADA A LA API (OBTIENE UNA LISTA DE EPISODIOS SEGUN LA SERIE A LA CUAL PERTENECE EL PERSONAJE DEL PERSONAJE)
                         string url = MetodosLogica.ObtenerUrl(personajeSeleccionado.DatosPersonaje.SerieDelPersonaje); //metodo segun serie obtiene url para enviarla al metodo API
-                        List<Episodio> episodios = await GetEpisodiosAsync(url); //llamada al metodo API obtiene lista de episodios de serie
+                        List<Episodio> episodios = await Api.GetEpisodiosAsync(url); //llamada al metodo API obtiene lista de episodios de serie
 
                     //PARTIDA - ENFRENTO AL PERSONAJE CON TODOS LOS PERSONAJES DE LA LISTA
                         var resultadoBatalla = true; //variable para controlar si se gano la batalla
@@ -170,6 +171,14 @@ LogicHelper MetodosLogica = new LogicHelper(); //creo instancia para usar metodo
         } while (opcionMenu == 1 || opcionMenu == 2);
     }
 
+//modular mejor - crear archivos que tengan que ver con los metodos
+//corregir ingreso de mas personajes  - personaje 12  - YA
+//corregi ingreso menu - YA
+//corregir fabrica de personajes
+//mejorar uso de API
+
+/*
+
 //USO DE API
 static async Task<List<Episodio>> GetEpisodiosAsync(string url) 
 {
@@ -190,9 +199,6 @@ static async Task<List<Episodio>> GetEpisodiosAsync(string url)
     }
 }
 
-//modular mejor - crear archivos que tengan que ver con los metodos
-//corregir ingreso de mas personajes  - personaje 12  - YA
-//corregi ingreso menu - YA
-//corregir fabrica de personajes
-//mejorar uso de API
 
+
+*/
