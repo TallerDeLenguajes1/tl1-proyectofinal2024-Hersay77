@@ -32,12 +32,12 @@ LogicHelper MetodosLogica = new LogicHelper();
         MetodosGUI.MostrarTxt(MetodosLogica.Portada, 0); 
         MetodosGUI.MostrarPresionarTecla();
 
-        int opcionMenu; //1 -> se eligio mostrar personajes y se inicia (al finalizar debe volver al inicio). 2 -> se muestra el historial (al finalziar debe volver al incio) y con el metodo opcion menu se verifica ingreso
-        int opcion;
+        int opcionMenu; //1 y 2 repite el bucle - se controla ingreso con metodo
+        int opcion; //variable para opciones
         do
         {
             MetodosGUI.MostrarMenu(); //MENU PRINCIPAL
-            opcionMenu = MetodosLogica.ElegirOpcionMenu(); //uso el metodo de elegir opcion
+            opcionMenu = MetodosLogica.ElegirOpcionMenu(); //control de ingreso correcto
             switch (opcionMenu)
             {
                 case 1:
@@ -45,15 +45,18 @@ LogicHelper MetodosLogica = new LogicHelper();
                         MetodosGUI.MostrarPersonajes(ListaPersonajes);
                         opcion = MetodosLogica.ElegirOpcionPersonaje();
                     //MOSTRAR PERSONAJE ELEGIDO 
-                        MetodosGUI.MostrarTxt($"ArchivosTxt/{ListaPersonajes[opcion].DatosPersonaje.Apodo}.txt", 0);//muestro personaje elegido
+                        MetodosGUI.MostrarTxt($"ArchivosTxt/{ListaPersonajes[opcion].DatosPersonaje.Apodo}.txt", 0);
                     //HAGO REFERENCIA AL PERSONAJE ELEGIDO EN OTRA VARIABLE
                         Personaje personajeSeleccionado = ListaPersonajes[opcion]; 
                     //ELIMINO PERSONAJE DE LISTA (SOLO SE ELIMINA DE LA LISTA, LA REFERENCIA A EL PERSONAJE ELEGIDO EN LA MEMORIA SIGUE EN LA VARIABLE personajeSeleccionado)
                         ListaPersonajes.Remove(ListaPersonajes[opcion]); 
                     
-                    //USO Y LLAMADA A LA API (OBTIENE UNA LISTA DE EPISODIOS SEGUN LA SERIE A LA CUAL PERTENECE EL PERSONAJE DEL PERSONAJE)
+                    //USO Y LLAMADA A LA API (OBTIENE UNA LISTA DE EPISODIOS SEGUN LA SERIE A LA CUAL PERTENECE EL PERSONAJE)
                         string url = MetodosLogica.ObtenerUrl(personajeSeleccionado.DatosPersonaje.SerieDelPersonaje); //metodo segun serie obtiene url para enviarla al metodo API
                         List<Episodio> episodios = await Api.GetEpisodiosAsync(url); //llamada al metodo API obtiene lista de episodios de serie
+
+                    //CONSULTA SI SABE NOMBRE DE EPISODIOS
+                    int SabeNombre = MetodosLogica.SabeNombre();
 
                     //PARTIDA - ENFRENTO AL PERSONAJE CON TODOS LOS PERSONAJES DE LA LISTA
                         var resultadoBatalla = true; //variable para controlar si se gano la batalla
@@ -63,81 +66,88 @@ LogicHelper MetodosLogica = new LogicHelper();
 
                         foreach (var jugador2 in ListaPersonajes) //se recorre la lista generando las batallas
                         {
-                            numeroBatalla += 1;              
-                            puntaje = MetodosLogica.Bonificacion(puntaje, episodios); //bonificacion por batalla
-                            Console.ForegroundColor = ConsoleColor.Magenta; 
-                            Console.WriteLine($"\n°°°°°°°°°°°°°° INICIA LA BATALLA N°: {numeroBatalla}°°°°°°°°°°°°°°°°°°\n");
-                            Thread.Sleep(700);
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            MetodosGUI.MostrarVS(personajeSeleccionado, jugador2);
-                            Console.ResetColor();
+                            numeroBatalla += 1;
 
-                            resultadoBatalla = Batalla.GenerarBatalla(personajeSeleccionado, jugador2); //BATALLA
+                            //BONIFICACION
+                            puntaje = SabeNombre == 1 ? MetodosLogica.BonificacionManual(puntaje, episodios): MetodosLogica.BonificacionAuto(puntaje, episodios);
+                            Thread.Sleep(1000);
 
-                            if (resultadoBatalla)//true - si se gana la batalla
-                            {
-                                Console.ForegroundColor = ConsoleColor.Green;
-                                Console.WriteLine("=============>>>> HAS GANADO LA BATALLA!!! <<<<============= ");
-                                Console.ResetColor();
-                                puntaje = puntaje + personajeSeleccionado.CaracteristicasPersonaje.Salud; //El puntaje acumulado en cada batalla sera la salud con la que queda el personaje
-                                personajeSeleccionado.CaracteristicasPersonaje.Salud = 100;//VUELVO SALUD DEL PERSONAJE NUEVAENTE A 100 PARA ENFRENTARSE AL PROXIMO OPONENTE
-
-                            }
-                            else
-                            {
+                           //MUESTRA INICIO DE BATALLA
+                                Console.ForegroundColor = ConsoleColor.Magenta; 
+                                Console.WriteLine($"\n°°°°°°°°°°°°°° INICIA LA BATALLA N°: {numeroBatalla}°°°°°°°°°°°°°°°°°°\n");
+                                Thread.Sleep(700);
                                 Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("=====================>>>HAS PERDIDO LA BATALLA!!! <<<<============= ");
+                                MetodosGUI.MostrarVS(personajeSeleccionado, jugador2);
                                 Console.ResetColor();
-                                ListaPersonajes= PersonajesJson.LeerPersonajes(MetodosLogica.ArchivoListaPersonajes); //restauro la lista y las propiedades de los personajes
-                                resultadoPartida = false; //si no se gano la batalla se pierde la partida 
-                                break;//se sale del bucle foreach
-                            }
-                        }
 
-                        if (resultadoPartida)
-                        {
-                            
-                            MetodosGUI.MostrarPartidaGanada();
-                            Console.WriteLine("================================================================");
-                            Console.WriteLine($"NIVEL PERSONAJE: {personajeSeleccionado.CaracteristicasPersonaje.Nivel}");
-                            personajeSeleccionado.CaracteristicasPersonaje.Nivel += 1; //cada vez que se gana una partida el nivel del personaje aumenta en 1 unidad
-                            
-                            Console.WriteLine("TU PERSONAJE AUMENTA +1 EN NIVEL !!!");
-                            Console.WriteLine($"NIVEL ACTUAL: {personajeSeleccionado.CaracteristicasPersonaje.Nivel}");
-                            ListaPersonajes= PersonajesJson.LeerPersonajes(MetodosLogica.ArchivoListaPersonajes); //restauro la lista y las propiedades de los personajes
-                            ListaPersonajes.Remove(ListaPersonajes[opcion]);//remuevo el personaje que se habia seleccionado
-                            ListaPersonajes.Add(personajeSeleccionado); //agrego el personaje con nivel modificado a la lista NO MODIFCADA
+                            //BATALLA
+                                resultadoBatalla = Batalla.GenerarBatalla(personajeSeleccionado, jugador2); 
 
-                            Guardado = PersonajesJson.GuardarPersonajes(ListaPersonajes, MetodosLogica.ArchivoListaPersonajes); //guardo la lista modificada
-                            Console.WriteLine(Guardado == true ?  "PERSONAJE ACTUALIZADO !!!": "ERROR EN EL GUARDADO DE LISTA MODIFICADA");
-                            Console.WriteLine($"===>>PUNTAJE: {puntaje}"); 
-                            //PEDIR DATOS SI ENTRA EN EL RANKING DE GANADORES
-                            if (Historial[9].Puntaje <= puntaje)
-                            {
-                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                Console.WriteLine("================================================================");
-                                Console.WriteLine("INGRESE SU NOMBRE PARA GUARDAR EN EL HISTORIAL DE GANADORES: ");
-                                var nombreJugador = Console.ReadLine();
-                                if(HistorialJson.GuardarGanador(personajeSeleccionado, nombreJugador, MetodosLogica.ArchivoHistorial, Historial, puntaje))
+                            //COMRUEBA RESULTADO DE BATLLA
+                                if (resultadoBatalla)//true - si se gana la batalla
                                 {
-                                    Historial = HistorialJson.LeerGanadores(MetodosLogica.ArchivoHistorial);
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    Console.WriteLine("=============>>>> HAS GANADO LA BATALLA!!! <<<<============= ");
+                                    Console.ResetColor();
+                                    puntaje = puntaje + personajeSeleccionado.CaracteristicasPersonaje.Salud; //El puntaje acumulado en cada batalla sera la salud con la que queda el personaje
+                                    personajeSeleccionado.CaracteristicasPersonaje.Salud = 100;//VUELVO SALUD DEL PERSONAJE NUEVAENTE A 100 PARA ENFRENTARSE AL PROXIMO OPONENTE
 
-                                    HistorialJson.MostrarHistorial(Historial); //MOSTRAR HISTORIAL
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Error al guardar");
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("=====================>>>HAS PERDIDO LA BATALLA!!! <<<<============= ");
+                                    Console.ResetColor();
+                                    ListaPersonajes= PersonajesJson.LeerPersonajes(MetodosLogica.ArchivoListaPersonajes); //restauro la lista y las propiedades de los personajes
+                                    resultadoPartida = false; //si no se gano la batalla se pierde la partida 
+                                    break;//se sale del bucle foreach
+                                }
+                        }
+
+                        //COMPRUEBA RESULTADO DE PARTIDA
+                            if (resultadoPartida)
+                            {
+                                
+                                MetodosGUI.MostrarPartidaGanada();
+                                Console.WriteLine("================================================================");
+                                Console.WriteLine($"NIVEL PERSONAJE: {personajeSeleccionado.CaracteristicasPersonaje.Nivel}");
+                                personajeSeleccionado.CaracteristicasPersonaje.Nivel += 1; //cada vez que se gana una partida el nivel del personaje aumenta en 1 unidad
+                                Console.WriteLine("TU PERSONAJE AUMENTA +1 EN NIVEL !!!");
+                                Console.WriteLine($"NIVEL ACTUAL: {personajeSeleccionado.CaracteristicasPersonaje.Nivel}");
+                                ListaPersonajes= PersonajesJson.LeerPersonajes(MetodosLogica.ArchivoListaPersonajes); //restauro la lista y las propiedades de los personajes
+                                ListaPersonajes.Remove(ListaPersonajes[opcion]);//remuevo el personaje que se habia seleccionado
+                                ListaPersonajes.Add(personajeSeleccionado); //agrego el personaje con nivel modificado a la lista NO MODIFCADA
+
+                                Guardado = PersonajesJson.GuardarPersonajes(ListaPersonajes, MetodosLogica.ArchivoListaPersonajes); //guardo la lista modificada
+                                Console.WriteLine(Guardado == true ?  "PERSONAJE ACTUALIZADO !!!": "ERROR EN EL GUARDADO DE LISTA MODIFICADA");
+                                Console.WriteLine($"===>>PUNTAJE: {puntaje}"); 
+                                //PEDIR DATOS SI ENTRA EN EL RANKING DE GANADORES
+                                if (Historial[9].Puntaje <= puntaje)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Yellow;
+                                    Console.WriteLine("================================================================");
+                                    Console.WriteLine("INGRESE SU NOMBRE PARA GUARDAR EN EL HISTORIAL DE GANADORES: ");
+                                    var nombreJugador = Console.ReadLine();
+                                    if(HistorialJson.GuardarGanador(personajeSeleccionado, nombreJugador, MetodosLogica.ArchivoHistorial, Historial, puntaje))
+                                    {
+                                        Historial = HistorialJson.LeerGanadores(MetodosLogica.ArchivoHistorial);
+
+                                        HistorialJson.MostrarHistorial(Historial); //MOSTRAR HISTORIAL
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Error al guardar");
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("PUNTAJE NO ALCANZADO PARA ENTRAR EN EL RANKING");
                                 }
                             }
                             else
                             {
-                                Console.WriteLine("PUNTAJE NO ALCANZADO PARA ENTRAR EN EL RANKING");
+                                MetodosGUI.MostrarGameOver();
                             }
-                        }
-                        else
-                        {
-                            MetodosGUI.MostrarGameOver();
-                        }
                 break;
                 case 2:
                     HistorialJson.MostrarHistorial(Historial); //MOSTRAR HISTORIAL
@@ -153,32 +163,3 @@ LogicHelper MetodosLogica = new LogicHelper();
             }
         } while (opcionMenu == 1 || opcionMenu == 2);
     }
-
-
-
-
-/*
-
-//USO DE API
-static async Task<List<Episodio>> GetEpisodiosAsync(string url) 
-{
-    try //para manejo de posibles excepciones
-    {
-        HttpClient client = new HttpClient(); 
-        HttpResponseMessage response = await client.GetAsync(url); 
-        response.EnsureSuccessStatusCode(); 
-        string responseBody = await response.Content.ReadAsStringAsync(); 
-        List<Episodio> ListaEpisodios = JsonSerializer.Deserialize<List<Episodio>>(responseBody);
-        return ListaEpisodios;
-    }
-    catch (HttpRequestException e)
-    {
-        Console.WriteLine("Problemas de acceso a la API");
-        Console.WriteLine("Message :{0} ", e.Message);
-        return null;
-    }
-}
-
-
-
-*/
