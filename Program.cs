@@ -2,39 +2,22 @@
 using EspacioPersonajes;
 using EspacioHistorialJson; //metodos guardar y leer json historial
 using EspacioClaseListaEpisdios;
-using System.Text.Json;
 using EspacioGUI;
 using EspacioLogicHelper;
 using EspacioBatalla;
 using EspacioAPI;
 
-
-GUI MetodosGUI = new GUI(); //creo instancia para usar metodos DE INTERFAZ GRAFICA DE USUARIO
-LogicHelper MetodosLogica = new LogicHelper(); //creo instancia para usar metodos de AYUDA PARA LOGICA PRINCIPAL
-
-//RUTAS DE ARCHIVOS
-    string ArchivoListaPersonajes = "Archivos/ListaPersonajes.json"; 
-    string ArchivoHistorial = "Archivos/Historial.json";
-    string Portada = "ArchivosTxt/Portada.txt";
-    string ArchivoDatosPersonajes = "Archivos/DatosPersonajes.json";
+//INSTANCIAS PARA USAR METODOS GUI Y AYUDA LOGICA
+GUI MetodosGUI = new GUI(); 
+LogicHelper MetodosLogica = new LogicHelper();
 
 
 //VERIFICACION DE EXISTENCIA Y CREACION DE ARCHIVOS PARA COMENZAR EL PROGRAMA
-    List<Personaje> ListaPersonajes;
-    List<PersonajeEnHistorial> Historial;
-    bool Guardado = true; //variable para identificar el correcto guardado de archivos de personajes. Inicia en true por si ya se habia guardado anteriormente por primera vez los personajes (si ya esta creada ListaPersonajes.json en una misma sesion)
+    MetodosLogica.VerificarYCrearArchivos();
+    List<Personaje> ListaPersonajes = MetodosLogica.ListaPersonajes;
+    List<PersonajeEnHistorial> Historial = MetodosLogica.Historial;
+    bool Guardado = MetodosLogica.Guardado;
 
-    if (PersonajesJson.Existe(ArchivoListaPersonajes)) ////Verificar al comienzo del Juego si existe el archivo de personajes
-    {
-        ListaPersonajes = PersonajesJson.LeerPersonajes(ArchivoListaPersonajes); //lee lista de personajes, sino retorna null
-        Historial = HistorialJson.LeerGanadores(ArchivoHistorial); //se lee el historial, sino retorna null
-    }
-    else
-    {
-        ListaPersonajes = PersonajesJson.GenerarPersonajesPreestablecidos(ArchivoDatosPersonajes); //Crea la lista de personajes desde 0 con DatosPersonajes.json (archivo que contiene datos de personajes preestablecidos)
-        Guardado = PersonajesJson.GuardarPersonajes(ListaPersonajes, ArchivoListaPersonajes); //el metodo guarda la lista de personajes en json y devuelve true si se completo el guardado
-        Historial = HistorialJson.LeerGanadores(ArchivoHistorial); //lee el historial desde un json, si no retorna null
-    }
 
 //CONTROL E INICIO DEL JUEGO
 
@@ -46,7 +29,7 @@ LogicHelper MetodosLogica = new LogicHelper(); //creo instancia para usar metodo
     {
         //MOSTRAR PORTADA DE INICIO
         Console.ForegroundColor = ConsoleColor.Green; 
-        MetodosGUI.MostrarTxt(Portada, 0); 
+        MetodosGUI.MostrarTxt(MetodosLogica.Portada, 0); 
         MetodosGUI.MostrarPresionarTecla();
 
         int opcionMenu; //1 -> se eligio mostrar personajes y se inicia (al finalizar debe volver al inicio). 2 -> se muestra el historial (al finalziar debe volver al incio) y con el metodo opcion menu se verifica ingreso
@@ -105,7 +88,7 @@ LogicHelper MetodosLogica = new LogicHelper(); //creo instancia para usar metodo
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("=====================>>>HAS PERDIDO LA BATALLA!!! <<<<============= ");
                                 Console.ResetColor();
-                                ListaPersonajes= PersonajesJson.LeerPersonajes(ArchivoListaPersonajes); //restauro la lista y las propiedades de los personajes
+                                ListaPersonajes= PersonajesJson.LeerPersonajes(MetodosLogica.ArchivoListaPersonajes); //restauro la lista y las propiedades de los personajes
                                 resultadoPartida = false; //si no se gano la batalla se pierde la partida 
                                 break;//se sale del bucle foreach
                             }
@@ -121,11 +104,11 @@ LogicHelper MetodosLogica = new LogicHelper(); //creo instancia para usar metodo
                             
                             Console.WriteLine("TU PERSONAJE AUMENTA +1 EN NIVEL !!!");
                             Console.WriteLine($"NIVEL ACTUAL: {personajeSeleccionado.CaracteristicasPersonaje.Nivel}");
-                            ListaPersonajes= PersonajesJson.LeerPersonajes(ArchivoListaPersonajes); //restauro la lista y las propiedades de los personajes
+                            ListaPersonajes= PersonajesJson.LeerPersonajes(MetodosLogica.ArchivoListaPersonajes); //restauro la lista y las propiedades de los personajes
                             ListaPersonajes.Remove(ListaPersonajes[opcion]);//remuevo el personaje que se habia seleccionado
                             ListaPersonajes.Add(personajeSeleccionado); //agrego el personaje con nivel modificado a la lista NO MODIFCADA
 
-                            Guardado = PersonajesJson.GuardarPersonajes(ListaPersonajes, ArchivoListaPersonajes); //guardo la lista modificada
+                            Guardado = PersonajesJson.GuardarPersonajes(ListaPersonajes, MetodosLogica.ArchivoListaPersonajes); //guardo la lista modificada
                             Console.WriteLine(Guardado == true ?  "PERSONAJE ACTUALIZADO !!!": "ERROR EN EL GUARDADO DE LISTA MODIFICADA");
                             Console.WriteLine($"===>>PUNTAJE: {puntaje}"); 
                             //PEDIR DATOS SI ENTRA EN EL RANKING DE GANADORES
@@ -135,9 +118,9 @@ LogicHelper MetodosLogica = new LogicHelper(); //creo instancia para usar metodo
                                 Console.WriteLine("================================================================");
                                 Console.WriteLine("INGRESE SU NOMBRE PARA GUARDAR EN EL HISTORIAL DE GANADORES: ");
                                 var nombreJugador = Console.ReadLine();
-                                if(HistorialJson.GuardarGanador(personajeSeleccionado, nombreJugador, ArchivoHistorial, Historial, puntaje))
+                                if(HistorialJson.GuardarGanador(personajeSeleccionado, nombreJugador, MetodosLogica.ArchivoHistorial, Historial, puntaje))
                                 {
-                                    Historial = HistorialJson.LeerGanadores(ArchivoHistorial);
+                                    Historial = HistorialJson.LeerGanadores(MetodosLogica.ArchivoHistorial);
 
                                     HistorialJson.MostrarHistorial(Historial); //MOSTRAR HISTORIAL
                                 }
@@ -171,11 +154,8 @@ LogicHelper MetodosLogica = new LogicHelper(); //creo instancia para usar metodo
         } while (opcionMenu == 1 || opcionMenu == 2);
     }
 
-//modular mejor - crear archivos que tengan que ver con los metodos
-//corregir ingreso de mas personajes  - personaje 12  - YA
-//corregi ingreso menu - YA
-//corregir fabrica de personajes
-//mejorar uso de API
+
+
 
 /*
 

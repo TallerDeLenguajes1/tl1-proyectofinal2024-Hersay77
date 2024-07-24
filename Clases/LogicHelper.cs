@@ -1,11 +1,60 @@
 using EspacioPersonajes;
 using EspacioClaseListaEpisdios;
 using EspacioFabricaDePersonajes;
+using EspacioHistorialJson;
+using EspacioPersonajesJson;
 
 namespace EspacioLogicHelper
 {
     public class LogicHelper
     {
+        private List<Personaje> listaPersonajes;
+        private List<PersonajeEnHistorial> historial;
+        private bool guardado = true; ////variable para identificar el correcto guardado de archivos de personajes. Inicia en true por si ya se habia guardado anteriormente por primera vez los personajes (si ya esta creada ListaPersonajes.json en una misma sesion)
+
+        //RUTAS DE ARCHIVOS
+        private string archivoListaPersonajes = "Archivos/ListaPersonajes.json"; 
+        private string archivoHistorial = "Archivos/Historial.json";
+        private string portada = "ArchivosTxt/Portada.txt";
+        private string archivoDatosPersonajes = "Archivos/DatosPersonajes.json";
+
+        public List<Personaje> ListaPersonajes { get => listaPersonajes; set => listaPersonajes = value; }
+        public List<PersonajeEnHistorial> Historial { get => historial; set => historial = value; }
+        public bool Guardado { get => guardado; set => guardado = value; }
+        public string ArchivoListaPersonajes { get => archivoListaPersonajes; }
+        public string ArchivoHistorial { get => archivoHistorial;  }
+        public string Portada { get => portada; }
+        public string ArchivoDatosPersonajes { get => archivoDatosPersonajes; }
+
+        public void VerificarYCrearArchivos(){
+            
+            if (PersonajesJson.Existe(ArchivoListaPersonajes)) ////Verificar al comienzo del Juego si existe el archivo de personajes
+            {
+                ListaPersonajes = PersonajesJson.LeerPersonajes(ArchivoListaPersonajes); //lee lista de personajes, sino retorna null
+                Historial = HistorialJson.LeerGanadores(ArchivoHistorial); //se lee el historial, sino retorna null
+            }
+            else
+            {
+                ListaPersonajes = PersonajesJson.GenerarPersonajesPreestablecidos(ArchivoDatosPersonajes); //Crea la lista de personajes desde 0 con DatosPersonajes.json (archivo que contiene datos de personajes preestablecidos)
+                Guardado = PersonajesJson.GuardarPersonajes(ListaPersonajes, ArchivoListaPersonajes); //el metodo guarda la lista de personajes en json y devuelve true si se completo el guardado
+                Historial = HistorialJson.LeerGanadores(ArchivoHistorial); //lee el historial desde un json, si no retorna null
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //METODO DINAMICO PARA VERIFICAR LA CORRECTA OPCION DEL MENU
         public int ElegirOpcionMenu() //METODO ELEGIR 
         {
