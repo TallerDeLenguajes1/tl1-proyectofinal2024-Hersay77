@@ -57,6 +57,7 @@ LogicHelper MetodosLogica = new LogicHelper();
                         var resultadoBatalla = true; //variable para controlar si se gano la batalla
                         var resultadoPartida = true; //variable para controlar si se gano la Partida
                         float puntaje = 0; //acumulador puntaje
+                        float bonificacion = 0;
                         var numeroBatalla = 0; //contador batalla
 
                         foreach (var jugador2 in ListaPersonajes) //se recorre la lista generando las batallas
@@ -66,7 +67,7 @@ LogicHelper MetodosLogica = new LogicHelper();
                                 numeroBatalla += 1;
 
                                 //BONIFICACION
-                                    puntaje = SabeNombre == 1 ? MetodosLogica.BonificacionManual(puntaje, episodios): MetodosLogica.BonificacionAuto(puntaje, episodios);
+                                    bonificacion = SabeNombre == 1 ? MetodosLogica.BonificacionManual(episodios): MetodosLogica.BonificacionAuto(episodios);
                                     Thread.Sleep(1000);
 
                                 //MUESTRA INICIO DE BATALLA
@@ -74,19 +75,19 @@ LogicHelper MetodosLogica = new LogicHelper();
                                     MetodosGUI.MostrarVS(personajeSeleccionado, jugador2);
 
                                 //BATALLA
-                                    resultadoBatalla = Batalla.GenerarBatalla(personajeSeleccionado, jugador2); 
+                                    resultadoBatalla = Batalla.GenerarBatalla(personajeSeleccionado, jugador2, bonificacion); 
 
                                 //COMRUEBA RESULTADO DE BATLLA
                                     if (resultadoBatalla)//true - si se gana la batalla
                                     {
                                         puntaje = puntaje + personajeSeleccionado.CaracteristicasPersonaje.Salud; //El puntaje acumulado en cada batalla sera la salud con la que queda el personaje, ademas de la bonificacion dada por la api de los episodios
+                                        MetodosGUI.MostrarPuntaje(puntaje);
                                         personajeSeleccionado.CaracteristicasPersonaje.Salud = 100;//VUELVO SALUD DEL PERSONAJE NUEVAENTE A 100 PARA ENFRENTARSE AL PROXIMO OPONENTE
                                         jugador2.CaracteristicasPersonaje.Salud = 100; //tambien restauro salud del oponente para una proxima partida
 
                                     }
                                     else
                                     {
-                                    /*    ListaPersonajes= PersonajesJson.LeerPersonajes(MetodosLogica.ArchivoListaPersonajes); //restauro la lista y las propiedades de los personajes*/
                                         //restauro la salud que se modifico durante la batalla por si se contnua con la instancia
                                         personajeSeleccionado.CaracteristicasPersonaje.Salud = 100;
                                         jugador2.CaracteristicasPersonaje.Salud = 100; 
@@ -108,7 +109,7 @@ LogicHelper MetodosLogica = new LogicHelper();
                                 Console.WriteLine("TU PERSONAJE AUMENTA +1 EN NIVEL !!!");
                                 Console.WriteLine($"NIVEL ACTUAL: {MetodosLogica.ListaPersonajes[opcion].CaracteristicasPersonaje.Nivel}");
 
-                                Guardado = PersonajesJson.GuardarPersonajes(ListaPersonajes, MetodosLogica.ArchivoListaPersonajes); //guardo la lista modificada
+                                Guardado = PersonajesJson.GuardarPersonajes(MetodosLogica.ListaPersonajes, MetodosLogica.ArchivoListaPersonajes); //guardo la lista modificada
                                 Console.WriteLine(Guardado == true ?  "PERSONAJE ACTUALIZADO !!!": "ERROR EN EL GUARDADO DE LISTA MODIFICADA");
                                 Console.WriteLine($"===>>PUNTAJE: {puntaje}"); 
 
@@ -145,8 +146,8 @@ LogicHelper MetodosLogica = new LogicHelper();
                 break;
                 case 3:
                     //SALIR
-                    Console.WriteLine(" # NOS VEMOS CAMPEON #");
-                    Thread.Sleep(700); 
+                    Console.WriteLine(" ####### NOS VEMOS CAMPEON ######");
+                    Thread.Sleep(1000); 
                 break;                
                 default:
                     opcionMenu = 1;

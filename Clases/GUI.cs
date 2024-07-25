@@ -212,5 +212,13 @@ namespace EspacioGUI
         Thread.Sleep(700);
         }
 
+    //METODO DINAMICO MOSTRAR PUNTAJE ACUMULADO
+      public void MostrarPuntaje(float puntaje){
+            Console.ForegroundColor = ConsoleColor.White; 
+            Console.WriteLine($"\nPUNTAJE ACUMULADO: {puntaje}\n");
+            Thread.Sleep(700);
+            Console.ResetColor();
+        }
+
     }
 }

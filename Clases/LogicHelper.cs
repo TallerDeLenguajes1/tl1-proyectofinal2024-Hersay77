@@ -72,7 +72,7 @@ namespace EspacioLogicHelper
                 Console.WriteLine("ELIGE EL NUMERO DE PERSONAJE: ");
                 string entrada = Console.ReadLine();
                 
-                if (int.TryParse(entrada, out numero) && numero >= 0 && numero <= 10)
+                if (int.TryParse(entrada, out numero) && numero >= 0 && numero <= 11)
                 {
                     Console.WriteLine("SELECCIONASTE LA OPCION: " + numero);
                     return numero;
@@ -114,15 +114,15 @@ namespace EspacioLogicHelper
         //METODO CONSULTA SI SABE NOMBRE DE EPISODIOS
         public int SabeNombre(){
             Console.WriteLine(@"
-    ╔═════════════════════════════════════════════════════════════════════════════════════════════════════════╗
-    ║     POR CADA BATALLA TIENE LA POSIBILIDAD DE AUMENTAR SU PUNTAJE A TRAVES DEL BONUS POR EPISODIO!!!     ║
-    ║                                                                                                         ║
-    ║     SI SABE EL NOMBRE DE LOS EPISODIOS DE LA SERIE DEL PERSONAJE QUE ELIGIO PRESIONE ---> 1             ║
-    ║     DE OTRO MODO LOS EPISODIOS SERAN ELEGIDOS DE UNA LISTA DE LOS MISMOS POR UN NUMERO ALEATORIO        ║
-    ║                                                                                                         ║
-    ║     TODOS LOS EPISODIOS TIENEN UN RATING QUE SE OBTIENE DE UNA WEB QUE CALCULA EL PROMEDIO DE           ║
-    ║     VISTAS AL EPISODIO Y A TRAVES DE ESTE RATING SU PERSONAJE PUEDE AUMENTAR EL PUNTAJE GENERAL         ║
-    ╚═════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
+╔═════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║     POR CADA BATALLA TIENE LA POSIBILIDAD DE AUMENTAR SU ATAQUE A TRAVES DEL BONUS POR EPISODIO!!!      ║
+║                                                                                                         ║
+║     SI SABE EL NOMBRE DE LOS EPISODIOS DE LA SERIE DEL PERSONAJE QUE ELIGIO PRESIONE ---> 1             ║
+║     DE OTRO MODO LOS EPISODIOS SERAN ELEGIDOS DE UNA LISTA DE LOS MISMOS POR UN NUMERO ALEATORIO        ║
+║                                                                                                         ║
+║     TODOS LOS EPISODIOS TIENEN UN RATING QUE SE OBTIENE DE UNA WEB QUE CALCULA EL PROMEDIO DE           ║
+║     VISTAS AL EPISODIO Y A TRAVES DE ESTE RATING SU PERSONAJE PUEDE AUMENTAR SU ATAQUE!!!               ║
+╚═════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
 
         int numero;
             while (true) //aseguro que el bucle siempre se repita a menos que entre al if 
@@ -153,7 +153,7 @@ namespace EspacioLogicHelper
         }
 
         //METODO DINAMICO PARA CALCULAR BONIFICACION SEGUN API Y MOSTRAR
-        public float BonificacionAuto(float puntaje, List<Episodio> episodios)
+        public float BonificacionAuto(List<Episodio> episodios)
         {
 
             var valorAleatorio = FabricaDePersonjaes.ValorAleatorio(0 , episodios.Count); //obtengo valor aleatorio basado en cantidad de episodios
@@ -165,15 +165,16 @@ namespace EspacioLogicHelper
             Console.WriteLine($"===>>EPISODIO ALEATORIO: {episodios[valorAleatorio].Name}");
             Console.WriteLine($"===>>RATING DEL EPISODIO: {episodios[valorAleatorio].Rating.Average}");
             double? rating = episodios[valorAleatorio].Rating.Average; //rating del episodio - //corrigiendo a veces devuelve null  - la api
-            puntaje += 2 *(float)(rating); 
-            Console.WriteLine($"===>>PUNTAJE NUEVO: {puntaje}");
+            float bonificacion = 0;
+            bonificacion += 2 *(float)(rating); 
+            Console.WriteLine($"===>>BONIFICACION: {bonificacion}");
             Console.ResetColor();
             Thread.Sleep(1500);
-            return puntaje;
+            return bonificacion;
         }
 
         //METODO DINAMICO PARA CALCULAR BONIFICACION SEGUN API Y MOSTRAR MANUALMENTE
-        public float BonificacionManual(float puntaje, List<Episodio> episodios)
+        public float BonificacionManual(List<Episodio> episodios)
         {
             Console.WriteLine("Ingrese el nombre del episodio: ");
             var NombreABuscar = Console.ReadLine();
@@ -192,20 +193,23 @@ namespace EspacioLogicHelper
                 Console.WriteLine($"===>>EPISODIO ALEATORIO: {EpisodioEncontrado.Name}");
                 Console.WriteLine($"===>>RATING DEL EPISODIO: {EpisodioEncontrado.Rating.Average}");
                 double? rating = EpisodioEncontrado.Rating.Average; //rating del episodio - //corrigiendo a veces devuelve null  - la api
-                puntaje += 2 *(float)(rating); 
-                Console.WriteLine($"===>>PUNTAJE NUEVO: {puntaje}");
+                float bonificacion = 0;
+                bonificacion += 2 *(float)(rating); 
+                Console.WriteLine($"===>>BONIFICACION: {bonificacion}");
                 Console.ResetColor();
                 Thread.Sleep(700);
-                return puntaje;
+                return bonificacion;
             }
             else
             {
                 Console.WriteLine("Episodio NO encontrado, se asigna uno aleatorio");
-                return (BonificacionAuto(puntaje, episodios));
+                return (BonificacionAuto(episodios));
             }
 
 
         }
+
+      
 
     }
 }

@@ -5,13 +5,13 @@ namespace EspacioBatalla
 {
     public class Batalla
     {
-        public static bool GenerarBatalla(Personaje jugador1, Personaje jugador2) //METODO SIMULA BATALLA
+        public static bool GenerarBatalla(Personaje jugador1, Personaje jugador2, float bonificacion) //METODO SIMULA BATALLA
         {
             var turno = 1;
-            int ataque; //Ataque: Destreza * Fuerza * Nivel (del personaje que ataca) 
+            int ataque; //Ataque: Destreza * Fuerza * Nivel (del personaje que ataca) * bonificacion
             int efectividad;//Valor aleatorio entre 1 y 100.
             int defensa; //armadura * Velocidad (del personaje que defiende)
-            const int ajuste = 500; 
+            const int ajuste = 500; //constante de ajuste
             float danioProvocado; //(Ataque * Efectividad) - Defensa) / constante de ajuste
 
             while (true) //repite siempre la batalla, sale del bucle por los if que verifican la salud
@@ -22,7 +22,7 @@ namespace EspacioBatalla
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("---------------TU TURNO----------ATACANDO! >>>>>>>>>");
                     Console.ResetColor();
-                    ataque = (jugador1.CaracteristicasPersonaje.Destreza) * (jugador1.CaracteristicasPersonaje.Fuerza) * (jugador1.CaracteristicasPersonaje.Nivel);
+                    ataque = (jugador1.CaracteristicasPersonaje.Destreza) * (jugador1.CaracteristicasPersonaje.Fuerza) * (jugador1.CaracteristicasPersonaje.Nivel) + (int)bonificacion;
                     efectividad = FabricaDePersonjaes.ValorAleatorio(1, 101); //efectividad es aleatoria
                     Console.WriteLine($"TU EFECTIVIDAD DE ATAQUE: {efectividad}");
                     defensa = (jugador2.CaracteristicasPersonaje.Armadura) * (jugador2.CaracteristicasPersonaje.Velocidad);
@@ -45,7 +45,7 @@ namespace EspacioBatalla
                 {
                     Thread.Sleep(700);  
                     Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.WriteLine("---------------TURNO ENEMIGO----------DEFENDIENDO!<<<<<<<<<<<");
+                    Console.WriteLine("---------------TURNO ENEMIGO----------DEFENDIENDO! <<<<<<<<<<<");
                     Console.ResetColor();
                     ataque = (jugador2.CaracteristicasPersonaje.Destreza) * (jugador2.CaracteristicasPersonaje.Fuerza) * (jugador2.CaracteristicasPersonaje.Nivel);
                     efectividad = FabricaDePersonjaes.ValorAleatorio(1, 101);
