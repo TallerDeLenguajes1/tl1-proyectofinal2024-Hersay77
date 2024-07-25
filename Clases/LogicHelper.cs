@@ -114,15 +114,15 @@ namespace EspacioLogicHelper
         //METODO CONSULTA SI SABE NOMBRE DE EPISODIOS
         public int SabeNombre(){
             Console.WriteLine(@"
-╔═════════════════════════════════════════════════════════════════════════════════════════════════════════╗
-║     POR CADA BATALLA TIENE LA POSIBILIDAD DE AUMENTAR SU PUNTAJE A TRAVES DEL BONUS POR EPISODIO!!!     ║
-║                                                                                                         ║
-║     SI SABE EL NOMBRE DE LOS EPISODIOS DE LA SERIE DEL PERSONAJE QUE ELIGIO PRESIONE ---> 1             ║
-║     DE OTRO MODO LOS EPISODIOS SERAN ELEGIDOS DE UNA LISTA DE LOS MISMOS POR UN NUMERO ALEATORIO        ║
-║                                                                                                         ║
-║     TODOS LOS EPISODIOS TIENEN UN RATING QUE SE OBTIENE DE UNA WEB QUE CALCULA EL PROMEDIO DE           ║
-║     VISTAS AL EPISODIO Y A TRAVES DE ESTE RATING SU PERSONAJE PUEDE AUMENTAR EL PUNTAJE GENERAL         ║
-╚═════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
+    ╔═════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+    ║     POR CADA BATALLA TIENE LA POSIBILIDAD DE AUMENTAR SU PUNTAJE A TRAVES DEL BONUS POR EPISODIO!!!     ║
+    ║                                                                                                         ║
+    ║     SI SABE EL NOMBRE DE LOS EPISODIOS DE LA SERIE DEL PERSONAJE QUE ELIGIO PRESIONE ---> 1             ║
+    ║     DE OTRO MODO LOS EPISODIOS SERAN ELEGIDOS DE UNA LISTA DE LOS MISMOS POR UN NUMERO ALEATORIO        ║
+    ║                                                                                                         ║
+    ║     TODOS LOS EPISODIOS TIENEN UN RATING QUE SE OBTIENE DE UNA WEB QUE CALCULA EL PROMEDIO DE           ║
+    ║     VISTAS AL EPISODIO Y A TRAVES DE ESTE RATING SU PERSONAJE PUEDE AUMENTAR EL PUNTAJE GENERAL         ║
+    ╚═════════════════════════════════════════════════════════════════════════════════════════════════════════╝");
 
         int numero;
             while (true) //aseguro que el bucle siempre se repita a menos que entre al if 
@@ -168,7 +168,7 @@ namespace EspacioLogicHelper
             puntaje += 2 *(float)(rating); 
             Console.WriteLine($"===>>PUNTAJE NUEVO: {puntaje}");
             Console.ResetColor();
-            Thread.Sleep(700);
+            Thread.Sleep(1500);
             return puntaje;
         }
 

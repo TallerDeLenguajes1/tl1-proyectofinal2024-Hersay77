@@ -145,6 +145,7 @@ namespace EspacioGUI
     
         //METODO DINAMICO MOSTRAR VERSUS
         public void MostrarVS(Personaje jugador1, Personaje jugador2){
+            Console.ForegroundColor = ConsoleColor.Red; 
             MostrarTxt($"ArchivosTxt/{jugador1.DatosPersonaje.Apodo}.txt", 0);
             Thread.Sleep(700);
 
@@ -158,6 +159,7 @@ namespace EspacioGUI
             MostrarTxt($"ArchivosTxt/{jugador2.DatosPersonaje.Apodo}.txt", 0);
             Thread.Sleep(700);
             Console.WriteLine(" ");
+            Console.ResetColor();
         }
 
         //MOSTRAR PARTIDA GANADA
@@ -203,16 +205,12 @@ namespace EspacioGUI
         Console.ResetColor();       
         }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    //METODO DINAMICO MOSTRAR INICIO BATALLA
+        public void MostrarInicioBatalla(int numeroBatalla){
+        Console.ForegroundColor = ConsoleColor.Magenta; 
+        Console.WriteLine($"\n°°°°°°°°°°°°°° INICIA LA BATALLA N°: {numeroBatalla}°°°°°°°°°°°°°°°°°°\n");
+        Thread.Sleep(700);
+        }
+
     }
 }

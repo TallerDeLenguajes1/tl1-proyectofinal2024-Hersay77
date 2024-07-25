@@ -7,10 +7,9 @@ using EspacioLogicHelper;
 using EspacioBatalla;
 using EspacioAPI;
 
-//INSTANCIAS PARA USAR METODOS GUI Y AYUDA LOGICA
+//INSTANCIAS PARA USAR METODOS DE INTERFAZ GRAFICA Y AYUDA LOGICA
 GUI MetodosGUI = new GUI(); 
 LogicHelper MetodosLogica = new LogicHelper();
-
 
 //VERIFICACION DE EXISTENCIA Y CREACION DE ARCHIVOS PARA COMENZAR EL PROGRAMA
     MetodosLogica.VerificarYCrearArchivos();
@@ -18,9 +17,7 @@ LogicHelper MetodosLogica = new LogicHelper();
     List<PersonajeEnHistorial> Historial = MetodosLogica.Historial;
     bool Guardado = MetodosLogica.Guardado;
 
-
 //CONTROL E INICIO DEL JUEGO
-
     if (ListaPersonajes == null || Historial == null || Guardado == false) 
     {
         Console.WriteLine("Error de programa: No se pudo cargar los datos");
@@ -32,7 +29,7 @@ LogicHelper MetodosLogica = new LogicHelper();
         MetodosGUI.MostrarTxt(MetodosLogica.Portada, 0); 
         MetodosGUI.MostrarPresionarTecla();
 
-        int opcionMenu; //1 y 2 repite el bucle - se controla ingreso con metodo
+        int opcionMenu; //1 y 2 repite el bucle dowhile - se controla ingreso con metodo
         int opcion; //variable para opciones
         do
         {
@@ -48,8 +45,6 @@ LogicHelper MetodosLogica = new LogicHelper();
                         MetodosGUI.MostrarTxt($"ArchivosTxt/{ListaPersonajes[opcion].DatosPersonaje.Apodo}.txt", 0);
                     //HAGO REFERENCIA AL PERSONAJE ELEGIDO EN OTRA VARIABLE
                         Personaje personajeSeleccionado = ListaPersonajes[opcion]; 
-               /*     //ELIMINO PERSONAJE DE LISTA (SOLO SE ELIMINA DE LA LISTA, LA REFERENCIA A EL PERSONAJE ELEGIDO EN LA MEMORIA SIGUE EN LA VARIABLE personajeSeleccionado)
-                        ListaPersonajes.Remove(ListaPersonajes[opcion]); */
                     
                     //USO Y LLAMADA A LA API (OBTIENE UNA LISTA DE EPISODIOS SEGUN LA SERIE A LA CUAL PERTENECE EL PERSONAJE)
                         string url = MetodosLogica.ObtenerUrl(personajeSeleccionado.DatosPersonaje.SerieDelPersonaje); //metodo segun serie obtiene url para enviarla al metodo API
@@ -71,16 +66,12 @@ LogicHelper MetodosLogica = new LogicHelper();
                                 numeroBatalla += 1;
 
                                 //BONIFICACION
-                                puntaje = SabeNombre == 1 ? MetodosLogica.BonificacionManual(puntaje, episodios): MetodosLogica.BonificacionAuto(puntaje, episodios);
-                                Thread.Sleep(1000);
+                                    puntaje = SabeNombre == 1 ? MetodosLogica.BonificacionManual(puntaje, episodios): MetodosLogica.BonificacionAuto(puntaje, episodios);
+                                    Thread.Sleep(1000);
 
-                            //MUESTRA INICIO DE BATALLA
-                                    Console.ForegroundColor = ConsoleColor.Magenta; 
-                                    Console.WriteLine($"\n°°°°°°°°°°°°°° INICIA LA BATALLA N°: {numeroBatalla}°°°°°°°°°°°°°°°°°°\n");
-                                    Thread.Sleep(700);
-                                    Console.ForegroundColor = ConsoleColor.Red;
+                                //MUESTRA INICIO DE BATALLA
+                                    MetodosGUI.MostrarInicioBatalla(numeroBatalla);
                                     MetodosGUI.MostrarVS(personajeSeleccionado, jugador2);
-                                    Console.ResetColor();
 
                                 //BATALLA
                                     resultadoBatalla = Batalla.GenerarBatalla(personajeSeleccionado, jugador2); 
@@ -88,20 +79,17 @@ LogicHelper MetodosLogica = new LogicHelper();
                                 //COMRUEBA RESULTADO DE BATLLA
                                     if (resultadoBatalla)//true - si se gana la batalla
                                     {
-                                        Console.ForegroundColor = ConsoleColor.Green;
-                                        Console.WriteLine("=============>>>> HAS GANADO LA BATALLA!!! <<<<============= ");
-                                        Console.ResetColor();
-                                        puntaje = puntaje + personajeSeleccionado.CaracteristicasPersonaje.Salud; //El puntaje acumulado en cada batalla sera la salud con la que queda el personaje
+                                        puntaje = puntaje + personajeSeleccionado.CaracteristicasPersonaje.Salud; //El puntaje acumulado en cada batalla sera la salud con la que queda el personaje, ademas de la bonificacion dada por la api de los episodios
                                         personajeSeleccionado.CaracteristicasPersonaje.Salud = 100;//VUELVO SALUD DEL PERSONAJE NUEVAENTE A 100 PARA ENFRENTARSE AL PROXIMO OPONENTE
                                         jugador2.CaracteristicasPersonaje.Salud = 100; //tambien restauro salud del oponente para una proxima partida
 
                                     }
                                     else
                                     {
-                                        Console.ForegroundColor = ConsoleColor.Red;
-                                        Console.WriteLine("=====================>>>HAS PERDIDO LA BATALLA!!! <<<<============= ");
-                                        Console.ResetColor();
-                                        ListaPersonajes= PersonajesJson.LeerPersonajes(MetodosLogica.ArchivoListaPersonajes); //restauro la lista y las propiedades de los personajes
+                                    /*    ListaPersonajes= PersonajesJson.LeerPersonajes(MetodosLogica.ArchivoListaPersonajes); //restauro la lista y las propiedades de los personajes*/
+                                        //restauro la salud que se modifico durante la batalla por si se contnua con la instancia
+                                        personajeSeleccionado.CaracteristicasPersonaje.Salud = 100;
+                                        jugador2.CaracteristicasPersonaje.Salud = 100; 
                                         resultadoPartida = false; //si no se gano la batalla se pierde la partida 
                                         break;//se sale del bucle foreach
                                     }
@@ -116,14 +104,10 @@ LogicHelper MetodosLogica = new LogicHelper();
                                 Console.WriteLine("================================================================");
                                 Console.WriteLine($"NIVEL PERSONAJE: {personajeSeleccionado.CaracteristicasPersonaje.Nivel}");
                                 MetodosLogica.ListaPersonajes[opcion].CaracteristicasPersonaje.Nivel +=1;
-                         /*       personajeSeleccionado.CaracteristicasPersonaje.Nivel += 1; //cada vez que se gana una partida el nivel del personaje aumenta en 1 unidad*/
+
                                 Console.WriteLine("TU PERSONAJE AUMENTA +1 EN NIVEL !!!");
                                 Console.WriteLine($"NIVEL ACTUAL: {MetodosLogica.ListaPersonajes[opcion].CaracteristicasPersonaje.Nivel}");
 
-                        /*        MetodosLogica.ListaPersonajes = PersonajesJson.LeerPersonajes(MetodosLogica.ArchivoListaPersonajes); //restauro la lista y las propiedades de los personajes
-
-                                MetodosLogica.ListaPersonajes[opcion].CaracteristicasPersonaje.Nivel = personajeSeleccionado.CaracteristicasPersonaje.Nivel; //actualizo el nivel del personaje en la lista
-                        */    
                                 Guardado = PersonajesJson.GuardarPersonajes(ListaPersonajes, MetodosLogica.ArchivoListaPersonajes); //guardo la lista modificada
                                 Console.WriteLine(Guardado == true ?  "PERSONAJE ACTUALIZADO !!!": "ERROR EN EL GUARDADO DE LISTA MODIFICADA");
                                 Console.WriteLine($"===>>PUNTAJE: {puntaje}"); 
