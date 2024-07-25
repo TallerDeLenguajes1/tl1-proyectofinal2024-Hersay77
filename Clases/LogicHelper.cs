@@ -176,7 +176,7 @@ namespace EspacioLogicHelper
         //METODO DINAMICO PARA CALCULAR BONIFICACION SEGUN API Y MOSTRAR MANUALMENTE
         public float BonificacionManual(List<Episodio> episodios)
         {
-            Console.WriteLine("Ingrese el nombre del episodio: ");
+            Console.WriteLine("Ingrese el nombre del episodio para aumentar su ataque en la siguiente batalla: ");
             var NombreABuscar = Console.ReadLine();
 
             Episodio EpisodioEncontrado = episodios.Find(t => t.Name == NombreABuscar); //uso metodo Find proporcionado por List<t>, devuelve el tipo t, enste caso Episodio si se cumple Episodio => Episodio.Name == NombreABuscar sino devuelve null
