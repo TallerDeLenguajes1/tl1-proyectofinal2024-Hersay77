@@ -53,7 +53,7 @@ namespace EspacioHistorialJson
         //REQUISITO - METODO ESTATICO COMPRUEBA SI EXISTE ARCHIVO HISTORIAL
         public static bool Existe(string Archivo)
         {
-            if (File.Exists(Archivo)) //se usa la clase File con el metodo exists para comprobar si existe el rchivo en la ruta proporcionada
+            if (File.Exists(Archivo)) //se usa la clase File con el metodo existe para comprobar si existe el archivo en la ruta proporcionada
             {
                 return true;
             }
@@ -72,15 +72,43 @@ namespace EspacioHistorialJson
 ║                                     HISTORIAL - RANKING GANADORES                                    ║
  ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
             Console.WriteLine();
-            for (int i = 0; i < Historial.Count; i++)
+            for (int i = 0; i <=9; i++)
             {
                 Console.WriteLine($"\n    {i+1} - \tJUGADOR: {Historial[i].NombreJugador} ----PERSONAJE: {Historial[i].NombrePersonaje} ----NIVEL: {Historial[i].Nivel} ----PUNTAJE: {Historial[i].Puntaje}");
             }
-
             Console.WriteLine(@"
 ╚══════════════════════════════════════════════════════════════════════════════════════════════════════╝");
             Console.ResetColor();
         }
+
+        //METODO PARA CREAR Y GUARDAR UN ARCHIVO SI NO EXISTE HISTORIAL
+        public static bool GuardarHistorialVacio(string ArchivoHistorial, List<PersonajeEnHistorial> Historial){
+            try
+                {
+                    string jsonString = JsonSerializer.Serialize(Historial); // Serializar el historial vacio
+                    File.WriteAllText(ArchivoHistorial, jsonString); // Escribir la cadena JSON en el archivo especificado - WriteAllText sobreexcribe el archivo si existe y si no, lo crea
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al guardar en Historial: {ex.Message}");
+                    return false; //retorna nulo si no se pudo guardar la lista Historial
+                };
+        }
+
+        //METODO CREA HISTORIAL VACIO
+        public static List<PersonajeEnHistorial> CrearHistorialVacio(){
+            List<PersonajeEnHistorial> Historial = new List<PersonajeEnHistorial>();
+            
+            for (int i = 0; i <= 9; i++)
+            {
+                var personaje = new PersonajeEnHistorial();
+                Historial.Add(personaje);
+            }
+
+            return Historial;
+        }
+
     }
 
     //CLASE PARA GUARDAR PERSONAJES Y DATOS EN UN FORMATO MAS SIMPLIFICADO EN EL HISTORIAL
@@ -95,6 +123,14 @@ namespace EspacioHistorialJson
             public string NombrePersonaje { get => nombrePersonaje; set => nombrePersonaje = value; }
             public int Nivel { get => nivel; set => nivel = value; }
             public float Puntaje { get => puntaje; set => puntaje = value; }
+
+            public PersonajeEnHistorial(){
+                nombreJugador = "VACIO";
+                nombrePersonaje = "VACIO";
+                nivel = 0;
+                puntaje = 0;
+            }
         }
+
 }
 

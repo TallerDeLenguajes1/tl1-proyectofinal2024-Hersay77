@@ -12,15 +12,17 @@ GUI MetodosGUI = new GUI();
 LogicHelper MetodosLogica = new LogicHelper();
 
 //VERIFICACION DE EXISTENCIA Y CREACION DE ARCHIVOS PARA COMENZAR EL PROGRAMA
-    MetodosLogica.VerificarYCrearArchivos();
+    MetodosLogica.VerificarListaPersonajes();
+    MetodosLogica.VerificarHistorial();
     List<Personaje> ListaPersonajes = MetodosLogica.ListaPersonajes; 
     List<PersonajeEnHistorial> Historial = MetodosLogica.Historial;
     bool Guardado = MetodosLogica.Guardado;
 
 //CONTROL E INICIO DEL JUEGO
-    if (ListaPersonajes == null || Historial == null || Guardado == false) 
+    if (Guardado == false) 
     {
         Console.WriteLine("Error de programa: No se pudo cargar los datos");
+        Console.ReadKey();
     }
     else //SE INCIA EL JUEGO
     {
@@ -92,6 +94,7 @@ LogicHelper MetodosLogica = new LogicHelper();
                                         personajeSeleccionado.CaracteristicasPersonaje.Salud = 100;
                                         jugador2.CaracteristicasPersonaje.Salud = 100; 
                                         resultadoPartida = false; //si no se gano la batalla se pierde la partida 
+                                        
                                         break;//se sale del bucle foreach
                                     }
                             }

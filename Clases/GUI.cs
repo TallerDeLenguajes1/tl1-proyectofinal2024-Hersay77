@@ -125,7 +125,7 @@ namespace EspacioGUI
                     break;
                 }
                 Console.WriteLine("");
-                Console.WriteLine($"    NUMERO: {i} - NOMBRE: {ListaPersonajes[i].DatosPersonaje.Nombre} - APODO: {ListaPersonajes[i].DatosPersonaje.Apodo}");
+                Console.WriteLine($"    NUMERO: {i+1} - NOMBRE: {ListaPersonajes[i].DatosPersonaje.Nombre} - APODO: {ListaPersonajes[i].DatosPersonaje.Apodo}");
                 Console.WriteLine($"    FECHA: {ListaPersonajes[i].DatosPersonaje.Fecha.ToShortDateString()} - EDAD: {ListaPersonajes[i].DatosPersonaje.Edad}");
                 Console.WriteLine($"    DESCRIPCION: {ListaPersonajes[i].DatosPersonaje.Descripcion}");
                 Console.WriteLine($"    SERIE: {ListaPersonajes[i].DatosPersonaje.SerieDelPersonaje}");

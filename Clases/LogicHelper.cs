@@ -10,7 +10,7 @@ namespace EspacioLogicHelper
     {
         private List<Personaje> listaPersonajes;
         private List<PersonajeEnHistorial> historial;
-        private bool guardado = true; ////variable para identificar el correcto guardado de archivos de personajes. Inicia en true por si ya se habia guardado anteriormente por primera vez los personajes (si ya esta creada ListaPersonajes.json en una misma sesion)
+        private bool guardado = true; //variable para identificar el correcto guardado de archivos de personajes. Inicia en true por si ya se habia iniciado sesion y creado archivos lista personajes e historial
 
         //RUTAS DE ARCHIVOS
         private string archivoListaPersonajes = "Archivos/ListaPersonajes.json"; 
@@ -20,27 +20,40 @@ namespace EspacioLogicHelper
     
         public List<Personaje> ListaPersonajes { get => listaPersonajes; set => listaPersonajes = value; }
         public List<PersonajeEnHistorial> Historial { get => historial; set => historial = value; }
-        public bool Guardado { get => guardado; set => guardado = value; }
+        public bool Guardado { get => guardado; set => guardado = value; } 
         public string ArchivoListaPersonajes { get => archivoListaPersonajes; }
         public string ArchivoHistorial { get => archivoHistorial;  }
         public string Portada { get => portada; }
         public string ArchivoDatosPersonajes { get => archivoDatosPersonajes; }
 
         //METODO DINAMICO VERIFICAR Y CREAR ARCHIVOS PARA EL INICIO DEL JUEGO
-        public void VerificarYCrearArchivos(){
+        public void VerificarListaPersonajes(){
             
-            if (PersonajesJson.Existe(ArchivoListaPersonajes)) ////Verificar al comienzo del Juego si existe el archivo de personajes
+            if (PersonajesJson.Existe(ArchivoListaPersonajes)) ////Verificar al comienzo del Juego si existe listapersonajes
             {
                 ListaPersonajes = PersonajesJson.LeerPersonajes(ArchivoListaPersonajes); //lee lista de personajes, sino retorna null
-                Historial = HistorialJson.LeerGanadores(ArchivoHistorial); //se lee el historial, sino retorna null
             }
             else
             {
                 ListaPersonajes = PersonajesJson.GenerarPersonajesPreestablecidos(ArchivoDatosPersonajes); //Crea la lista de personajes desde 0 con DatosPersonajes.json (archivo que contiene datos de personajes preestablecidos)
-                Guardado = PersonajesJson.GuardarPersonajes(ListaPersonajes, ArchivoListaPersonajes); //el metodo guarda la lista de personajes en json y devuelve true si se completo el guardado
-                Historial = HistorialJson.LeerGanadores(ArchivoHistorial); //lee el historial desde un json, si no retorna null
+                Guardado = PersonajesJson.GuardarPersonajes(ListaPersonajes, ArchivoListaPersonajes); //el metodo guarda la lista de personajes en json y devuelve true si se completo el guardado               
             }
         }
+
+        //
+        public void VerificarHistorial()
+        {
+                if (HistorialJson.Existe(ArchivoHistorial))//verifica historial
+                {
+                    Historial = HistorialJson.LeerGanadores(ArchivoHistorial); //se lee el historial, sino retorna null
+                }
+                else
+                {
+                    Historial = HistorialJson.CrearHistorialVacio(); //crea una lista vacia
+                    Guardado = HistorialJson.GuardarHistorialVacio(ArchivoHistorial, Historial); //guarda y confirma guardado del json historial
+                }
+        }
+
 
         //METODO DINAMICO PARA VERIFICAR LA CORRECTA OPCION DEL MENU
         public int ElegirOpcionMenu() //METODO ELEGIR 
@@ -72,10 +85,10 @@ namespace EspacioLogicHelper
                 Console.WriteLine("ELIGE EL NUMERO DE PERSONAJE: ");
                 string entrada = Console.ReadLine();
                 
-                if (int.TryParse(entrada, out numero) && numero >= 0 && numero <= 11)
+                if (int.TryParse(entrada, out numero) && numero >= 1 && numero <= 12)
                 {
                     Console.WriteLine("SELECCIONASTE LA OPCION: " + numero);
-                    return numero;
+                    return numero-1;
                 }
                 else
                 {
