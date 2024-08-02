@@ -15,11 +15,11 @@ El proyecto consiste en cumplir con los objetivos y rúbricas establecidos en la
 
 Al inicio se muestra un Menu para elegir personajes, una vez presionada la opcion, se mostrara una lista de los mismos para poder seleccionar el personaje con el cual se va a Jugar.
 
-![Portada](Imagenes/Imagen1.png)
+![Portada](Imagenes/imagen1.png)
 
 Una vez elegido uno de los personajes, se recorre el camino del torneo enfrentando a dicho personaje con los demás en la lista, uno vs uno. El jugador por cada batalla tiene la posibilidad de aumentar su ataque a traves de una bonificacion que se realiza al llamar a la API que proporciona un lista de episodios segun la serie del personaje, cada episodio posee un Rating, este mismo se duplica y se suma al ataque del jugador. Para ello se pregunta antes si el usuario desea ingresar los nombres de los episodios (favoreciendo al jugador al saber cuales episodios tuvieron mucho rating y cuales no) o si no los conoce se obtendra un episodio aleatorio de la lista.
 
-![Portada](Imagenes/Imagen2.png)
+![Portada](Imagenes/imagen2.png)
 
 Cada ataque en la batalla se realiza por turnos en los cuales un personaje ataca y otro se defiende a través de cálculos matemáticos donde se tienen en cuenta las características de ambos personajes para calcular el daño provocado, hasta que uno pierde la salud completamente.
 
@@ -37,7 +37,7 @@ Los calculos son:
 
   El puntaje acumulado en cada batalla se calcula sumando la salud con la que queda el jugador en cada batalla, cuanto menos daño recibio mas puntaje obtendrá.
   
-![Portada](Imagenes/Imagen3.png)
+![Portada](Imagenes/imagen3.png)
 
 
 Si el jugador gana, su salud es restaurada para comenzar nuevamente otra batalla y así hasta llegar al último personaje de la lista.
@@ -45,13 +45,13 @@ Cuando el personaje seleccionado derrota a todos los contrincantes de la lista, 
 
 En caso de haber alcanzado un puntaje que entre en el Historial de los mejores 10, se le pedira que ingrese un nombre para guardar en el ranking.
 
-![Portada](Imagenes/Imagen4.png)
+![Portada](Imagenes/imagen4.png)
 
 Si nuestro personaje a perdido una batalla, se pierde la partida, pero aun asi el juego continua con los personajes restantes en la lista, donde el enemigo que vencio a nuestro participante es el que sigue recorriendo el camino hasta alcanzar el "trono de hierro", si o si habra un ganador del torneo.
 
-![Portada](Imagenes/Imagen5.png)
+![Portada](Imagenes/imagen5.png)
 
-![Portada](Imagenes/Imagen6.png)
+![Portada](Imagenes/imagen6.png)
 
 
 
