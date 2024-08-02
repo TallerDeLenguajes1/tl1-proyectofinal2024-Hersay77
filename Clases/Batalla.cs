@@ -25,8 +25,10 @@ namespace EspacioBatalla
                     Console.ResetColor();
                     ataque = (jugador1.CaracteristicasPersonaje.Destreza) * (jugador1.CaracteristicasPersonaje.Fuerza) * (jugador1.CaracteristicasPersonaje.Nivel) + (int)bonificacion;
                     efectividad = FabricaDePersonjaes.ValorAleatorio(1, 101); //efectividad es aleatoria
+                    Console.WriteLine($"TU ATAQUE: {ataque}");
                     Console.WriteLine($"TU EFECTIVIDAD DE ATAQUE: {efectividad}");
                     defensa = (jugador2.CaracteristicasPersonaje.Armadura) * (jugador2.CaracteristicasPersonaje.Velocidad);
+                    Console.WriteLine($"DEFENSA DEL ENEMIGO: {defensa}");
                     danioProvocado = ((ataque * efectividad) - defensa) / ajuste;
                     jugador2.CaracteristicasPersonaje.Salud = (jugador2.CaracteristicasPersonaje.Salud) - danioProvocado;
                     Console.WriteLine($"DANIO PROVOCADO: {danioProvocado}");
@@ -50,8 +52,10 @@ namespace EspacioBatalla
                     Console.ResetColor();
                     ataque = (jugador2.CaracteristicasPersonaje.Destreza) * (jugador2.CaracteristicasPersonaje.Fuerza) * (jugador2.CaracteristicasPersonaje.Nivel);
                     efectividad = FabricaDePersonjaes.ValorAleatorio(1, 101);
+                    Console.WriteLine($"ATAQUE ENEMIGO: {ataque}");
                     Console.WriteLine($"EFECTIVIDAD DE ATAQUE DEL ENEMIGO: {efectividad} ");
                     defensa = (jugador1.CaracteristicasPersonaje.Armadura) * (jugador1.CaracteristicasPersonaje.Velocidad);
+                    Console.WriteLine($"TU DEFENSA: {defensa}");
                     danioProvocado = ((ataque * efectividad) - defensa) / ajuste;
                     jugador1.CaracteristicasPersonaje.Salud = (jugador1.CaracteristicasPersonaje.Salud) - danioProvocado;
                     Console.WriteLine($"DANIO PROVOCADO: {danioProvocado}");
