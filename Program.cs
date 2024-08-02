@@ -61,49 +61,57 @@ LogicHelper MetodosLogica = new LogicHelper();
                         float puntaje = 0; //acumulador puntaje
                         float bonificacion = 0;
                         var numeroBatalla = 0; //contador batalla
+                        Personaje cpu = new Personaje(); //creo personaje vacio para cpu hasta que se pierda una batalla
 
                         foreach (var jugador2 in ListaPersonajes) //se recorre la lista generando las batallas
                         {
-                            if (jugador2 != personajeSeleccionado) //contola que no pelee con el mismo personaje
+                            if (resultadoBatalla == true)
                             {
-                                numeroBatalla += 1;
+                                if (jugador2 != personajeSeleccionado) //contola que no pelee con el mismo personaje
+                                {
+                                    numeroBatalla += 1;
 
-                                //BONIFICACION
-                                    bonificacion = SabeNombre == 1 ? MetodosLogica.BonificacionManual(episodios): MetodosLogica.BonificacionAuto(episodios);
-                                    Thread.Sleep(1000);
+                                    //BONIFICACION
+                                        bonificacion = SabeNombre == 1 ? MetodosLogica.BonificacionManual(episodios): MetodosLogica.BonificacionAuto(episodios);
+                                        Thread.Sleep(1000);
 
-                                //MUESTRA INICIO DE BATALLA
-                                    MetodosGUI.MostrarInicioBatalla(numeroBatalla);
-                                    MetodosGUI.MostrarVS(personajeSeleccionado, jugador2);
+                                    //MUESTRA INICIO DE BATALLA
+                                        MetodosGUI.MostrarInicioBatalla(numeroBatalla);
+                                        MetodosGUI.MostrarVS(personajeSeleccionado, jugador2);
 
-                                //BATALLA
-                                    resultadoBatalla = Batalla.GenerarBatalla(personajeSeleccionado, jugador2, bonificacion); 
+                                    //BATALLA
+                                        resultadoBatalla = Batalla.GenerarBatalla(personajeSeleccionado, jugador2, bonificacion); 
 
-                                //COMRUEBA RESULTADO DE BATLLA
-                                    if (resultadoBatalla)//true - si se gana la batalla
-                                    {
-                                        puntaje = puntaje + personajeSeleccionado.CaracteristicasPersonaje.Salud; //El puntaje acumulado en cada batalla sera la salud con la que queda el personaje, ademas de la bonificacion dada por la api de los episodios
-                                        MetodosGUI.MostrarPuntaje(puntaje);
-                                        personajeSeleccionado.CaracteristicasPersonaje.Salud = 100;//VUELVO SALUD DEL PERSONAJE NUEVAENTE A 100 PARA ENFRENTARSE AL PROXIMO OPONENTE
-                                        jugador2.CaracteristicasPersonaje.Salud = 100; //tambien restauro salud del oponente para una proxima partida
+                                    //COMRUEBA RESULTADO DE BATLLA
+                                        if (resultadoBatalla)//true - si se gana la batalla
+                                        {
+                                            puntaje = puntaje + personajeSeleccionado.CaracteristicasPersonaje.Salud; //El puntaje acumulado en cada batalla sera la salud con la que queda el personaje, ademas de la bonificacion dada por la api de los episodios
+                                            MetodosGUI.MostrarPuntaje(puntaje);
+                                            personajeSeleccionado.CaracteristicasPersonaje.Salud = 100;//VUELVO SALUD DEL PERSONAJE NUEVAENTE A 100 PARA ENFRENTARSE AL PROXIMO OPONENTE
+                                            jugador2.CaracteristicasPersonaje.Salud = 100; //tambien restauro salud del oponente para una proxima partida
 
-                                    }
-                                    else
-                                    {
-                                        //restauro la salud que se modifico durante la batalla por si se contnua con la instancia
-                                        personajeSeleccionado.CaracteristicasPersonaje.Salud = 100;
-                                        jugador2.CaracteristicasPersonaje.Salud = 100; 
-                                        resultadoPartida = false; //si no se gano la batalla se pierde la partida 
-                                        
-                                        break;//se sale del bucle foreach
-                                    }
+                                        }
+                                        else
+                                        {
+                                            //restauro la salud que se modifico durante la batalla por si se contnua con la instancia
+                                            personajeSeleccionado.CaracteristicasPersonaje.Salud = 100;
+                                            jugador2.CaracteristicasPersonaje.Salud = 100; 
+                                            cpu = jugador2; //el torneo continua con el jugador ganador
+                                            resultadoPartida = false; //si no se gano la batalla se pierde la partida
+                                            /*break;//se sale del bucle foreach*/
+                                        }
+                                }
+                            }
+                            else //si perdio la batalla continua el torneo
+                            {
+                                cpu = Batalla.GenerarBatallaCPU(cpu, jugador2);
                             }
                         }
 
                         //COMPRUEBA RESULTADO DE PARTIDA
                             if (resultadoPartida)
                             {
-                                
+                                MetodosGUI.MostrarGanador(personajeSeleccionado);
                                 MetodosGUI.MostrarPartidaGanada();
                                 Console.WriteLine("================================================================");
                                 Console.WriteLine($"NIVEL PERSONAJE: {personajeSeleccionado.CaracteristicasPersonaje.Nivel}");
@@ -141,6 +149,7 @@ LogicHelper MetodosLogica = new LogicHelper();
                             }
                             else
                             {
+                                MetodosGUI.MostrarGanador(cpu);
                                 MetodosGUI.MostrarGameOver();
                             }
                 break;

@@ -192,6 +192,7 @@ namespace EspacioGUI
         public void MostrarGameOver(){
 
             Console.ForegroundColor = ConsoleColor.Red;
+        
             Console.WriteLine(@"
 
 ▄██████░▄████▄░▄██▄▄██▄░▄█████░░░▄█████▄░██░░░██░▄█████░█████▄
@@ -202,6 +203,8 @@ namespace EspacioGUI
 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
             ");
+
+
         Console.ResetColor();       
         }
     
@@ -219,6 +222,20 @@ namespace EspacioGUI
             Thread.Sleep(700);
             Console.ResetColor();
         }
+    
+        //METODO MOSTRAR GANADOR TORNEO
+        public void MostrarGanador(Personaje jugador){
+                        Console.WriteLine(@"
+   ___   _   _  _   _   ___   ___  ___   ___  ___ _      _____ ___  ___  _  _  ___  
+  / __| /_\ | \| | /_\ |   \ / _ \| _ \ |   \| __| |    |_   _| _ \/ _ \| \| |/ _ \ 
+ | (_ |/ _ \| .` |/ _ \| |) | (_) |   / | |) | _|| |__    | | |   / (_) | .` | (_) |
+  \___/_/ \_\_|\_/_/ \_\___/ \___/|_|_\ |___/|___|____|   |_| |_|_\\___/|_|\_|\___/ 
+                ");
+
+                MostrarTxt($"ArchivosTxt/{jugador.DatosPersonaje.Apodo}.txt", 0);
+        }
 
     }
+
+
 }
